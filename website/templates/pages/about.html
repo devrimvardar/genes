@@ -1,0 +1,685 @@
+    <div class="about-container">
+        <div class="about-hero">
+            <h1>About Genes Framework</h1>
+            <p>Simple, powerful, and developer-friendly</p>
+        </div>
+
+        <!-- Philosophy -->
+        <section class="philosophy">
+            <h2>Philosophy & Design Principles</h2>
+            <div class="philosophy-grid">
+                <div class="principle">
+                    <div class="principle-icon">🎯</div>
+                    <h3>Simplicity First</h3>
+                    <p>
+                        Every feature has a clear purpose. No bloat, no unnecessary abstractions.
+                        The API is designed to be intuitive - if it looks right, it probably is right.
+                    </p>
+                </div>
+                <div class="principle">
+                    <div class="principle-icon">⚡</div>
+                    <h3>Zero Dependencies</h3>
+                    <p>
+                        No package managers, no build tools, no complex setup. Just copy the files
+                        and start coding. Your project stays lean and maintainable.
+                    </p>
+                </div>
+                <div class="principle">
+                    <div class="principle-icon">📖</div>
+                    <h3>Readable Code</h3>
+                    <p>
+                        Code should read like a book. Every function, every variable is clearly named.
+                        Self-documenting code that both humans and AI can understand.
+                    </p>
+                </div>
+                <div class="principle">
+                    <div class="principle-icon">🔧</div>
+                    <h3>Flexibility</h3>
+                    <p>
+                        Use a database or don't. Use all features or just what you need.
+                        Genes adapts to your project, not the other way around.
+                    </p>
+                </div>
+                <div class="principle">
+                    <div class="principle-icon">🏗️</div>
+                    <h3>Solid Foundation</h3>
+                    <p>
+                        Built on proven patterns and best practices. Multi-tenant from the ground up,
+                        with a clean data model that scales from prototypes to production.
+                    </p>
+                </div>
+                <div class="principle">
+                    <div class="principle-icon">🤝</div>
+                    <h3>AI-Friendly</h3>
+                    <p>
+                        Written with AI assistants in mind. Clear structure, consistent patterns,
+                        and comprehensive examples make it easy to work with modern AI tools.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Makes Genes Different -->
+        <section class="different">
+            <h2>What Makes Genes Different?</h2>
+            <div class="comparison">
+                <div class="comparison-item">
+                    <h3>🚫 Traditional Frameworks</h3>
+                    <ul>
+                        <li>Require Composer/npm</li>
+                        <li>Complex folder structures</li>
+                        <li>Dozens of dependencies</li>
+                        <li>Steep learning curve</li>
+                        <li>Build process required</li>
+                        <li>Multi-tenancy as afterthought</li>
+                    </ul>
+                </div>
+                <div class="comparison-item highlight">
+                    <h3>✅ Genes Framework</h3>
+                    <ul>
+                        <li>Zero dependencies</li>
+                        <li>Single file design (genes.php + genes.js)</li>
+                        <li>Works out of the box</li>
+                        <li>Learn in minutes</li>
+                        <li>No build process</li>
+                        <li>Multi-tenant by design</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Deep Dive -->
+        <section class="features-deep">
+            <h2>Core Features</h2>
+            
+            <div class="feature-detail">
+                <div class="feature-header">
+                    <h3>🏢 Multi-Tenant Architecture</h3>
+                </div>
+                <p>
+                    Genes uses a clone-based isolation system that makes building SaaS platforms and
+                    multi-site applications straightforward. Each "clone" is a completely isolated tenant
+                    with its own data, automatically filtered by <code>clone_id</code>.
+                </p>
+                <pre><code>// Create a tenant
+g::run("db.createClone", array("hash" => "client-abc", "name" => "ABC Corp"));
+
+// Set active tenant
+g::run("db.setClone", "client-abc");
+
+// All queries automatically filtered
+$items = g::run("db.getItems"); // Only client-abc items
+$users = g::run("db.getPersons"); // Only client-abc users</code></pre>
+            </div>
+
+            <div class="feature-detail">
+                <div class="feature-header">
+                    <h3>🗄️ Flexible Data Model</h3>
+                </div>
+                <p>
+                    The 5-table schema (clones, persons, items, labels, events) is generic enough for
+                    most applications yet specific enough to be immediately useful. Each table stores
+                    JSON data, giving you schema flexibility when you need it.
+                </p>
+                <pre><code>// Tables automatically created with g::run("db.createSchema")
+clones   - Master tenant table
+persons  - Users, contacts, profiles (has clone_id)
+items    - Content, products, entities (has clone_id)
+labels   - Categories, tags, groups (has clone_id)
+events   - Activity log, history (has clone_id)</code></pre>
+            </div>
+
+            <div class="feature-detail">
+                <div class="feature-header">
+                    <h3>🔌 Database Agnostic</h3>
+                </div>
+                <p>
+                    Use MySQL, SQLite, or no database at all. Config.json for simple data storage,
+                    HTML partials for static sites, or mix-and-match as needed.
+                </p>
+                <pre><code>// MySQL
+g::run("db.connect", array("driver" => "mysql", "database" => "mydb", ...));
+
+// SQLite
+g::run("db.connect", array("driver" => "sqlite", "database" => "app.db"));
+
+// No database - use config.json, HTML partials, or any other data source</code></pre>
+            </div>
+
+            <div class="feature-detail">
+                <div class="feature-header">
+                    <h3>🎨 Template System</h3>
+                </div>
+                <p>
+                    Simple variable substitution in HTML partials. No complex templating language to learn,
+                    just <code>{{variable}}</code> placeholders that get replaced with your data.
+                </p>
+                <pre><code>// Load partial with variables
+function loadPartial($file, $vars = array()) {
+    $content = file_get_contents("templates/" . $file);
+    foreach ($vars as $key => $value) {
+        $content = str_replace("{{" . $key . "}}", $value, $content);
+    }
+    return $content;
+}
+
+echo loadPartial("page.html", array("title" => "Welcome", "user" => "John"));</code></pre>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="use-cases">
+            <h2>Perfect For</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <h3>🏢 SaaS Platforms</h3>
+                    <p>Built-in multi-tenancy with complete data isolation per client</p>
+                </div>
+                <div class="use-case">
+                    <h3>📝 Content Management</h3>
+                    <p>Flexible data model for blogs, wikis, documentation sites</p>
+                </div>
+                <div class="use-case">
+                    <h3>🔌 REST APIs</h3>
+                    <p>Simple routing and JSON handling for API backends</p>
+                </div>
+                <div class="use-case">
+                    <h3>🌐 Static Sites</h3>
+                    <p>HTML partials and templating without build tools</p>
+                </div>
+                <div class="use-case">
+                    <h3>⚡ Rapid Prototypes</h3>
+                    <p>Zero setup time - clone and start coding immediately</p>
+                </div>
+                <div class="use-case">
+                    <h3>🎓 Learning Projects</h3>
+                    <p>Clear, readable code perfect for education</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Name -->
+        <section class="name-origin">
+            <h2>Why "Genes"?</h2>
+            <div class="name-content">
+                <div class="dna-icon">🧬</div>
+                <p>
+                    Like DNA carries the blueprint for life, Genes Framework carries the essential
+                    building blocks for web applications. The clone-based architecture mirrors biological
+                    cloning - each tenant is a perfect copy of the base structure, yet completely
+                    independent and unique.
+                </p>
+                <p>
+                    Just as genes are simple building blocks that combine to create complex organisms,
+                    Genes Framework provides simple, reusable components that combine to build
+                    sophisticated applications.
+                </p>
+            </div>
+        </section>
+
+        <!-- Creator -->
+        <section class="creator">
+            <h2>Created By</h2>
+            <div class="creator-card">
+                <div class="creator-info">
+                    <h3>Devrim Vardar</h3>
+                    <p class="creator-title">Software Developer & Framework Designer</p>
+                    <p class="creator-bio">
+                        Passionate about building tools that make developers' lives easier.
+                        Believer in simplicity, clarity, and code that just works.
+                    </p>
+                    <div class="creator-links">
+                        <a href="{{github_url}}" target="_blank">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="stats-detailed">
+            <h2>By The Numbers</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">~6,400</div>
+                    <div class="stat-label">Lines of PHP</div>
+                    <div class="stat-desc">Single file design</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">~1,300</div>
+                    <div class="stat-label">Lines of JavaScript</div>
+                    <div class="stat-desc">Client-side features</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Database Tables</div>
+                    <div class="stat-desc">Clones, persons, items, labels, events</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Dependencies</div>
+                    <div class="stat-desc">Zero external packages</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">PHP 5.6+</div>
+                    <div class="stat-label">Compatibility</div>
+                    <div class="stat-desc">Works on legacy & modern</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Examples</div>
+                    <div class="stat-desc">Database & non-database</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section class="license">
+            <h2>License & Contributing</h2>
+            <div class="license-content">
+                <div class="license-section">
+                    <h3>📜 Open Source</h3>
+                    <p>
+                        Genes Framework is open source software. Check the repository for license details.
+                        Free to use for personal and commercial projects.
+                    </p>
+                </div>
+                <div class="license-section">
+                    <h3>🤝 Contributing</h3>
+                    <p>
+                        Contributions are welcome! Found a bug? Have an idea? Open an issue or
+                        submit a pull request on GitHub.
+                    </p>
+                </div>
+                <div class="license-section">
+                    <h3>💬 Support</h3>
+                    <p>
+                        Questions or feedback? Open an issue on GitHub or reach out through the
+                        repository's discussion board.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="about-cta">
+            <h2>Ready to Get Started?</h2>
+            <p>Download Genes Framework and start building today</p>
+            <div class="cta-buttons">
+                <a href="?page=download" class="btn btn-primary btn-large">Download Now</a>
+                <a href="{{github_url}}" target="_blank" class="btn btn-secondary btn-large">View on GitHub</a>
+            </div>
+        </section>
+    </div>
+
+    <style>
+    .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .about-hero {
+        text-align: center;
+        padding: 60px 0 40px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        border-radius: 12px;
+        margin-bottom: 60px;
+    }
+
+    .about-hero h1 {
+        font-size: 3.5em;
+        margin-bottom: 10px;
+    }
+
+    .about-hero p {
+        font-size: 1.4em;
+        opacity: 0.95;
+    }
+
+    section {
+        margin-bottom: 80px;
+    }
+
+    section h2 {
+        font-size: 2.5em;
+        margin-bottom: 40px;
+        color: var(--dark);
+        text-align: center;
+        border-bottom: 3px solid var(--primary);
+        padding-bottom: 15px;
+    }
+
+    .philosophy {
+        background: var(--light);
+        padding: 60px 40px;
+        border-radius: 12px;
+    }
+
+    .philosophy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
+    }
+
+    .principle {
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .principle-icon {
+        font-size: 3em;
+        margin-bottom: 15px;
+    }
+
+    .principle h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 1.5em;
+    }
+
+    .principle p {
+        line-height: 1.8;
+        color: var(--text-light);
+    }
+
+    .comparison {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 40px;
+        margin-top: 40px;
+    }
+
+    .comparison-item {
+        background: var(--light);
+        padding: 40px;
+        border-radius: 12px;
+    }
+
+    .comparison-item.highlight {
+        background: linear-gradient(to bottom, #fff 0%, #f0f4ff 100%);
+        border: 3px solid var(--primary);
+    }
+
+    .comparison-item h3 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+        color: var(--dark);
+    }
+
+    .comparison-item ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .comparison-item li {
+        padding: 12px 0;
+        font-size: 1.1em;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .features-deep {
+        background: white;
+        padding: 60px 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .feature-detail {
+        margin-bottom: 50px;
+        padding-bottom: 50px;
+        border-bottom: 2px solid var(--border);
+    }
+
+    .feature-detail:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .feature-header h3 {
+        color: var(--primary);
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .feature-detail p {
+        font-size: 1.1em;
+        line-height: 1.8;
+        color: var(--text);
+        margin-bottom: 20px;
+    }
+
+    .feature-detail code {
+        background: var(--light);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        color: var(--primary);
+    }
+
+    .feature-detail pre {
+        background: var(--dark);
+        color: white;
+        padding: 25px;
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+
+    .feature-detail pre code {
+        background: none;
+        color: white;
+        padding: 0;
+        font-size: 0.95em;
+        line-height: 1.6;
+    }
+
+    .use-cases {
+        background: var(--light);
+        padding: 60px 40px;
+        border-radius: 12px;
+    }
+
+    .use-cases-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    .use-case {
+        background: white;
+        padding: 35px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .use-case h3 {
+        color: var(--primary);
+        margin-bottom: 10px;
+        font-size: 1.4em;
+    }
+
+    .use-case p {
+        color: var(--text-light);
+        line-height: 1.7;
+    }
+
+    .name-origin {
+        background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+        padding: 60px 40px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .name-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .dna-icon {
+        font-size: 5em;
+        margin-bottom: 30px;
+    }
+
+    .name-content p {
+        font-size: 1.2em;
+        line-height: 1.9;
+        margin-bottom: 25px;
+        color: var(--text);
+    }
+
+    .creator {
+        background: white;
+        padding: 60px 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .creator-card {
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .creator-info h3 {
+        color: var(--primary);
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .creator-title {
+        font-size: 1.3em;
+        color: var(--text-light);
+        margin-bottom: 25px;
+    }
+
+    .creator-bio {
+        font-size: 1.1em;
+        line-height: 1.8;
+        color: var(--text);
+        margin-bottom: 30px;
+    }
+
+    .creator-links a {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+
+    .creator-links a:hover {
+        text-decoration: underline;
+    }
+
+    .stats-detailed {
+        background: var(--dark);
+        color: white;
+        padding: 60px 40px;
+        border-radius: 12px;
+    }
+
+    .stats-detailed h2 {
+        color: white;
+        border-color: var(--primary);
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+
+    .stat-card {
+        background: rgba(255,255,255,0.1);
+        padding: 35px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .stat-value {
+        font-size: 3.5em;
+        font-weight: bold;
+        color: var(--primary);
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 1.3em;
+        margin-bottom: 8px;
+    }
+
+    .stat-desc {
+        font-size: 0.95em;
+        opacity: 0.8;
+    }
+
+    .license {
+        background: var(--light);
+        padding: 60px 40px;
+        border-radius: 12px;
+    }
+
+    .license-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .license-section {
+        background: white;
+        padding: 35px;
+        border-radius: 8px;
+    }
+
+    .license-section h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 1.5em;
+    }
+
+    .license-section p {
+        line-height: 1.8;
+        color: var(--text-light);
+    }
+
+    .about-cta {
+        text-align: center;
+        padding: 80px 40px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        border-radius: 12px;
+    }
+
+    .about-cta h2 {
+        font-size: 3em;
+        margin-bottom: 15px;
+        color: white;
+        border: none;
+    }
+
+    .about-cta p {
+        font-size: 1.3em;
+        margin-bottom: 35px;
+        opacity: 0.95;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+        .comparison {
+            grid-template-columns: 1fr;
+        }
+        
+        .cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    </style>

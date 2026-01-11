@@ -1,0 +1,49 @@
+{
+  "site": {
+    "name": "Genes Framework",
+    "tagline": "Lightweight PHP & JavaScript Framework",
+    "description": "Zero dependencies, multi-tenant ready, works with or without a database",
+    "version": "2.0",
+    "github_url": "https://github.com/devrimvardar/genes",
+    "repo_name": "devrimvardar/genes"
+  },
+  "features": [
+    {
+      "icon": "⚡",
+      "title": "Zero Dependencies",
+      "description": "No Composer, npm, or build tools required. Just copy files and start coding."
+    },
+    {
+      "icon": "🏢",
+      "title": "Multi-Tenant Ready",
+      "description": "Built-in clone-based isolation for SaaS platforms and multi-site applications."
+    },
+    {
+      "icon": "🗄️",
+      "title": "Database Agnostic",
+      "description": "Works with MySQL, SQLite, or no database at all. Your choice."
+    },
+    {
+      "icon": "🎯",
+      "title": "PHP 5.6+ Compatible",
+      "description": "Runs on both legacy and modern servers without modification."
+    },
+    {
+      "icon": "📦",
+      "title": "Single File Design",
+      "description": "genes.php (~6,400 lines), genes.js (~1,300 lines). That's it."
+    },
+    {
+      "icon": "🤖",
+      "title": "AI-Friendly",
+      "description": "Clear, readable, self-documenting code designed for humans and AI."
+    }
+  ],
+  "stats": {
+    "php_lines": "~6,400",
+    "js_lines": "~1,300",
+    "css_lines": "~1,700",
+    "tables": "5",
+    "dependencies": "0"
+  }
+}

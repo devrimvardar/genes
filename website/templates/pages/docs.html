@@ -1,0 +1,406 @@
+    <div class="docs-container">
+        <div class="docs-hero">
+            <h1>Documentation</h1>
+            <p>Everything you need to build with Genes Framework</p>
+        </div>
+
+        <!-- Main Documentation Links -->
+        <section class="docs-section">
+            <h2>📚 Core Documentation</h2>
+            <div class="docs-grid">
+                <div class="doc-card">
+                    <h3><a href="../docs/INDEX.md">📖 Documentation Index</a></h3>
+                    <p>Complete overview of all available documentation</p>
+                </div>
+                <div class="doc-card">
+                    <h3><a href="../docs/QUICKSTART.md">⚡ Quick Start Guide</a></h3>
+                    <p>Get up and running in 5 minutes</p>
+                </div>
+                <div class="doc-card">
+                    <h3><a href="../docs/ARCHITECTURE.md">🏗️ Architecture</a></h3>
+                    <p>Understand the framework design and patterns</p>
+                </div>
+                <div class="doc-card">
+                    <h3><a href="../docs/MULTI-TENANCY.md">🏢 Multi-Tenancy</a></h3>
+                    <p>Build SaaS applications with clone-based isolation</p>
+                </div>
+                <div class="doc-card">
+                    <h3><a href="../DATABASE-SCHEMA.md">🗄️ Database Schema</a></h3>
+                    <p>5-table schema design and usage</p>
+                </div>
+                <div class="doc-card">
+                    <h3><a href="../README.md">📋 README</a></h3>
+                    <p>Project overview and getting started</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="docs-section quick-ref">
+            <h2>⚡ Quick Reference</h2>
+            
+            <div class="ref-block">
+                <h3>Core Concept</h3>
+                <p>Genes uses a simple function-based API through the <code>g::run()</code> method:</p>
+                <pre><code>// Connect to database
+g::run("db.connect", array("driver" => "mysql", "database" => "mydb"));
+
+// Create schema (5 tables: clones, persons, items, labels, events)
+g::run("db.createSchema");
+
+// Set current clone for multi-tenant isolation
+g::run("db.setClone", "abc123");
+
+// CRUD operations
+g::run("db.createItem", array("name" => "Example Item"));
+$items = g::run("db.getItems");
+g::run("db.updateItem", array("id" => 1, "name" => "Updated"));
+g::run("db.deleteItem", 1);</code></pre>
+            </div>
+
+            <div class="ref-block">
+                <h3>Database Schema (5 Tables)</h3>
+                <pre><code>clones        - Master tenant table (id, hash, data)
+  └─ persons  - Users/contacts (id, clone_id, data)
+  └─ items    - Generic entities (id, clone_id, data)
+  └─ labels   - Categories/tags (id, clone_id, data)
+  └─ events   - Activity log (id, clone_id, data)</code></pre>
+            </div>
+
+            <div class="ref-block">
+                <h3>No Database? No Problem!</h3>
+                <p>Use config.json for data storage or HTML partials for static sites:</p>
+                <pre><code>// Load configuration
+$config = json_decode(file_get_contents("config.json"), true);
+
+// Load HTML partial with variable substitution
+function loadPartial($file, $vars = array()) {
+    $content = file_get_contents($file);
+    foreach ($vars as $key => $value) {
+        $content = str_replace("{{" . $key . "}}", $value, $content);
+    }
+    return $content;
+}</code></pre>
+            </div>
+
+            <div class="ref-block">
+                <h3>Multi-Tenant Isolation</h3>
+                <pre><code>// Set current clone (tenant)
+g::run("db.setClone", "customer-abc");
+
+// All queries are now automatically filtered to this clone
+$items = g::run("db.getItems"); // Only returns items for customer-abc
+
+// Switch to different clone
+g::run("db.setClone", "customer-xyz");
+$items = g::run("db.getItems"); // Returns items for customer-xyz</code></pre>
+            </div>
+        </section>
+
+        <!-- Common Tasks -->
+        <section class="docs-section">
+            <h2>🔧 Common Tasks</h2>
+            <div class="tasks-grid">
+                <div class="task-card">
+                    <h3>Connect to MySQL</h3>
+                    <pre><code>g::run("db.connect", array(
+    "driver" => "mysql",
+    "host" => "localhost",
+    "database" => "mydb",
+    "username" => "user",
+    "password" => "pass"
+));</code></pre>
+                </div>
+
+                <div class="task-card">
+                    <h3>Connect to SQLite</h3>
+                    <pre><code>g::run("db.connect", array(
+    "driver" => "sqlite",
+    "database" => "data/app.db"
+));</code></pre>
+                </div>
+
+                <div class="task-card">
+                    <h3>Create a Clone</h3>
+                    <pre><code>$clone = g::run("db.createClone", array(
+    "hash" => "unique-id",
+    "name" => "Client Name"
+));</code></pre>
+                </div>
+
+                <div class="task-card">
+                    <h3>Create an Item</h3>
+                    <pre><code>g::run("db.setClone", "unique-id");
+$item = g::run("db.createItem", array(
+    "name" => "My Item",
+    "description" => "Details"
+));</code></pre>
+                </div>
+
+                <div class="task-card">
+                    <h3>Query Items</h3>
+                    <pre><code>$items = g::run("db.getItems", array(
+    "where" => "name LIKE '%search%'",
+    "orderby" => "created DESC",
+    "limit" => 10
+));</code></pre>
+                </div>
+
+                <div class="task-card">
+                    <h3>Build REST API</h3>
+                    <pre><code>$method = $_SERVER['REQUEST_METHOD'];
+if ($method === 'GET') {
+    echo json_encode(g::run("db.getItems"));
+} elseif ($method === 'POST') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    echo json_encode(g::run("db.createItem", $data));
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Requirements -->
+        <section class="docs-section requirements">
+            <h2>💻 System Requirements</h2>
+            <ul>
+                <li><strong>PHP:</strong> 5.6 or higher (tested up to PHP 8.x)</li>
+                <li><strong>Database:</strong> MySQL 5.5+ or SQLite 3.x (or none!)</li>
+                <li><strong>Server:</strong> Apache, Nginx, or any PHP-capable web server</li>
+                <li><strong>Dependencies:</strong> None! No Composer, npm, or build tools required</li>
+            </ul>
+        </section>
+
+        <!-- Support -->
+        <section class="docs-section support">
+            <h2>💬 Need Help?</h2>
+            <div class="support-grid">
+                <div class="support-card">
+                    <h3>📖 Read the Docs</h3>
+                    <p>Start with the <a href="../docs/QUICKSTART.md">Quick Start Guide</a></p>
+                </div>
+                <div class="support-card">
+                    <h3>💡 See Examples</h3>
+                    <p>Check out our <a href="?page=examples">working examples</a></p>
+                </div>
+                <div class="support-card">
+                    <h3>🐛 Report Issues</h3>
+                    <p>Found a bug? <a href="{{github_url}}/issues" target="_blank">Open an issue</a></p>
+                </div>
+                <div class="support-card">
+                    <h3>💻 View Source</h3>
+                    <p>Browse the <a href="{{github_url}}" target="_blank">GitHub repository</a></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <style>
+    .docs-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .docs-hero {
+        text-align: center;
+        padding: 60px 0 40px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        border-radius: 12px;
+        margin-bottom: 60px;
+    }
+
+    .docs-hero h1 {
+        font-size: 3.5em;
+        margin-bottom: 10px;
+    }
+
+    .docs-hero p {
+        font-size: 1.4em;
+        opacity: 0.95;
+    }
+
+    .docs-section {
+        margin-bottom: 60px;
+    }
+
+    .docs-section h2 {
+        font-size: 2.5em;
+        margin-bottom: 30px;
+        color: var(--dark);
+        border-bottom: 3px solid var(--primary);
+        padding-bottom: 10px;
+    }
+
+    .docs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .doc-card {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .doc-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+    }
+
+    .doc-card h3 {
+        margin-bottom: 10px;
+    }
+
+    .doc-card h3 a {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 1.3em;
+    }
+
+    .doc-card h3 a:hover {
+        text-decoration: underline;
+    }
+
+    .doc-card p {
+        color: var(--text-light);
+        line-height: 1.6;
+    }
+
+    .quick-ref {
+        background: var(--light);
+        padding: 40px;
+        border-radius: 12px;
+    }
+
+    .ref-block {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .ref-block h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 1.5em;
+    }
+
+    .ref-block p {
+        margin-bottom: 15px;
+        line-height: 1.7;
+    }
+
+    .ref-block code {
+        background: var(--light);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        color: var(--primary);
+    }
+
+    .ref-block pre {
+        background: var(--dark);
+        color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin-top: 10px;
+    }
+
+    .ref-block pre code {
+        background: none;
+        color: #fff;
+        padding: 0;
+    }
+
+    .tasks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 25px;
+    }
+
+    .task-card {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .task-card h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 1.2em;
+    }
+
+    .task-card pre {
+        background: var(--light);
+        padding: 15px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 0.9em;
+    }
+
+    .task-card code {
+        font-family: 'Courier New', monospace;
+        color: var(--text);
+    }
+
+    .requirements {
+        background: var(--light);
+        padding: 40px;
+        border-radius: 12px;
+    }
+
+    .requirements ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .requirements li {
+        padding: 15px;
+        margin-bottom: 10px;
+        background: white;
+        border-radius: 6px;
+        font-size: 1.1em;
+    }
+
+    .requirements strong {
+        color: var(--primary);
+    }
+
+    .support-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+    }
+
+    .support-card {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    .support-card h3 {
+        color: var(--primary);
+        margin-bottom: 10px;
+        font-size: 1.3em;
+    }
+
+    .support-card a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .support-card a:hover {
+        text-decoration: underline;
+    }
+    </style>

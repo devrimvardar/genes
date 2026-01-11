@@ -1,0 +1,178 @@
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Genes Framework</h1>
+                <p class="hero-tagline">Lightweight PHP & JavaScript Framework</p>
+                <p class="hero-description">
+                    Zero dependencies • Multi-tenant ready • Works with or without a database<br>
+                    PHP 5.6+ • Single-file design • AI-friendly code
+                </p>
+                <div class="hero-buttons">
+                    <a href="?page=download" class="btn btn-primary">Get Started</a>
+                    <a href="{{github_url}}" target="_blank" class="btn btn-secondary">View on GitHub</a>
+                </div>
+                <div class="hero-code">
+                    <pre><code>// Install (no package manager needed!)
+git clone https://github.com/devrimvardar/genes.git
+
+// Use
+require_once 'genes.php';
+g::run("db.connect", array("driver" => "sqlite", "database" => "data/app.db"));
+g::run("db.createSchema");</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Genes?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Zero Dependencies</h3>
+                    <p>No Composer, npm, or build tools required. Just copy files and start coding.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏢</div>
+                    <h3>Multi-Tenant Ready</h3>
+                    <p>Built-in clone-based isolation for SaaS platforms and multi-site applications.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗄️</div>
+                    <h3>Database Agnostic</h3>
+                    <p>Works with MySQL, SQLite, or no database at all. Your choice.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>PHP 5.6+ Compatible</h3>
+                    <p>Runs on both legacy and modern servers without modification.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Single File Design</h3>
+                    <p>genes.php (~6,400 lines), genes.js (~1,300 lines). That's it.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Friendly</h3>
+                    <p>Clear, readable, self-documenting code designed for humans and AI.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section class="quickstart">
+        <div class="container">
+            <h2 class="section-title">Quick Start</h2>
+            <div class="quickstart-grid">
+                <div class="quickstart-step">
+                    <div class="step-number">1</div>
+                    <h3>Download</h3>
+                    <p>Clone or download the repository</p>
+                    <pre><code>git clone https://github.com/devrimvardar/genes.git</code></pre>
+                </div>
+                <div class="quickstart-step">
+                    <div class="step-number">2</div>
+                    <h3>Copy Files</h3>
+                    <p>Add to your project</p>
+                    <pre><code>cp genes.php your-project/
+cp genes.js your-project/
+cp genes.css your-project/</code></pre>
+                </div>
+                <div class="quickstart-step">
+                    <div class="step-number">3</div>
+                    <h3>Start Coding</h3>
+                    <p>Create your first page</p>
+                    <pre><code>require_once 'genes.php';
+echo "Hello Genes!";</code></pre>
+                </div>
+            </div>
+            <div class="quickstart-cta">
+                <a href="?page=download" class="btn btn-primary">Full Getting Started Guide →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section class="examples-preview">
+        <div class="container">
+            <h2 class="section-title">See It In Action</h2>
+            <p class="section-subtitle">Working examples demonstrating real-world usage</p>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h3>📊 Database CRUD</h3>
+                    <p>Complete CRUD operations with both MySQL and SQLite</p>
+                    <a href="?page=examples#crud" class="example-link">View Example →</a>
+                </div>
+                <div class="example-card">
+                    <h3>📝 Multi-Tenant Blog</h3>
+                    <p>Clone-based isolation with automatic filtering</p>
+                    <a href="?page=examples#blog" class="example-link">View Example →</a>
+                </div>
+                <div class="example-card">
+                    <h3>🔌 REST API</h3>
+                    <p>RESTful endpoints with multi-tenant support</p>
+                    <a href="?page=examples#api" class="example-link">View Example →</a>
+                </div>
+                <div class="example-card">
+                    <h3>📄 Config-Based Site</h3>
+                    <p>No database - uses config.json for content</p>
+                    <a href="?page=examples#config" class="example-link">View Example →</a>
+                </div>
+                <div class="example-card">
+                    <h3>🎨 HTML Partials</h3>
+                    <p>Static templates with variable substitution</p>
+                    <a href="?page=examples#partials" class="example-link">View Example →</a>
+                </div>
+                <div class="example-card">
+                    <h3>🌐 This Website!</h3>
+                    <p>Built entirely with Genes Framework</p>
+                    <a href="{{github_url}}/tree/main/website" class="example-link" target="_blank">View Source →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">~6,400</div>
+                    <div class="stat-label">PHP Lines</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">~1,300</div>
+                    <div class="stat-label">JS Lines</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Database Tables</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Dependencies</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">PHP 5.6+</div>
+                    <div class="stat-label">Compatibility</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Build Something Amazing?</h2>
+            <p>Get started with Genes Framework today - no dependencies, no build tools, just code.</p>
+            <div class="cta-buttons">
+                <a href="?page=download" class="btn btn-primary btn-large">Get Started</a>
+                <a href="?page=docs" class="btn btn-secondary btn-large">Read Docs</a>
+            </div>
+        </div>
+    </section>

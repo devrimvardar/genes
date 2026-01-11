@@ -1,0 +1,483 @@
+    <div class="examples-container">
+        <div class="examples-hero">
+            <h1>Examples</h1>
+            <p>Real-world code showing Genes Framework in action</p>
+        </div>
+
+        <!-- Database Examples -->
+        <section class="example-section">
+            <h2>🗄️ Database Examples</h2>
+            <p class="section-intro">These examples demonstrate Genes with MySQL or SQLite databases</p>
+
+            <div id="crud" class="example-detail">
+                <div class="example-header">
+                    <h3>1. Database CRUD</h3>
+                    <a href="{{github_url}}/tree/main/examples/1-database-crud" target="_blank" class="view-source">View Source →</a>
+                </div>
+                <p class="example-description">
+                    Complete CRUD operations with both MySQL and SQLite. Demonstrates schema creation,
+                    connection management, and all basic database operations.
+                </p>
+                <div class="example-features">
+                    <span class="feature-tag">MySQL</span>
+                    <span class="feature-tag">SQLite</span>
+                    <span class="feature-tag">Schema</span>
+                    <span class="feature-tag">CRUD</span>
+                </div>
+                <div class="example-code">
+                    <h4>Key Concepts:</h4>
+                    <pre><code>// Connect to database
+g::run("db.connect", array("driver" => "sqlite", "database" => "data/app.db"));
+
+// Create 5-table schema
+g::run("db.createSchema");
+
+// CRUD operations
+g::run("db.createItem", array("name" => "Example"));
+$items = g::run("db.getItems");
+g::run("db.updateItem", array("id" => 1, "name" => "Updated"));
+g::run("db.deleteItem", 1);</code></pre>
+                </div>
+            </div>
+
+            <div id="blog" class="example-detail">
+                <div class="example-header">
+                    <h3>2. Multi-Tenant Blog</h3>
+                    <a href="{{github_url}}/tree/main/examples/2-blog-system" target="_blank" class="view-source">View Source →</a>
+                </div>
+                <p class="example-description">
+                    Blog platform with clone-based isolation. Each blog (clone) has its own posts, comments,
+                    and categories - all automatically filtered by clone_id.
+                </p>
+                <div class="example-features">
+                    <span class="feature-tag">Multi-Tenant</span>
+                    <span class="feature-tag">Clones</span>
+                    <span class="feature-tag">Blog</span>
+                    <span class="feature-tag">Isolation</span>
+                </div>
+                <div class="example-code">
+                    <h4>Key Concepts:</h4>
+                    <pre><code>// Create a blog (clone)
+$blog = g::run("db.createClone", array("hash" => "tech-blog", "name" => "Tech Blog"));
+
+// Set current blog
+g::run("db.setClone", "tech-blog");
+
+// All operations are now isolated to this blog
+g::run("db.createItem", array("title" => "My Post", "content" => "..."));
+$posts = g::run("db.getItems"); // Only returns tech-blog posts
+
+// Switch to different blog
+g::run("db.setClone", "personal-blog");
+$posts = g::run("db.getItems"); // Returns personal-blog posts</code></pre>
+                </div>
+            </div>
+
+            <div id="api" class="example-detail">
+                <div class="example-header">
+                    <h3>3. RESTful API</h3>
+                    <a href="{{github_url}}/tree/main/examples/3-rest-api" target="_blank" class="view-source">View Source →</a>
+                </div>
+                <p class="example-description">
+                    Full REST API with GET, POST, PUT, DELETE endpoints. Includes JSON responses,
+                    error handling, and multi-tenant support via API keys.
+                </p>
+                <div class="example-features">
+                    <span class="feature-tag">REST API</span>
+                    <span class="feature-tag">JSON</span>
+                    <span class="feature-tag">HTTP Methods</span>
+                    <span class="feature-tag">API Keys</span>
+                </div>
+                <div class="example-code">
+                    <h4>Key Concepts:</h4>
+                    <pre><code>// Route based on HTTP method
+$method = $_SERVER['REQUEST_METHOD'];
+
+if ($method === 'GET') {
+    // List all items
+    $items = g::run("db.getItems");
+    echo json_encode(array("success" => true, "data" => $items));
+    
+} elseif ($method === 'POST') {
+    // Create new item
+    $data = json_decode(file_get_contents('php://input'), true);
+    $item = g::run("db.createItem", $data);
+    echo json_encode(array("success" => true, "data" => $item));
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- No-Database Examples -->
+        <section class="example-section no-db">
+            <h2>📄 No-Database Examples</h2>
+            <p class="section-intro">Genes works great without a database too!</p>
+
+            <div id="config" class="example-detail">
+                <div class="example-header">
+                    <h3>4. Config-Based Data</h3>
+                    <a href="{{github_url}}/tree/main/examples/4-config-data" target="_blank" class="view-source">View Source →</a>
+                </div>
+                <p class="example-description">
+                    Use config.json as your data source instead of a database. Perfect for static sites,
+                    settings pages, or small applications.
+                </p>
+                <div class="example-features">
+                    <span class="feature-tag">No Database</span>
+                    <span class="feature-tag">JSON</span>
+                    <span class="feature-tag">Static Data</span>
+                    <span class="feature-tag">Simple</span>
+                </div>
+                <div class="example-code">
+                    <h4>Key Concepts:</h4>
+                    <pre><code>// Load configuration from JSON file
+$config = json_decode(file_get_contents("data/config.json"), true);
+
+// Use the data
+foreach ($config['features'] as $feature) {
+    echo "&lt;h3&gt;" . $feature['title'] . "&lt;/h3&gt;";
+    echo "&lt;p&gt;" . $feature['description'] . "&lt;/p&gt;";
+}
+
+// Access settings
+echo $config['site']['name']; // "My Website"
+echo $config['site']['version']; // "2.0"</code></pre>
+                </div>
+            </div>
+
+            <div id="partials" class="example-detail">
+                <div class="example-header">
+                    <h3>5. HTML Partials</h3>
+                    <a href="{{github_url}}/tree/main/examples/5-html-partials" target="_blank" class="view-source">View Source →</a>
+                </div>
+                <p class="example-description">
+                    Build static sites using HTML partial templates with variable substitution.
+                    No database, no build tools - just clean HTML composition.
+                </p>
+                <div class="example-features">
+                    <span class="feature-tag">Templates</span>
+                    <span class="feature-tag">Partials</span>
+                    <span class="feature-tag">Static Sites</span>
+                    <span class="feature-tag">Variables</span>
+                </div>
+                <div class="example-code">
+                    <h4>Key Concepts:</h4>
+                    <pre><code>// Load partial with variable substitution
+function loadPartial($filename, $vars = array()) {
+    $content = file_get_contents("templates/" . $filename);
+    foreach ($vars as $key => $value) {
+        $content = str_replace("{{" . $key . "}}", $value, $content);
+    }
+    return $content;
+}
+
+// Use partials
+echo loadPartial("header.html", array("title" => "Welcome"));
+echo loadPartial("content.html", array("name" => "John"));
+echo loadPartial("footer.html", array("year" => date("Y")));</code></pre>
+                </div>
+            </div>
+
+            <div id="website" class="example-detail highlight">
+                <div class="example-header">
+                    <h3>6. This Website!</h3>
+                    <a href="{{github_url}}/tree/main/website" target="_blank" class="view-source">View Full Source →</a>
+                </div>
+                <p class="example-description">
+                    The genes.one website you're viewing right now is built entirely with Genes Framework.
+                    It combines config.json data with HTML partials to create a complete, professional website.
+                </p>
+                <div class="example-features">
+                    <span class="feature-tag">Complete Site</span>
+                    <span class="feature-tag">Routing</span>
+                    <span class="feature-tag">Templates</span>
+                    <span class="feature-tag">Real-World</span>
+                </div>
+                <div class="example-code">
+                    <h4>Website Structure:</h4>
+                    <pre><code>website/
+  ├── index.php              # Router with renderPage()
+  ├── data/
+  │   └── config.json        # Site data (no database!)
+  ├── templates/
+  │   ├── layout/
+  │   │   ├── header.html    # &lt;head&gt;, meta tags
+  │   │   ├── nav.html       # Navigation menu
+  │   │   └── footer.html    # Footer links
+  │   └── pages/
+  │       ├── home.html      # Homepage content
+  │       ├── docs.html      # Documentation
+  │       └── examples.html  # This page!
+  └── assets/
+      └── css/
+          └── style.css      # Stylesheet</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Run Examples -->
+        <section class="example-section run-examples">
+            <h2>🚀 Running the Examples</h2>
+            <div class="run-steps">
+                <div class="run-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Clone Repository</h3>
+                        <pre><code>git clone https://github.com/devrimvardar/genes.git
+cd genes</code></pre>
+                    </div>
+                </div>
+                <div class="run-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Navigate to Example</h3>
+                        <pre><code>cd examples/1-database-crud
+# or any other example folder</code></pre>
+                    </div>
+                </div>
+                <div class="run-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Start PHP Server</h3>
+                        <pre><code>php -S localhost:8000</code></pre>
+                    </div>
+                </div>
+                <div class="run-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Open in Browser</h3>
+                        <pre><code>http://localhost:8000</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download CTA -->
+        <section class="example-cta">
+            <h2>Ready to Start Building?</h2>
+            <p>Download Genes and start with any example that fits your needs</p>
+            <a href="?page=download" class="btn btn-primary btn-large">Get Started</a>
+        </section>
+    </div>
+
+    <style>
+    .examples-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .examples-hero {
+        text-align: center;
+        padding: 60px 0 40px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        border-radius: 12px;
+        margin-bottom: 60px;
+    }
+
+    .examples-hero h1 {
+        font-size: 3.5em;
+        margin-bottom: 10px;
+    }
+
+    .examples-hero p {
+        font-size: 1.4em;
+        opacity: 0.95;
+    }
+
+    .example-section {
+        margin-bottom: 80px;
+    }
+
+    .example-section h2 {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+        color: var(--dark);
+        border-bottom: 3px solid var(--primary);
+        padding-bottom: 10px;
+    }
+
+    .section-intro {
+        font-size: 1.2em;
+        color: var(--text-light);
+        margin-bottom: 40px;
+    }
+
+    .example-detail {
+        background: white;
+        padding: 40px;
+        margin-bottom: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .example-detail.highlight {
+        border: 3px solid var(--primary);
+        background: linear-gradient(to bottom, #fff 0%, #f8f9ff 100%);
+    }
+
+    .example-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .example-header h3 {
+        font-size: 2em;
+        color: var(--primary);
+        margin: 0;
+    }
+
+    .view-source {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1em;
+    }
+
+    .view-source:hover {
+        text-decoration: underline;
+    }
+
+    .example-description {
+        font-size: 1.1em;
+        line-height: 1.8;
+        color: var(--text);
+        margin-bottom: 20px;
+    }
+
+    .example-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 25px;
+    }
+
+    .feature-tag {
+        background: var(--primary);
+        color: white;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        font-weight: 600;
+    }
+
+    .example-code {
+        background: var(--light);
+        padding: 25px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+
+    .example-code h4 {
+        color: var(--dark);
+        margin-bottom: 15px;
+        font-size: 1.2em;
+    }
+
+    .example-code pre {
+        background: var(--dark);
+        color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 0;
+    }
+
+    .example-code code {
+        font-family: 'Courier New', monospace;
+        font-size: 0.95em;
+        line-height: 1.6;
+    }
+
+    .no-db {
+        background: var(--light);
+        padding: 60px 40px;
+        border-radius: 12px;
+    }
+
+    .run-examples {
+        background: white;
+        padding: 60px 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .run-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .run-step {
+        display: flex;
+        gap: 20px;
+    }
+
+    .step-number {
+        width: 50px;
+        height: 50px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5em;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+    .step-content h3 {
+        color: var(--dark);
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    .step-content pre {
+        background: var(--light);
+        padding: 12px;
+        border-radius: 6px;
+        overflow-x: auto;
+    }
+
+    .step-content code {
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+        color: var(--primary);
+    }
+
+    .example-cta {
+        text-align: center;
+        padding: 80px 40px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        border-radius: 12px;
+    }
+
+    .example-cta h2 {
+        font-size: 3em;
+        margin-bottom: 15px;
+    }
+
+    .example-cta p {
+        font-size: 1.3em;
+        margin-bottom: 30px;
+        opacity: 0.95;
+    }
+
+    @media (max-width: 768px) {
+        .example-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .run-steps {
+            grid-template-columns: 1fr;
+        }
+    }
+    </style>

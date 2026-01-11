@@ -1,0 +1,667 @@
+    <div class="download-container">
+        <div class="download-hero">
+            <h1>Download & Install</h1>
+            <p>Get started with Genes Framework in minutes</p>
+        </div>
+
+        <!-- Quick Download -->
+        <section class="quick-download">
+            <h2>Quick Download</h2>
+            <div class="download-options">
+                <div class="download-option">
+                    <div class="download-icon">📦</div>
+                    <h3>Clone Repository</h3>
+                    <p>Get the complete source with examples and docs</p>
+                    <pre><code>git clone https://github.com/devrimvardar/genes.git</code></pre>
+                    <a href="{{github_url}}" target="_blank" class="btn btn-primary">View on GitHub →</a>
+                </div>
+                <div class="download-option">
+                    <div class="download-icon">⬇️</div>
+                    <h3>Download ZIP</h3>
+                    <p>Direct download of the latest release</p>
+                    <div class="download-size">~7,700 lines • No dependencies</div>
+                    <a href="{{github_url}}/archive/refs/heads/main.zip" class="btn btn-secondary">Download ZIP →</a>
+                </div>
+                <div class="download-option">
+                    <div class="download-icon">📄</div>
+                    <h3>Just the Files</h3>
+                    <p>Copy only what you need to your project</p>
+                    <ul class="file-list">
+                        <li><a href="{{github_url}}/blob/main/genes.php" target="_blank">genes.php</a> (~6,400 lines)</li>
+                        <li><a href="{{github_url}}/blob/main/genes.js" target="_blank">genes.js</a> (~1,300 lines)</li>
+                        <li><a href="{{github_url}}/blob/main/genes.css" target="_blank">genes.css</a> (optional)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Steps -->
+        <section class="installation">
+            <h2>Installation Guide</h2>
+            
+            <div class="install-tabs">
+                <div class="install-tab active" data-tab="new">
+                    <h3>New Project</h3>
+                </div>
+                <div class="install-tab" data-tab="existing">
+                    <h3>Add to Existing Project</h3>
+                </div>
+            </div>
+
+            <div class="install-content">
+                <div class="install-panel active" id="new">
+                    <div class="install-step">
+                        <div class="step-num">1</div>
+                        <div class="step-info">
+                            <h4>Clone the Repository</h4>
+                            <pre><code>git clone https://github.com/devrimvardar/genes.git
+cd genes</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="install-step">
+                        <div class="step-num">2</div>
+                        <div class="step-info">
+                            <h4>Choose Your Starting Point</h4>
+                            <p>Copy one of the examples as your starting point:</p>
+                            <pre><code># For database project
+cp -r examples/1-database-crud my-project
+
+# For static site
+cp -r examples/5-html-partials my-project
+
+# Or start from scratch with just the core files
+mkdir my-project
+cp genes.php genes.js genes.css my-project/</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="install-step">
+                        <div class="step-num">3</div>
+                        <div class="step-info">
+                            <h4>Start Development Server</h4>
+                            <pre><code>cd my-project
+php -S localhost:8000</code></pre>
+                            <p>Open <code>http://localhost:8000</code> in your browser</p>
+                        </div>
+                    </div>
+
+                    <div class="install-step">
+                        <div class="step-num">4</div>
+                        <div class="step-info">
+                            <h4>Start Coding!</h4>
+                            <p>Create <code>index.php</code>:</p>
+                            <pre><code>&lt;?php
+require_once 'genes.php';
+
+// Connect to database (optional)
+g::run("db.connect", array(
+    "driver" => "sqlite",
+    "database" => "data/app.db"
+));
+
+// Create schema
+g::run("db.createSchema");
+
+// Your code here
+echo "Hello Genes!";
+?&gt;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="install-panel" id="existing">
+                    <div class="install-step">
+                        <div class="step-num">1</div>
+                        <div class="step-info">
+                            <h4>Copy Core Files</h4>
+                            <pre><code># Download and copy to your project
+curl -O https://raw.githubusercontent.com/devrimvardar/genes/main/genes.php
+curl -O https://raw.githubusercontent.com/devrimvardar/genes/main/genes.js
+curl -O https://raw.githubusercontent.com/devrimvardar/genes/main/genes.css</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="install-step">
+                        <div class="step-num">2</div>
+                        <div class="step-info">
+                            <h4>Include in Your Project</h4>
+                            <pre><code>&lt;?php
+// Add to your existing PHP files
+require_once 'genes.php';
+
+// Use Genes features alongside your existing code
+g::run("db.connect", $your_db_config);
+?&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="install-step">
+                        <div class="step-num">3</div>
+                        <div class="step-info">
+                            <h4>Configure Database (Optional)</h4>
+                            <p>If using database features:</p>
+                            <pre><code>// Use existing MySQL connection
+g::run("db.connect", array(
+    "driver" => "mysql",
+    "host" => "localhost",
+    "database" => "your_database",
+    "username" => "your_user",
+    "password" => "your_password"
+));
+
+// Or use SQLite
+g::run("db.connect", array(
+    "driver" => "sqlite",
+    "database" => "path/to/database.db"
+));</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Requirements -->
+        <section class="requirements">
+            <h2>System Requirements</h2>
+            <div class="req-grid">
+                <div class="req-item">
+                    <h3>✅ PHP Version</h3>
+                    <p><strong>PHP 5.6 or higher</strong></p>
+                    <p>Tested and working on PHP 5.6, 7.x, and 8.x</p>
+                </div>
+                <div class="req-item">
+                    <h3>✅ Database (Optional)</h3>
+                    <p><strong>MySQL 5.5+ or SQLite 3.x</strong></p>
+                    <p>Or no database at all - your choice!</p>
+                </div>
+                <div class="req-item">
+                    <h3>✅ Web Server</h3>
+                    <p><strong>Any PHP-capable server</strong></p>
+                    <p>Apache, Nginx, PHP built-in server</p>
+                </div>
+                <div class="req-item">
+                    <h3>✅ Dependencies</h3>
+                    <p><strong>NONE</strong></p>
+                    <p>No Composer, npm, or build tools required</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Code -->
+        <section class="quickstart-code">
+            <h2>Quick Start Examples</h2>
+
+            <div class="code-examples">
+                <div class="code-example">
+                    <h3>🗄️ With Database (SQLite)</h3>
+                    <pre><code>&lt;?php
+require_once 'genes.php';
+
+// Connect
+g::run("db.connect", array(
+    "driver" => "sqlite",
+    "database" => "data/app.db"
+));
+
+// Create schema
+g::run("db.createSchema");
+
+// Create item
+g::run("db.createItem", array(
+    "name" => "My First Item",
+    "description" => "Hello Genes!"
+));
+
+// Get all items
+$items = g::run("db.getItems");
+print_r($items);
+?&gt;</code></pre>
+                </div>
+
+                <div class="code-example">
+                    <h3>📄 Without Database (Config)</h3>
+                    <pre><code>&lt;?php
+require_once 'genes.php';
+
+// Load config data
+$config = json_decode(file_get_contents("config.json"), true);
+
+// Use the data
+echo "&lt;h1&gt;" . $config['site']['name'] . "&lt;/h1&gt;";
+
+foreach ($config['pages'] as $page) {
+    echo "&lt;a href='" . $page['url'] . "'&gt;";
+    echo $page['title'] . "&lt;/a&gt;";
+}
+?&gt;</code></pre>
+                </div>
+
+                <div class="code-example">
+                    <h3>🎨 With HTML Partials</h3>
+                    <pre><code>&lt;?php
+require_once 'genes.php';
+
+// Helper function
+function loadPartial($file, $vars = array()) {
+    $html = file_get_contents("templates/" . $file);
+    foreach ($vars as $key => $value) {
+        $html = str_replace("{{" . $key . "}}", $value, $html);
+    }
+    return $html;
+}
+
+// Build page
+echo loadPartial("header.html", array("title" => "Welcome"));
+echo loadPartial("content.html", array("name" => "World"));
+echo loadPartial("footer.html", array("year" => date("Y")));
+?&gt;</code></pre>
+                </div>
+
+                <div class="code-example">
+                    <h3>🏢 Multi-Tenant App</h3>
+                    <pre><code>&lt;?php
+require_once 'genes.php';
+
+g::run("db.connect", array("driver" => "sqlite", "database" => "app.db"));
+g::run("db.createSchema");
+
+// Create tenant (clone)
+g::run("db.createClone", array(
+    "hash" => "client-abc",
+    "name" => "Client ABC Corp"
+));
+
+// Set current tenant
+g::run("db.setClone", "client-abc");
+
+// All operations isolated to this tenant
+g::run("db.createItem", array("name" => "ABC Item"));
+$items = g::run("db.getItems"); // Only client-abc items
+?&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Steps -->
+        <section class="next-steps">
+            <h2>What's Next?</h2>
+            <div class="next-grid">
+                <div class="next-card">
+                    <h3>📖 Read the Docs</h3>
+                    <p>Learn about architecture, multi-tenancy, and advanced features</p>
+                    <a href="?page=docs" class="next-link">View Documentation →</a>
+                </div>
+                <div class="next-card">
+                    <h3>💡 Explore Examples</h3>
+                    <p>See real-world implementations with complete source code</p>
+                    <a href="?page=examples" class="next-link">Browse Examples →</a>
+                </div>
+                <div class="next-card">
+                    <h3>💬 Get Help</h3>
+                    <p>Questions? Check the docs or open an issue on GitHub</p>
+                    <a href="{{github_url}}/issues" target="_blank" class="next-link">Ask a Question →</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <style>
+    .download-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .download-hero {
+        text-align: center;
+        padding: 60px 0 40px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        border-radius: 12px;
+        margin-bottom: 60px;
+    }
+
+    .download-hero h1 {
+        font-size: 3.5em;
+        margin-bottom: 10px;
+    }
+
+    .download-hero p {
+        font-size: 1.4em;
+        opacity: 0.95;
+    }
+
+    section {
+        margin-bottom: 80px;
+    }
+
+    section h2 {
+        font-size: 2.5em;
+        margin-bottom: 40px;
+        color: var(--dark);
+        text-align: center;
+    }
+
+    .quick-download {
+        background: var(--light);
+        padding: 60px 40px;
+        border-radius: 12px;
+    }
+
+    .download-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .download-option {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .download-icon {
+        font-size: 4em;
+        margin-bottom: 20px;
+    }
+
+    .download-option h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 1.8em;
+    }
+
+    .download-option p {
+        color: var(--text-light);
+        margin-bottom: 20px;
+        line-height: 1.7;
+    }
+
+    .download-option pre {
+        background: var(--light);
+        padding: 15px;
+        border-radius: 8px;
+        margin: 20px 0;
+        text-align: left;
+    }
+
+    .download-option code {
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+        color: var(--primary);
+    }
+
+    .download-size {
+        font-size: 0.9em;
+        color: var(--text-light);
+        margin: 15px 0;
+    }
+
+    .file-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+        text-align: left;
+    }
+
+    .file-list li {
+        padding: 10px;
+        margin-bottom: 8px;
+        background: var(--light);
+        border-radius: 4px;
+    }
+
+    .file-list a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .file-list a:hover {
+        text-decoration: underline;
+    }
+
+    .installation {
+        background: white;
+        padding: 60px 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .install-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 40px;
+        justify-content: center;
+    }
+
+    .install-tab {
+        padding: 15px 30px;
+        background: var(--light);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .install-tab.active {
+        background: var(--primary);
+        color: white;
+    }
+
+    .install-tab h3 {
+        margin: 0;
+        font-size: 1.2em;
+    }
+
+    .install-panel {
+        display: none;
+    }
+
+    .install-panel.active {
+        display: block;
+    }
+
+    .install-step {
+        display: flex;
+        gap: 25px;
+        margin-bottom: 40px;
+        align-items: flex-start;
+    }
+
+    .step-num {
+        width: 60px;
+        height: 60px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8em;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+    .step-info {
+        flex: 1;
+    }
+
+    .step-info h4 {
+        color: var(--dark);
+        margin-bottom: 15px;
+        font-size: 1.5em;
+    }
+
+    .step-info p {
+        color: var(--text-light);
+        margin-bottom: 15px;
+        line-height: 1.7;
+    }
+
+    .step-info pre {
+        background: var(--dark);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 15px 0;
+    }
+
+    .step-info code {
+        font-family: 'Courier New', monospace;
+        font-size: 0.95em;
+        line-height: 1.6;
+    }
+
+    .step-info p code {
+        background: var(--light);
+        color: var(--primary);
+        padding: 2px 6px;
+        border-radius: 3px;
+    }
+
+    .requirements {
+        background: var(--light);
+        padding: 60px 40px;
+        border-radius: 12px;
+    }
+
+    .req-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+
+    .req-item {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+    }
+
+    .req-item h3 {
+        color: var(--primary);
+        margin-bottom: 10px;
+        font-size: 1.3em;
+    }
+
+    .req-item p {
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+
+    .req-item strong {
+        color: var(--dark);
+    }
+
+    .quickstart-code {
+        background: white;
+        padding: 60px 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .code-examples {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 30px;
+    }
+
+    .code-example {
+        background: var(--light);
+        padding: 30px;
+        border-radius: 8px;
+    }
+
+    .code-example h3 {
+        color: var(--primary);
+        margin-bottom: 20px;
+        font-size: 1.4em;
+    }
+
+    .code-example pre {
+        background: var(--dark);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 0;
+    }
+
+    .code-example code {
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+        line-height: 1.6;
+    }
+
+    .next-steps {
+        background: var(--light);
+        padding: 60px 40px;
+        border-radius: 12px;
+    }
+
+    .next-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .next-card {
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .next-card h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 1.5em;
+    }
+
+    .next-card p {
+        color: var(--text-light);
+        margin-bottom: 20px;
+        line-height: 1.7;
+    }
+
+    .next-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1em;
+    }
+
+    .next-link:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .install-step {
+            flex-direction: column;
+        }
+        
+        .code-examples {
+            grid-template-columns: 1fr;
+        }
+    }
+    </style>
+
+    <script>
+    // Tab switching
+    document.querySelectorAll('.install-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-tab');
+            
+            // Update tabs
+            document.querySelectorAll('.install-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update panels
+            document.querySelectorAll('.install-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+    </script>
