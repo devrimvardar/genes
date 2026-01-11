@@ -1,0 +1,96 @@
+{
+    "clone": {
+        "name": "My Clone",
+        "domain": "localhost",
+        "type": "platform",
+        "state": "active",
+        "settings": {
+            "theme": "default",
+            "features": []
+        }
+    },
+    "urls": {
+        "cdn": "https://cdn.genes.one/"
+    },
+    "settings": {
+        "debug": false,
+        "timezone": "UTC",
+        "language": "en",
+        "date_format": "Y-m-d H:i:s.u",
+        "log_level": 1,
+        "session_name": "genes_session",
+        "environment": "development"
+    },
+    "application": {
+        "name": "Genes App",
+        "version": "1.0.0",
+        "description": "Built with Genes Framework"
+    },
+    "meta": {
+        "title": "Genes App",
+        "description": "Built with Genes Framework",
+        "keywords": "",
+        "og_image": "ui/img/share.jpg"
+    },
+    "database": {
+        "enabled": false,
+        "type": "mysql",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "name": "",
+        "user": "",
+        "password": "",
+        "charset": "utf8mb4"
+    },
+    "security": {
+        "salt": "UskeWidF6qNv7UpoK8rPdT9bUygoPDqysEOSmUCbl2sOTRG6KRt2MxWfXzyDAb2o",
+        "secret": "pI4DIkXPADAq6wDMK4YveudAUWzSeqbxx3QxfWdyyhckk7g4y2saRKszdGTD97Ob"
+    },
+    "admin": {
+        "name": "Admin User",
+        "alias": "admin",
+        "email": "admin@localhost",
+        "password": "admin123",
+        "type": "admin",
+        "state": "active"
+    },
+    "seed": {
+        "labels": []
+    },
+    "setup": {
+        "completed": false
+    },
+    "views": {
+        "Index": {
+            "function": "clone.Index",
+            "template": "index",
+            "urls": {
+                "en": "index"
+            }
+        },
+        "Admin": {
+            "function": "clone.Admin",
+            "template": "admin",
+            "urls": {
+                "en": "admin"
+            }
+        }
+    },
+    "bits": {
+        "site_name": {
+            "en": "My Site"
+        }
+    },
+    "env": {
+        "https_localhost_dv-public_genes_examples_2-database-crud": {
+            "base_url": "https://localhost/dv-public/genes/examples/2-database-crud/",
+            "paths": {
+                "data": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\2-database-crud\\data\\",
+                "cache": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\2-database-crud\\cache\\",
+                "ui": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\2-database-crud\\ui\\",
+                "mods": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\2-database-crud\\mods\\",
+                "uploads": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\2-database-crud\\uploads\\"
+            }
+        }
+    }
+}

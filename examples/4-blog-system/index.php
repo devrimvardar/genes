@@ -163,7 +163,7 @@ foreach ($posts as &$post) {
                     "loggedout" => "✓ You have been logged out.",
                     "posted" => "✓ Post published successfully!"
                 );
-                echo $messages[$_GET["message"]] ?? "Success!";
+                echo isset($messages[$_GET["message"]]) ? $messages[$_GET["message"]] : "Success!";
                 ?>
             </div>
         <?php endif; ?>

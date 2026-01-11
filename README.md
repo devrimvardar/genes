@@ -179,17 +179,21 @@ g.api.create("persons", data, cb)  // POST /api/persons
 
 ## 🗄️ Database Schema
 
-Genes uses a universal 5-table schema that adapts to most applications:
+Genes uses a **multi-tenant 5-table schema** for maximum flexibility:
 
 | Table | Purpose | Example Usage |
 |-------|---------|---------------|
-| **persons** | Users, accounts, profiles | Users, admins, moderators |
-| **clones** | User-generated content | Posts, comments, shares |
-| **links** | Relationships between entities | Follows, likes, votes |
-| **nodes** | Static content | Pages, categories, tags |
-| **events** | Audit log, analytics | Logins, views, actions |
+| **clones** | Projects/instances (multi-tenancy) | Blog, shop, platform |
+| **persons** | Users, accounts (per clone) | Users, admins, authors |
+| **items** | Content (per clone) | Posts, pages, comments, products |
+| **labels** | Taxonomy/tags (per clone) | Categories, tags, statuses |
+| **events** | Audit log, analytics (per clone) | Logins, views, actions |
 
-All tables include: `hash`, `type`, `state`, `meta` (JSON), `created_at`, `updated_at`, `deleted_at`
+**Multi-Tenancy**: Run multiple projects from one database. Each clone has isolated `persons`, `items`, `labels`, and `events` via `clone_id`.
+
+**Supported Databases**: MySQL, MariaDB, SQLite
+
+See [DATABASE-SCHEMA.md](DATABASE-SCHEMA.md) for complete schema reference.
 
 ---
 
