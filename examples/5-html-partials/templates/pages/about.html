@@ -1,0 +1,59 @@
+    <main class="container" style="margin-bottom: 40px;">
+        <div style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <h2 style="color: #667eea; margin-bottom: 20px; font-size: 2em;">About This Demo</h2>
+            
+            <p style="font-size: 1.1em; margin-bottom: 20px;">
+                This example showcases <strong>Genes Framework</strong> in its simplest form - working entirely with static HTML partial files without requiring a database connection.
+            </p>
+
+            <h3 style="color: #667eea; margin-top: 30px; margin-bottom: 15px;">Template Structure</h3>
+            <pre style="background: #f8f9fa; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', monospace;"><code>templates/
+├── header.html        ← Site header with title
+├── nav.html           ← Navigation menu
+├── footer.html        ← Site footer
+└── pages/
+    ├── home.html      ← This page
+    ├── about.html     ← About page
+    ├── services.html  ← Services page
+    └── contact.html   ← Contact page</code></pre>
+
+            <h3 style="color: #667eea; margin-top: 30px; margin-bottom: 15px;">Variable Substitution</h3>
+            <p style="margin-bottom: 15px;">
+                Templates use a simple <code>{{variable}}</code> syntax for dynamic content:
+            </p>
+            <pre style="background: #f8f9fa; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', monospace;"><code>&lt;h1&gt;{{site_name}}&lt;/h1&gt;
+&lt;p&gt;{{tagline}}&lt;/p&gt;</code></pre>
+
+            <p style="margin-top: 15px;">
+                These are replaced at runtime by the PHP script, allowing for dynamic values while keeping templates pure HTML.
+            </p>
+
+            <h3 style="color: #667eea; margin-top: 30px; margin-bottom: 15px;">When to Use This Approach</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div style="background: #d4edda; padding: 20px; border-radius: 8px; border-left: 4px solid #28a745;">
+                    <h4 style="color: #155724; margin-bottom: 10px;">✅ Perfect For:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8; color: #155724;">
+                        <li>Marketing websites</li>
+                        <li>Portfolio sites</li>
+                        <li>Documentation</li>
+                        <li>Landing pages</li>
+                        <li>Company sites (&lt;50 pages)</li>
+                    </ul>
+                </div>
+                <div style="background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 4px solid #dc3545;">
+                    <h4 style="color: #721c24; margin-bottom: 10px;">❌ Not Ideal For:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8; color: #721c24;">
+                        <li>User-generated content</li>
+                        <li>Comments/forums</li>
+                        <li>E-commerce sites</li>
+                        <li>Large datasets</li>
+                        <li>Search functionality</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
+                <strong>📚 Learn More:</strong> Check out the other examples to see Genes Framework with databases, APIs, and multi-tenant architectures!
+            </div>
+        </div>
+    </main>

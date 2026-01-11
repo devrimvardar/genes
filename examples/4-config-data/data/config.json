@@ -1,0 +1,46 @@
+{
+  "site": {
+    "name": "My Portfolio",
+    "tagline": "Developer & Designer",
+    "description": "Building amazing things with code"
+  },
+  "pages": [
+    {
+      "slug": "home",
+      "title": "Home",
+      "content": "Welcome to my portfolio!\n\nI'm a full-stack developer passionate about building clean, efficient applications. This site demonstrates how Genes Framework can work entirely without a database - all content is loaded from this config.json file.\n\nCheck out my projects below and explore the other pages to learn more about me and my work."
+    },
+    {
+      "slug": "about",
+      "title": "About Me",
+      "content": "Hi! I'm a developer who loves working with lightweight frameworks and elegant solutions.\n\nI specialize in:\n- PHP & JavaScript development\n- Database design & optimization\n- API development\n- Multi-tenant architectures\n\nI believe in writing clean, maintainable code that solves real problems. When I'm not coding, you can find me reading tech blogs, contributing to open source, or exploring new frameworks.\n\nThis portfolio is built with Genes Framework using only config.json as a data source - no database required!"
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "content": "Let's connect!\n\nEmail: hello@example.com\nGitHub: github.com/username\nTwitter: @username\nLinkedIn: linkedin.com/in/username\n\nFeel free to reach out if you'd like to collaborate on a project or just chat about tech!"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Genes Framework",
+      "description": "Lightweight PHP framework with zero dependencies. Works with or without a database.",
+      "url": "https://github.com/devrimvardar/genes"
+    },
+    {
+      "title": "Config-Based CMS",
+      "description": "Simple content management using JSON files. Perfect for small sites.",
+      "url": "#"
+    },
+    {
+      "title": "Multi-Tenant Blog",
+      "description": "Clone-based multi-tenancy example with automatic isolation.",
+      "url": "#"
+    },
+    {
+      "title": "REST API Demo",
+      "description": "Clean RESTful API with proper error handling and CORS support.",
+      "url": "#"
+    }
+  ]
+}

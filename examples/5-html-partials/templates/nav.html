@@ -1,0 +1,19 @@
+    <nav style="background: white; padding: 20px 0; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <div class="container">
+            <ul style="list-style: none; display: flex; gap: 30px; flex-wrap: wrap;">
+                <li><a href="?page=home" class="{{home_active}}" style="color: #667eea; text-decoration: none; font-weight: 500; padding: 10px 20px; border-radius: 4px; display: inline-block; transition: all 0.3s;">Home</a></li>
+                <li><a href="?page=about" class="{{about_active}}" style="color: #667eea; text-decoration: none; font-weight: 500; padding: 10px 20px; border-radius: 4px; display: inline-block; transition: all 0.3s;">About</a></li>
+                <li><a href="?page=services" class="{{services_active}}" style="color: #667eea; text-decoration: none; font-weight: 500; padding: 10px 20px; border-radius: 4px; display: inline-block; transition: all 0.3s;">Services</a></li>
+                <li><a href="?page=contact" class="{{contact_active}}" style="color: #667eea; text-decoration: none; font-weight: 500; padding: 10px 20px; border-radius: 4px; display: inline-block; transition: all 0.3s;">Contact</a></li>
+            </ul>
+        </div>
+        <style>
+            nav a.active {
+                background: #667eea !important;
+                color: white !important;
+            }
+            nav a:hover {
+                background: #f8f9fa;
+            }
+        </style>
+    </nav>

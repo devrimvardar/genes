@@ -1,19 +1,23 @@
 # Genes Framework Examples
 
-Working examples demonstrating the **correct 5-table schema** and **multi-tenant patterns**.
+Working examples demonstrating the **correct 5-table schema**, **multi-tenant patterns**, and **no-database usage**.
 
 ## Overview
 
-All examples use the **correct schema**:
+All database examples use the **correct schema**:
 - `clones` - Projects/instances (master multi-tenancy table)
 - `persons` - Users with `clone_id`
 - `items` - Content with `clone_id`
 - `labels` - Taxonomy with `clone_id`
 - `events` - Audit log with `clone_id`
 
+Non-database examples demonstrate using **config.json** and **HTML partials** for static sites.
+
 ## Examples
 
-### 1. Database CRUD Operations
+### Database Examples (1-3)
+
+#### 1. Database CRUD Operations
 **Path**: `examples/1-database-crud/`  
 **Run**: `php -S localhost:8000 -t examples/1-database-crud`
 
@@ -29,7 +33,7 @@ All examples use the **correct schema**:
 
 ---
 
-### 2. Multi-Tenant Blog System
+#### 2. Multi-Tenant Blog System
 **Path**: `examples/2-blog-system/`  
 **Run**: `php -S localhost:8001 -t examples/2-blog-system`
 
@@ -50,7 +54,7 @@ All examples use the **correct schema**:
 
 ---
 
-### 3. REST API with Clone Context
+#### 3. REST API with Clone Context
 **Path**: `examples/3-rest-api/`  
 **Run**: `php -S localhost:8002 -t examples/3-rest-api`
 
@@ -83,6 +87,80 @@ curl -X POST http://localhost:8002/api/posts \
   -H "Content-Type: application/json" \
   -d '{"title":"Test","text":"Content"}'
 ```
+
+---
+
+### No-Database Examples (4-5)
+
+#### 4. Config-Based Data
+**Path**: `examples/4-config-data/`  
+**Run**: `php -S localhost:8003 -t examples/4-config-data`
+
+**Demonstrates**:
+- ✅ Using config.json as data source
+- ✅ No database required
+- ✅ Perfect for static content sites
+- ✅ Simple configuration management
+- ✅ JSON data handling
+
+**Perfect for**: Small sites, settings pages, or when you don't need a database.
+
+**Features**:
+- Loads site data from `config.json`
+- Displays features, stats, and metadata
+- No database overhead
+- Easy to deploy and maintain
+
+---
+
+#### 5. HTML Partials & Templating
+**Path**: `examples/5-html-partials/`  
+**Run**: `php -S localhost:8004 -t examples/5-html-partials`
+
+**Demonstrates**:
+- ✅ HTML partial template system
+- ✅ Variable substitution (`{{variable}}`)
+- ✅ Template composition
+- ✅ Static site generation
+- ✅ No database, no build tools
+
+**Perfect for**: Static websites, landing pages, or template-driven sites.
+
+**Features**:
+- `loadPartial()` function for template loading
+- Simple `{{variable}}` syntax
+- Reusable header, nav, footer components
+- Clean separation of content and layout
+
+---
+
+### Complete Website Example
+
+#### 6. genes.one Website
+**Path**: `website/`  
+**Run**: `php -S localhost:8005 -t website`
+
+**Demonstrates**:
+- ✅ Complete, production-ready website
+- ✅ Combines config.json + HTML partials
+- ✅ Clean routing system
+- ✅ Modern, responsive design
+- ✅ Multiple pages (home, docs, examples, download, about)
+- ✅ Professional layout components
+
+**Perfect for**: Real-world reference implementation and learning by example.
+
+**Features**:
+- Full routing with `renderPage()` function
+- Layout components (header, nav, footer)
+- Page templates with variable substitution
+- CSS Grid and Flexbox layouts
+- Mobile-responsive design
+- Interactive JavaScript features
+
+**This is the actual genes.one website!** View it as both:
+1. A complete working example
+2. The official framework documentation site
 
 ---
 
