@@ -1,0 +1,44 @@
+# This workflow will run basic PHP syntax checks
+
+name: PHP Syntax Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  syntax-check:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        php-version: ['5.6', '7.4', '8.0', '8.1', '8.2']
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+    
+    - name: Check PHP syntax
+      run: |
+        find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors"
+        if [ $? -eq 0 ]; then
+          echo "Syntax errors found"
+          exit 1
+        fi
+        echo "No syntax errors detected"
+    
+    - name: Validate genes.php
+      run: php -l genes.php
+    
+    - name: Validate examples
+      run: |
+        for file in examples/*/index.php; do
+          echo "Checking $file"
+          php -l "$file"
+        done

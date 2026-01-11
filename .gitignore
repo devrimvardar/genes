@@ -1,0 +1,49 @@
+# Dependencies
+vendor/
+node_modules/
+composer.lock
+package-lock.json
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Project specific
+data/config.json
+data/*.db
+cache/
+uploads/
+*.log
+*.pid
+
+# Keep example configs
+!examples/**/config.json
+!examples/**/data/
+
+# Build outputs
+dist/
+build/
+*.min.js
+*.min.css
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Database
+*.sqlite
+*.db
