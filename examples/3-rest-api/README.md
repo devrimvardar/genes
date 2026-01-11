@@ -1,144 +1,166 @@
-# Example 3: REST API Server
+# Example 3: REST API with Clone Context
 
-Complete RESTful API with automatic CRUD endpoints for all tables.
+RESTful API demonstrating **multi-tenant clone isolation** with proper API patterns.
 
 ## What This Demonstrates
 
-- URL routing and parsing
-- Automatic API endpoint handling
-- RESTful CRUD operations (GET, POST, PUT, DELETE)
-- JSON request/response handling
-- Query parameter filtering
-- API security (table validation)
-- Error handling
-
-## Prerequisites
-
-- MySQL or MariaDB database
-- cURL or API testing tool (Postman, Insomnia, etc.)
-
-## Setup
-
-1. Create database:
-```sql
-CREATE DATABASE genes_api;
-```
-
-2. Update credentials in `index.php` if needed
-
-## How to Run
-
-```bash
-cd examples/3-rest-api
-php -S localhost:8000
-```
+- ✅ RESTful API endpoints (GET, POST, PUT, DELETE)
+- ✅ Multi-tenant clone-based isolation
+- ✅ API authentication with tokens
+- ✅ JSON request/response handling
+- ✅ CORS support
+- ✅ Error handling
+- ✅ Clone context from API tokens
 
 ## API Endpoints
 
-### List All Records
-```bash
-GET /api/{table}
+### Posts API
 
-curl http://localhost:8000/api/persons
+```
+GET    /api/posts          - List all posts (clone-scoped)
+GET    /api/posts/:hash    - Get single post
+POST   /api/posts          - Create new post
+PUT    /api/posts/:hash    - Update post
+DELETE /api/posts/:hash    - Delete post (soft)
 ```
 
-### Filter Records
-```bash
-GET /api/{table}?key=value
+### Persons API
 
-curl http://localhost:8000/api/persons?state=active
+```
+GET    /api/persons        - List all users (clone-scoped)
+GET    /api/persons/:hash  - Get single user
+POST   /api/persons        - Create new user
 ```
 
-### Get Single Record
-```bash
-GET /api/{table}/{hash}
+### Labels API
 
-curl http://localhost:8000/api/persons/{hash}
+```
+GET    /api/labels         - List all labels (clone-scoped)
+POST   /api/labels         - Create new label
 ```
 
-### Create Record
-```bash
-POST /api/{table}
+## Running the Example
 
-curl -X POST http://localhost:8000/api/persons \
+```bash
+php -S localhost:8002 -t examples/3-rest-api
+```
+
+Test with curl:
+
+```bash
+# List posts
+curl http://localhost:8002/api/posts
+
+# Get single post
+curl http://localhost:8002/api/posts/HASH
+
+# Create post
+curl -X POST http://localhost:8002/api/posts \
   -H "Content-Type: application/json" \
-  -d '{"name":"John","email":"john@example.com","state":"active"}'
-```
+  -d '{"title":"New Post","text":"Content here"}'
 
-### Update Record
-```bash
-PUT /api/{table}/{hash}
-
-curl -X PUT http://localhost:8000/api/persons/{hash} \
+# Update post
+curl -X PUT http://localhost:8002/api/posts/HASH \
   -H "Content-Type: application/json" \
-  -d '{"name":"Jane"}'
+  -d '{"title":"Updated Title"}'
+
+# Delete post
+curl -X DELETE http://localhost:8002/api/posts/HASH
 ```
 
-### Delete Record
-```bash
-DELETE /api/{table}/{hash}
+## Clone Isolation in APIs
 
-curl -X DELETE http://localhost:8000/api/persons/{hash}
+The API automatically scopes all queries to the current clone:
+
+```php
+// Set clone context (in real app, from API token)
+g::run("db.setClone", $cloneHash);
+
+// All API queries auto-filtered
+GET /api/posts
+// Returns ONLY posts from the current clone
+
+POST /api/posts
+// Creates post WITH clone_id automatically added
 ```
 
-## Supported Tables
+## Authentication
 
-- `persons` - Users and accounts
-- `clones` - User-generated content (posts, comments)
-- `links` - Relationships (follows, likes)
-- `nodes` - Static content (pages, categories)
-- `events` - Audit log
+The example shows a simple token-based authentication:
+
+```php
+// Each API token is linked to a clone
+$token = "demo-token-abc123";
+$cloneHash = getCloneFromToken($token);
+g::run("db.setClone", $cloneHash);
+```
+
+In production:
+- Store tokens in `persons` table with `clone_id`
+- Validate tokens on each request
+- Use proper JWT or OAuth2
 
 ## Response Format
 
-### Success
+All responses follow this structure:
+
 ```json
 {
   "success": true,
-  "data": [...],
-  "count": 2
+  "data": {...},
+  "meta": {
+    "clone_id": "abc123...",
+    "timestamp": "2026-01-11 12:00:00"
+  }
 }
 ```
 
-### Error
+Errors:
+
 ```json
 {
   "success": false,
-  "error": "Error message"
+  "error": "Error message here",
+  "code": 404
 }
 ```
 
-## Code Highlights
+## CORS Support
 
-### Routing
+The API includes CORS headers for cross-origin requests:
+
 ```php
-g::run("route.parseUrl");
-$request = g::get("request");
-
-if ($request["segments"][0] === "api") {
-    $table = $request["segments"][1];
-    // Handle API request
-}
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 ```
 
-### API Handling
-```php
-// Automatically handles GET, POST, PUT, DELETE
-$result = g::run("api.handle", $table);
-g::run("api.respond", $result);
+## Testing with JavaScript
+
+```javascript
+// List posts
+fetch('http://localhost:8002/api/posts')
+  .then(r => r.json())
+  .then(data => console.log(data));
+
+// Create post
+fetch('http://localhost:8002/api/posts', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    title: 'New Post',
+    text: 'Content here',
+    state: 'published'
+  })
+})
+.then(r => r.json())
+.then(data => console.log(data));
 ```
 
-## Security Features
+## Next Steps
 
-- Table name validation (whitelist)
-- SQL injection protection (automatic)
-- JSON input validation
-- HTTP method validation
-
-## Testing
-
-Visit http://localhost:8000 for interactive documentation and example requests.
-
-## What's Next
-
-Check out [Example 4: Blog System](../4-blog-system/) for a complete application with auth.
+- **CRUD Basics** → See Example 1
+- **Blog System** → See Example 2
+- **Documentation** → Read `/docs`

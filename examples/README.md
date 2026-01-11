@@ -1,205 +1,251 @@
-# Examples Index
+# Genes Framework Examples
 
-This folder contains complete working examples demonstrating Genes Framework capabilities.
+Working examples demonstrating the **correct 5-table schema** and **multi-tenant patterns**.
 
-## 📚 Available Examples
+## Overview
 
-### [1. Hello World](1-hello-world/)
-**Difficulty**: Beginner  
-**Time**: 2 minutes  
-**Topics**: Basic setup, framework inclusion
+All examples use the **correct schema**:
+- `clones` - Projects/instances (master multi-tenancy table)
+- `persons` - Users with `clone_id`
+- `items` - Content with `clone_id`
+- `labels` - Taxonomy with `clone_id`
+- `events` - Audit log with `clone_id`
 
-The simplest possible Genes application. Perfect for getting started.
+## Examples
 
+### 1. Database CRUD Operations
+**Path**: `examples/1-database-crud/`  
+**Run**: `php -S localhost:8000 -t examples/1-database-crud`
+
+**Demonstrates**:
+- ✅ Correct 5-table schema
+- ✅ Both MySQL and SQLite drivers
+- ✅ Complete CRUD operations (Create, Read, Update, Delete)
+- ✅ Auto-generated hashes and timestamps
+- ✅ Multi-tenant clone isolation
+- ✅ Soft delete pattern
+
+**Perfect for**: Understanding the basic database operations and schema structure.
+
+---
+
+### 2. Multi-Tenant Blog System
+**Path**: `examples/2-blog-system/`  
+**Run**: `php -S localhost:8001 -t examples/2-blog-system`
+
+**Demonstrates**:
+- ✅ Multi-clone architecture
+- ✅ Items table for blog posts
+- ✅ Labels for categories
+- ✅ Person (author) relationships
+- ✅ Events for view tracking
+- ✅ URL routing with `safe_url`
+- ✅ Clone context management
+
+**Perfect for**: Building content-driven multi-tenant applications.
+
+**URLs**:
+- `http://localhost:8001` - Blog home (list of posts)
+- `http://localhost:8001/?post=slug` - Single post view
+
+---
+
+### 3. REST API with Clone Context
+**Path**: `examples/3-rest-api/`  
+**Run**: `php -S localhost:8002 -t examples/3-rest-api`
+
+**Demonstrates**:
+- ✅ RESTful API endpoints (GET, POST, PUT, DELETE)
+- ✅ Multi-tenant clone isolation
+- ✅ JSON request/response handling
+- ✅ CORS support
+- ✅ Error handling
+- ✅ Event logging
+
+**Perfect for**: Building APIs for single-page applications or mobile apps.
+
+**Endpoints**:
 ```bash
-cd 1-hello-world
-php -S localhost:8000
+GET    /api/posts          # List posts
+GET    /api/posts/:hash    # Get single post
+POST   /api/posts          # Create post
+PUT    /api/posts/:hash    # Update post
+DELETE /api/posts/:hash    # Delete post
+GET    /api/persons        # List users
+GET    /api/labels         # List labels
+GET    /api/events         # List events
+```
+
+**Test**:
+```bash
+curl http://localhost:8002/api/posts
+curl -X POST http://localhost:8002/api/posts \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test","text":"Content"}'
 ```
 
 ---
 
-### [2. Database CRUD](2-database-crud/)
-**Difficulty**: Beginner  
-**Time**: 10 minutes  
-**Topics**: Database connection, schema creation, CRUD operations
+## Key Concepts Demonstrated
 
-Complete demonstration of Create, Read, Update, Delete operations with the universal 5-table schema.
+### 1. Clone-Based Multi-Tenancy
 
-**Prerequisites**: MySQL/MariaDB database
+All examples use **clone context** for automatic data isolation:
 
-```bash
-cd 2-database-crud
-php -S localhost:8000
-```
-
----
-
-### [3. REST API](3-rest-api/)
-**Difficulty**: Intermediate  
-**Time**: 15 minutes  
-**Topics**: Routing, API endpoints, JSON responses, HTTP methods
-
-A complete RESTful API server with automatic CRUD endpoints for all tables.
-
-**Prerequisites**: MySQL/MariaDB database, cURL or API client
-
-```bash
-cd 3-rest-api
-php -S localhost:8000
-```
-
-Test with:
-```bash
-curl http://localhost:8000/api/persons
-```
-
----
-
-### [4. Blog System](4-blog-system/)
-**Difficulty**: Intermediate  
-**Time**: 20 minutes  
-**Topics**: Authentication, user registration, sessions, forms, relationships
-
-A complete blog application with user accounts, login/logout, and post creation.
-
-**Prerequisites**: MySQL/MariaDB database
-
-```bash
-cd 4-blog-system
-php -S localhost:8000
-```
-
----
-
-### [5. Single Page App](5-spa/)
-**Difficulty**: Intermediate  
-**Time**: 15 minutes  
-**Topics**: Frontend JavaScript, state management, events, localStorage
-
-A frontend-only todo list application demonstrating Genes JS capabilities.
-
-**Prerequisites**: None (no backend required!)
-
-```bash
-cd 5-spa
-php -S localhost:8000
-```
-
-OR open `index.html` directly in your browser.
-
----
-
-## 🎯 Learning Path
-
-**New to Genes?** Follow this sequence:
-
-1. **Hello World** - Get familiar with basic setup
-2. **Database CRUD** - Learn database operations
-3. **REST API** - Build API endpoints
-4. **Blog System** - Create a full application
-5. **Single Page App** - Master frontend features
-
-## 🛠️ Running Examples
-
-### Using PHP Built-in Server
-
-All examples can run with PHP's built-in development server:
-
-```bash
-cd examples/[example-name]
-php -S localhost:8000
-```
-
-Then visit: http://localhost:8000
-
-### Database Setup
-
-Examples 2, 3, and 4 require a database. Create databases:
-
-```sql
-CREATE DATABASE genes_test;    -- For example 2
-CREATE DATABASE genes_api;     -- For example 3
-CREATE DATABASE genes_blog;    -- For example 4
-```
-
-Update database credentials in each `index.php` if needed.
-
-### No Server Required
-
-Example 5 (SPA) runs directly in your browser without a server!
-
-## 📖 Documentation
-
-Each example includes:
-- `README.md` - Detailed explanation and setup
-- Commented source code
-- Prerequisites and requirements
-- Expected output
-- What's demonstrated
-- Ideas for extension
-
-## 🔧 Customization
-
-All examples are designed to be:
-- **Self-contained** - Copy and modify freely
-- **Well-commented** - Understand what's happening
-- **Extensible** - Build on top of them
-- **Production-ready patterns** - Use in real projects
-
-## 🆘 Troubleshooting
-
-### Database Connection Issues
-```
-Error: SQLSTATE[HY000] [1045] Access denied
-```
-
-**Solution**: Check database credentials in `index.php`:
 ```php
-g::run("db.connect", array(
-    "host" => "localhost",
-    "name" => "your_database",
-    "user" => "your_username",
-    "pass" => "your_password"
+// Set clone context
+g::run("db.setClone", $cloneHash);
+
+// All queries now auto-filter by clone_id
+$posts = g::run("db.select", "items", array("type" => "post"));
+// SQL: SELECT * FROM items WHERE type='post' AND clone_id='...'
+```
+
+### 2. Correct Schema Usage
+
+**Items Table** (not "nodes" or "clones"):
+```php
+g::run("db.insert", "items", array(
+    "type" => "post",
+    "title" => "My Post",
+    "text" => "Content..."
+    // clone_id auto-added!
 ));
 ```
 
-### Port Already in Use
-```
-Failed to listen on localhost:8000
-```
-
-**Solution**: Use a different port:
-```bash
-php -S localhost:8001
-```
-
-### Missing Extensions
-
-**Solution**: Ensure PHP has PDO and PDO_MySQL:
-```bash
-php -m | grep -i pdo
+**Labels Table** (not "links"):
+```php
+g::run("db.insert", "labels", array(
+    "type" => "category",
+    "key" => "tech",
+    "name" => "Technology"
+    // clone_id auto-added!
+));
 ```
 
-## 💡 Next Steps
+**Events Table** (audit log):
+```php
+g::run("db.insert", "events", array(
+    "type" => "post.viewed",
+    "item_id" => $postHash
+    // clone_id auto-added!
+));
+```
 
-After completing the examples:
+### 3. Auto-Generated Fields
 
-1. Read the **[AI Framework Guide](../docs/GENES-AI-FRAMEWORK.md)** for comprehensive documentation
-2. Check **[Quick Reference](../docs/GENES-QUICKREF.md)** for API cheat sheet
-3. Explore **[More Examples](../docs/GENES-EXAMPLES.md)** for additional patterns
-4. Build your own application!
+The framework **automatically** adds:
+- `hash` - Unique identifier
+- `clone_id` - Current clone context (if set)
+- `created_at` - Creation timestamp
+- `updated_at` - Update timestamp
 
-## 🤝 Contributing Examples
+### 4. Database Flexibility
 
-Have a great example to share? We'd love to include it!
+All examples work with both **MySQL** and **SQLite**:
 
-1. Create your example following the existing structure
-2. Include a detailed README.md
-3. Comment your code thoroughly
-4. Submit a pull request
+```php
+// SQLite (default)
+g::run("db.connect", array(
+    "driver" => "sqlite",
+    "name" => "main",
+    "database" => "data/app.db"
+));
 
-See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
+// MySQL
+g::run("db.connect", array(
+    "driver" => "mysql",
+    "name" => "main",
+    "host" => "localhost",
+    "database" => "myapp",
+    "username" => "root",
+    "password" => ""
+));
+```
 
----
+## Common Patterns
 
-**Happy coding with Genes Framework! 🚀**
+### Create Clone
+
+```php
+$cloneHash = g::run("db.insert", "clones", array(
+    "name" => "My Blog",
+    "domain" => "myblog.local",
+    "type" => "blog",
+    "state" => "active"
+));
+g::run("db.setClone", $cloneHash);
+```
+
+### Create User
+
+```php
+$userHash = g::run("db.insert", "persons", array(
+    "email" => "user@example.com",
+    "name" => "John Doe",
+    "type" => "user",
+    "state" => "active"
+    // clone_id auto-added from context!
+));
+```
+
+### Create Blog Post
+
+```php
+$postHash = g::run("db.insert", "items", array(
+    "type" => "post",
+    "state" => "published",
+    "title" => "My Post",
+    "safe_url" => "my-post",
+    "text" => "Post content...",
+    "created_by" => $userHash
+    // clone_id auto-added!
+));
+```
+
+### Create Category
+
+```php
+$categoryHash = g::run("db.insert", "labels", array(
+    "type" => "category",
+    "key" => "tech",
+    "name" => "Technology"
+    // clone_id auto-added!
+));
+```
+
+### Log Event
+
+```php
+g::run("db.insert", "events", array(
+    "type" => "post.viewed",
+    "item_id" => $postHash,
+    "person_id" => $userHash,
+    "data" => json_encode(array("ip" => $_SERVER['REMOTE_ADDR']))
+    // clone_id auto-added!
+));
+```
+
+## Requirements
+
+- PHP 5.6+
+- SQLite or MySQL/MariaDB
+- No additional dependencies
+
+## Next Steps
+
+1. **Run an example** - Start with Example 1
+2. **Read the docs** - Check `/docs` folder
+3. **Build your own** - Use examples as templates
+
+## Documentation
+
+- [Quickstart Guide](../docs/QUICKSTART.md)
+- [Architecture Overview](../docs/ARCHITECTURE.md)
+- [Multi-Tenancy Guide](../docs/MULTI-TENANCY.md)
+- [Database Schema](../DATABASE-SCHEMA.md)
+
+## Support
+
+- GitHub: https://github.com/devrimvardar/genes
+- Issues: https://github.com/devrimvardar/genes/issues

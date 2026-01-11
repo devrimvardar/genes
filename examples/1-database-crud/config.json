@@ -1,0 +1,13 @@
+{
+  "clone": {
+    "name": "CRUD Example Blog",
+    "domain": "crud-example.local",
+    "type": "blog",
+    "state": "active",
+    "default_language": "en"
+  },
+  "database": {
+    "driver": "sqlite",
+    "database": "data/crud-example.db"
+  }
+}
