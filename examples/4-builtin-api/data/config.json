@@ -41,7 +41,7 @@
         "user": "",
         "password": "",
         "charset": "utf8mb4",
-        "database": "app.db"
+        "database": "data/app.db"
     },
     "security": {
         "salt": "",

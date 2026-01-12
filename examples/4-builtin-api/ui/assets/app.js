@@ -38,7 +38,7 @@ async function apiRequest(method, endpoint, body = null) {
 
 // Load todos using built-in API with filters
 async function loadTodos() {
-    const response = await apiRequest('GET', '?filters[type]=todo');
+    const response = await apiRequest('GET', ';filters[type]=todo');
     if (response && response.success) {
         todos = response.data || [];
         renderTodos();

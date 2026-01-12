@@ -1,70 +1,74 @@
 <!DOCTYPE html>
 <html data-g-lang>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-g-bind="post.title">Post Title</title>
-    <link rel="stylesheet" href="../../genes.css">
-    <link rel="stylesheet" href="ui/assets/app.css">
-</head>
-<body>
-    <div class="container">
-        <header class="py-2 border-t border-b">
-            <div class="flex flex-between" style="align-items: center;">
-                <div>
-                    <h1 style="margin-bottom: 0;" data-g-bind="bits.translations.site_title">Blog</h1>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="../../favicon.png">
+        <title data-g-bind="post.title">Post Title</title>
+        <link rel="stylesheet" href="../../genes.css">
+        <link rel="stylesheet" href="ui/assets/app.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <header class="py-2 border-t border-b">
+                <div class="flex flex-between" style="align-items: center;">
+                    <div>
+                        <h1 style="margin-bottom: 0;" data-g-bind="bits.translations.site_title">Blog</h1>
+                    </div>
+                    <nav>
+                        <a href="index" class="ml-1">English</a>
+                        <a href="anasayfa" class="ml-1">Türkçe</a>
+                        <a href="startseite" class="ml-1">Deutsch</a>
+                    </nav>
                 </div>
-                <nav>
-                    <a href="index" class="ml-1">English</a>
-                    <a href="anasayfa" class="ml-1">Türkçe</a>
-                    <a href="startseite" class="ml-1">Deutsch</a>
+            </header>
+
+            <main class="py-3" data-g-if="show_single">
+                <nav class="mb-2">
+                    <a data-g-attr="href:/blog" class="text-muted">
+                        <span data-g-bind="bits.translations.back_to_blog">← Back to Blog</span>
+                    </a>
                 </nav>
-            </div>
-        </header>
 
-        <main class="py-3" data-g-if="show_single">
-            <nav class="mb-2">
-                <a data-g-attr="href:/blog" class="text-muted">
-                    <span data-g-bind="bits.translations.back_to_blog">← Back to Blog</span>
-                </a>
-            </nav>
+                <article class="post-single">
+                    <div class="flex flex-between mb-2" style="align-items: center;">
+                        <span class="badge" data-g-bind="post.category">Category</span>
+                        <span class="text-muted" data-g-bind="post.reading_time">5 min</span>
+                    </div>
 
-            <article class="post-single">
-                <div class="flex flex-between mb-2" style="align-items: center;">
-                    <span class="badge" data-g-bind="post.category">Category</span>
-                    <span class="text-muted" data-g-bind="post.reading_time">5 min</span>
-                </div>
+                    <h1 class="mb-1" data-g-bind="post.title">Post Title</h1>
 
-                <h1 class="mb-1" data-g-bind="post.title">Post Title</h1>
-                
-                <p class="text-muted mb-3">
-                    <span data-g-bind="bits.translations.by_author">by</span>
-                    <strong data-g-bind="post.author">Author</strong>
-                </p>
+                    <p class="text-muted mb-3">
+                        <span data-g-bind="bits.translations.by_author">by</span>
+                        <strong data-g-bind="post.author">Author</strong>
+                    </p>
 
-                <div class="post-content" data-g-html="post.text">
-                    <p>Post content goes here...</p>
-                </div>
-            </article>
+                    <div class="post-content" data-g-html="post.text">
+                        <p>Post content goes here...</p>
+                    </div>
+                </article>
 
-            <!-- Related Posts -->
-            <section class="mt-4 pt-3 border-t" data-g-if="has_related">
-                <h3 class="mb-2" data-g-bind="bits.translations.related_posts">Related Posts</h3>
-                
-                <div class="grid grid-3 gap-3">
-                    <article class="post-card p-2 border rounded" data-g-for="related in related_posts">
-                        <h4 class="mb-1">
-                            <a data-g-attr="href:/blog/{{related.safe_url}}" data-g-bind="related.title">Title</a>
-                        </h4>
-                        <p class="text-muted text-sm" data-g-bind="related.blurb">Excerpt...</p>
-                    </article>
-                </div>
-            </section>
-        </main>
+                <!-- Related Posts -->
+                <section class="mt-4 pt-3 border-t" data-g-if="has_related">
+                    <h3 class="mb-2" data-g-bind="bits.translations.related_posts">Related Posts</h3>
 
-        <footer class="py-2 border-t text-center text-muted">
-            <p>Example 2: Multi-Language Blog System | Genes Framework</p>
-        </footer>
-    </div>
-</body>
+                    <div class="grid grid-3 gap-3">
+                        <article class="post-card p-2 border rounded" data-g-for="related in related_posts">
+                            <h4 class="mb-1">
+                                <a data-g-attr="href:/blog/{{related.safe_url}}" data-g-bind="related.title">Title</a>
+                            </h4>
+                            <p class="text-muted text-sm" data-g-bind="related.blurb">Excerpt...</p>
+                        </article>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="py-2 border-t text-center text-muted">
+                <p>Example 2: Multi-Language Blog System | Genes Framework</p>
+            </footer>
+        </div>
+    </body>
+
 </html>

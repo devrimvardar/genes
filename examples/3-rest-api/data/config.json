@@ -38,7 +38,7 @@
         "host": "",
         "port": 0,
         "name": "main",
-        "database": "todos.db",
+        "database": "data/todos.db",
         "user": "",
         "password": "",
         "charset": "utf8mb4"

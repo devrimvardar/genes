@@ -5,10 +5,10 @@
  * ============================================================================
  * A lightweight, single-file PHP framework for rapid web development
  * 
- * @version     2.0.1
- * @date        2026-01-12
+ * @version     2.0.0
+ * @date        2025-10-06
  * @author      Devrim Vardar
- * @copyright   (c) 2024-2026 NodOnce OÜ
+ * @copyright   (c) 2024-2025 NodOnce OÜ
  * @license     MIT
  * @link        https://genes.one
  * 
@@ -1286,11 +1286,16 @@ g::def("route", array(
         // Get request URI (path + query string)
         $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
 
-        // Split path and query string (standard ? delimiter)
+        // Split path and query string (support both ? and ; delimiters)
         $path = $requestUri;
         $queryString = '';
 
-        if (strpos($requestUri, '?') !== false) {
+        // Check for semicolon first (preferred), then question mark
+        if (strpos($requestUri, ';') !== false) {
+            $parts = explode(';', $requestUri, 2);
+            $path = $parts[0];
+            $queryString = isset($parts[1]) ? $parts[1] : '';
+        } elseif (strpos($requestUri, '?') !== false) {
             $parts = explode('?', $requestUri, 2);
             $path = $parts[0];
             $queryString = isset($parts[1]) ? $parts[1] : '';
@@ -1309,7 +1314,7 @@ g::def("route", array(
             // Smart detection: analyze URL structure against known routes
             // Get config to find known routes
             $config = g::get("config");
-            $knownRoutes = array('index'); // 'index' is always a known route
+            $knownRoutes = array('index', 'api'); // 'index' and 'api' are always known routes
             
             if ($config && isset($config["views"])) {
                 foreach ($config["views"] as $view) {

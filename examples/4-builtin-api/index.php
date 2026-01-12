@@ -33,7 +33,7 @@ if (!file_exists($dbPath)) {
         "name" => "Demo User",
         "email" => "demo@example.com",
         "state" => "active"
-    ), "main");
+    ));
     
     // Create some sample todos
     $todos = array(
@@ -61,7 +61,7 @@ if (!file_exists($dbPath)) {
     );
     
     foreach ($todos as $todo) {
-        g::run("db.insert", "items", $todo, "main");
+        g::run("db.insert", "items", $todo);
     }
 }
 

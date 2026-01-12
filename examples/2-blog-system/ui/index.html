@@ -1,178 +1,254 @@
 <!DOCTYPE html>
 <html lang="{{lang}}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{bits.site_title}}</title>
-    <link rel="stylesheet" href="../../genes.css">
-    <style>
-        .blog-header { border-bottom: 1px solid var(--border); }
-        .blog-footer { border-top: 1px solid var(--border); margin-top: 4rem; }
-        .post-card { border: 1px solid var(--border); border-radius: 0.5rem; background: var(--card-bg); }
-        .badge { background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; display: inline-block; }
-        .edit-btn { background: var(--warning); color: white; margin-left: 1rem; font-size: 0.875rem; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; }
-        .modal-content { background: var(--bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 2rem; max-height: 90vh; overflow-y: auto; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <header class="blog-header p-3" data-a>
-            <div class="flex flex-between" data-b>
-                <div data-c>
-                    <h1>{{bits.site_title}}</h1><!--c-->
-                    <p style="color: var(--text-muted);">{{bits.site_description}}</p>
-                </div><!--b-->
-                <div class="flex gap-2" data-d>
-                    <a href="index" class="button">EN</a>
-                    <a href="anasayfa" class="button">TR</a>
-                    <a href="startseite" class="button">DE</a>
-                </div><!--d-->
-            </div><!--a-->
-        </header>
 
-        <!-- Example Info -->
-        <div class="my-3 p-3" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem;" data-aa>
-            <h3 style="margin-bottom: 1rem;">📘 Example 2: Multi-Language Blog System</h3>
-            <p style="margin-bottom: 0.5rem;"><strong>What this demonstrates:</strong></p>
-            <ul style="margin-left: 2rem; margin-bottom: 1rem; color: var(--text-muted);">
-                <li>Database integration (SQLite auto-setup)</li>
-                <li>Multi-language content with routing</li>
-                <li>Admin mode for editing posts inline</li>
-                <li>Create, read, update operations</li>
-                <li>Real data-g-* template directives</li>
-            </ul>
-            <p style="color: var(--text-muted); font-size: 0.875rem;"><strong>Try it:</strong> Click language buttons (EN/TR/DE) to switch languages. <a href="index/admin" style="font-weight: 600;">Enable Admin Mode</a> to see edit buttons and create new posts!</p>
-        </div><!--aa-->
+    <head>
+        <!-- Essential Meta Tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        
+        <!-- SEO Meta Tags -->
+        <title>{{bits.site_title}} - Blog System Demo | genes Framework</title>
+        <meta name="description" content="Complete blog system demo built with genes framework. Features posts, categories, and dynamic content. Zero dependencies PHP blog.">
+        <meta name="keywords" content="genes blog demo, PHP blog system, genes framework example, vanilla PHP blog, no database blog">
+        <meta name="author" content="Devrim Vardar">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="https://genes.one/demos/2-blog-system/">
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://genes.one/demos/2-blog-system/">
+        <meta property="og:title" content="{{bits.site_title}} - Blog System Demo">
+        <meta property="og:description" content="Complete blog system built with genes framework. Zero dependencies.">
+        <meta property="og:image" content="https://genes.one/assets/images/genes-og-image.png">
+        <meta property="og:site_name" content="genes Framework">
+        
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="https://genes.one/demos/2-blog-system/">
+        <meta name="twitter:title" content="{{bits.site_title}} - Blog System Demo">
+        <meta name="twitter:description" content="Complete blog system built with genes framework.">
+        <meta name="twitter:image" content="https://genes.one/assets/images/genes-og-image.png">
+        <meta name="twitter:creator" content="@DevrimVardar">
+        
+        <link rel="icon" type="image/png" href="../../favicon.png">
+        <link rel="apple-touch-icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../genes.css">
+        <style>
+            .blog-header {
+                border-bottom: 1px solid var(--border);
+            }
 
-        <!-- Main Content -->
-        <main class="my-4" data-g-if="show_list" data-e>
-            <div class="flex flex-between mb-3" data-f>
-                <div data-fa>
-                    <h2>{{bits.blog_title}}</h2><!--fa-->
-                    <p style="color: var(--text-muted); font-size: 0.875rem;" data-g-if="is_admin" data-fb>Admin Mode Active - <a href="index">Exit Admin Mode</a></p><!--fb-->
-                    <p style="color: var(--text-muted); font-size: 0.875rem;" data-g-if="!is_admin" data-fc><a href="index/admin">Enable Admin Mode</a> to edit posts</p><!--fc-->
-                </div><!--f-->
-                <button class="button" data-g-if="is_admin" onclick="openNewPost()" data-g>+ New Post</button><!--g-->
-            </div>
-            
-            <!-- Empty State -->
-            <div data-g-if="!has_posts" style="text-align: center; padding: 4rem 2rem; border: 2px dashed var(--border); border-radius: 0.5rem;" data-ga>
-                <h3 style="margin-bottom: 1rem;">No Posts Yet</h3>
-                <p style="color: var(--text-muted); margin-bottom: 2rem;">This blog is empty. Click the button below to create your first post!</p>
-                <button class="button" data-g-if="is_admin" onclick="openNewPost()">Create First Post</button><!--ga-->
-                <p style="color: var(--text-muted); margin-top: 1rem;" data-g-if="!is_admin"><a href="index/admin">Enable Admin Mode</a> to add posts</p>
-            </div>
-            
-            <!-- Post List -->
-            <div data-g-for="post in posts" class="post-card p-3 mb-3" data-h>
-                <div class="flex flex-between mb-2" data-i>
-                    <span class="badge">{{post.category}}</span>
-                    <div data-j>
-                        <span style="color: var(--text-muted); font-size: 0.875rem;">{{post.reading_time}}</span>
-                        <button class="button edit-btn" data-g-if="is_admin" onclick="editPost('{{post.hash}}', '{{post.title}}', '{{post.safe_url}}', '{{post.blurb}}')">✏ Edit</button><!--j-->
-                    </div><!--i-->
+            .blog-footer {
+                border-top: 1px solid var(--border);
+                margin-top: 4rem;
+            }
+
+            .post-card {
+                border: 1px solid var(--border);
+                border-radius: 0.5rem;
+                background: var(--card-bg);
+            }
+
+            .badge {
+                background: var(--primary);
+                color: white;
+                padding: 0.25rem 0.75rem;
+                border-radius: 1rem;
+                font-size: 0.875rem;
+                display: inline-block;
+            }
+
+            .edit-btn {
+                background: var(--warning);
+                color: white;
+                margin-left: 1rem;
+                font-size: 0.875rem;
+            }
+
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            }
+
+            .modal-content {
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 0.5rem;
+                padding: 2rem;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <!-- Header -->
+            <header class="blog-header p-3" data-a>
+                <div class="flex flex-between" data-b>
+                    <div data-c>
+                        <h1>{{bits.site_title}}</h1><!--c-->
+                        <p style="color: var(--text-muted);">{{bits.site_description}}</p>
+                    </div><!--b-->
+                    <div class="flex gap-2" data-d>
+                        <a href="index" class="button">EN</a>
+                        <a href="anasayfa" class="button">TR</a>
+                        <a href="startseite" class="button">DE</a>
+                    </div><!--d-->
+                </div><!--a-->
+            </header>
+
+            <!-- Example Info -->
+            <div class="my-3 p-3" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem;" data-aa>
+                <h3 style="margin-bottom: 1rem;">📘 Example 2: Multi-Language Blog System</h3>
+                <p style="margin-bottom: 0.5rem;"><strong>What this demonstrates:</strong></p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem; color: var(--text-muted);">
+                    <li>Database integration (SQLite auto-setup)</li>
+                    <li>Multi-language content with routing</li>
+                    <li>Admin mode for editing posts inline</li>
+                    <li>Create, read, update operations</li>
+                    <li>Real data-g-* template directives</li>
+                </ul>
+                <p style="color: var(--text-muted); font-size: 0.875rem;"><strong>Try it:</strong> Click language buttons (EN/TR/DE) to switch languages. <a href="index/admin" style="font-weight: 600;">Enable Admin Mode</a> to see edit buttons and create new posts!</p>
+            </div><!--aa-->
+
+            <!-- Main Content -->
+            <main class="my-4" data-g-if="show_list" data-e>
+                <div class="flex flex-between mb-3" data-f>
+                    <div data-fa>
+                        <h2>{{bits.blog_title}}</h2><!--fa-->
+                        <p style="color: var(--text-muted); font-size: 0.875rem;" data-g-if="is_admin" data-fb>Admin Mode Active - <a href="index">Exit Admin Mode</a></p><!--fb-->
+                        <p style="color: var(--text-muted); font-size: 0.875rem;" data-g-if="!is_admin" data-fc><a href="index/admin">Enable Admin Mode</a> to edit posts</p><!--fc-->
+                    </div><!--f-->
+                    <button class="button" data-g-if="is_admin" onclick="openNewPost()" data-g>+ New Post</button><!--g-->
                 </div>
-                <h3 class="mb-2"><a href="post/{{post.safe_url}}">{{post.title}}</a></h3>
-                <p style="color: var(--text-muted); font-size: 0.875rem;" class="mb-2">{{bits.by_author}} {{post.author}}</p>
-                <p class="mb-2">{{post.blurb}}</p>
-                <a href="post/{{post.safe_url}}" class="button">{{bits.read_more}} →</a>
-            </div><!--h-->
 
-            <!-- Pagination -->
-            <div class="flex flex-center gap-2 my-4" data-g-if="has_pagination" data-k>
-                <a href="index/page/{{pagination.prev_page}}" class="button" data-g-if="pagination.has_prev" data-l>← {{bits.previous}}</a><!--l-->
-                <span>{{bits.page}} {{pagination.current_page}} / {{pagination.total_pages}}</span>
-                <a href="index/page/{{pagination.next_page}}" class="button" data-g-if="pagination.has_next" data-m>{{bits.next}} →</a><!--m-->
-            </div><!--k-->
-        </main><!--e-->
+                <!-- Empty State -->
+                <div data-g-if="!has_posts" style="text-align: center; padding: 4rem 2rem; border: 2px dashed var(--border); border-radius: 0.5rem;" data-ga>
+                    <h3 style="margin-bottom: 1rem;">No Posts Yet</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">This blog is empty. Click the button below to create your first post!</p>
+                    <button class="button" data-g-if="is_admin" onclick="openNewPost()">Create First Post</button><!--ga-->
+                    <p style="color: var(--text-muted); margin-top: 1rem;" data-g-if="!is_admin"><a href="index/admin">Enable Admin Mode</a> to add posts</p>
+                </div>
 
-        <!-- Footer -->
-        <footer class="blog-footer p-3" style="text-align: center; color: var(--text-muted);" data-n>
-            <p>Example 2: Multi-Language Blog System | Genes Framework</p>
-        </footer><!--n-->
-    </div>
+                <!-- Post List -->
+                <div data-g-for="post in posts" class="post-card p-3 mb-3" data-h>
+                    <div class="flex flex-between mb-2" data-i>
+                        <span class="badge">{{post.category}}</span>
+                        <div data-j>
+                            <span style="color: var(--text-muted); font-size: 0.875rem;">{{post.reading_time}}</span>
+                            <button class="button edit-btn" data-g-if="is_admin" onclick="editPost('{{post.hash}}', '{{post.title}}', '{{post.safe_url}}', '{{post.blurb}}')">✏ Edit</button><!--j-->
+                        </div><!--i-->
+                    </div>
+                    <h3 class="mb-2"><a href="post/{{post.safe_url}}">{{post.title}}</a></h3>
+                    <p style="color: var(--text-muted); font-size: 0.875rem;" class="mb-2">{{bits.by_author}} {{post.author}}</p>
+                    <p class="mb-2">{{post.blurb}}</p>
+                    <a href="post/{{post.safe_url}}" class="button">{{bits.read_more}} →</a>
+                </div><!--h-->
 
-    <!-- Edit Post Modal -->
-    <div id="edit-modal" class="modal" data-g-if="is_admin" data-o>
-        <div class="modal-content" style="max-width: 48rem;" data-p>
-            <h2 class="mb-3">Edit Post</h2>
-            <form id="edit-form" onsubmit="return savePost(event)" data-q>
-                <input type="hidden" id="edit-hash">
-                <div class="mb-2" data-r>
-                    <label style="display: block; margin-bottom: 0.5rem;">Title</label>
-                    <input type="text" id="edit-title" class="input" required>
-                </div><!--r-->
-                <div class="mb-2" data-s>
-                    <label style="display: block; margin-bottom: 0.5rem;">Slug (URL)</label>
-                    <input type="text" id="edit-slug" class="input" required>
-                </div><!--s-->
-                <div class="mb-2" data-t>
-                    <label style="display: block; margin-bottom: 0.5rem;">Excerpt</label>
-                    <textarea id="edit-blurb" class="input" rows="3"></textarea>
-                </div><!--t-->
-                <div class="mb-2" data-u>
-                    <label style="display: block; margin-bottom: 0.5rem;">Content (HTML)</label>
-                    <textarea id="edit-text" class="input" rows="10"></textarea>
-                </div><!--u-->
-                <div class="flex gap-2" data-v>
-                    <button type="submit" class="button">Save Changes</button>
-                    <button type="button" class="button" onclick="closeModal()">Cancel</button>
-                </div><!--v-->
-            </form><!--q-->
-        </div><!--p-->
-    </div><!--o-->
+                <!-- Pagination -->
+                <div class="flex flex-center gap-2 my-4" data-g-if="has_pagination" data-k>
+                    <a href="index/page/{{pagination.prev_page}}" class="button" data-g-if="pagination.has_prev" data-l>← {{bits.previous}}</a><!--l-->
+                    <span>{{bits.page}} {{pagination.current_page}} / {{pagination.total_pages}}</span>
+                    <a href="index/page/{{pagination.next_page}}" class="button" data-g-if="pagination.has_next" data-m>{{bits.next}} →</a><!--m-->
+                </div><!--k-->
+            </main><!--e-->
 
-    <script src="../../genes.js"></script>
-    <script>
-        function editPost(hash, title, slug, blurb) {
-            g.el('#edit-hash').value = hash;
-            g.el('#edit-title').value = decodeURIComponent(title);
-            g.el('#edit-slug').value = slug;
-            g.el('#edit-blurb').value = decodeURIComponent(blurb);
-            g.el('#edit-text').value = '';
-            g.el('#edit-modal').style.display = 'flex';
-        }
+            <!-- Footer -->
+            <footer class="blog-footer p-3" style="text-align: center; color: var(--text-muted);" data-n>
+                <p>Example 2: Multi-Language Blog System | Genes Framework</p>
+            </footer><!--n-->
+        </div>
 
-        function openNewPost() {
-            g.el('#edit-hash').value = '';
-            g.el('#edit-title').value = '';
-            g.el('#edit-slug').value = '';
-            g.el('#edit-blurb').value = '';
-            g.el('#edit-text').value = '';
-            g.el('#edit-modal').style.display = 'flex';
-        }
+        <!-- Edit Post Modal -->
+        <div id="edit-modal" class="modal" data-g-if="is_admin" data-o>
+            <div class="modal-content" style="max-width: 48rem;" data-p>
+                <h2 class="mb-3">Edit Post</h2>
+                <form id="edit-form" onsubmit="return savePost(event)" data-q>
+                    <input type="hidden" id="edit-hash">
+                    <div class="mb-2" data-r>
+                        <label style="display: block; margin-bottom: 0.5rem;">Title</label>
+                        <input type="text" id="edit-title" class="input" required>
+                    </div><!--r-->
+                    <div class="mb-2" data-s>
+                        <label style="display: block; margin-bottom: 0.5rem;">Slug (URL)</label>
+                        <input type="text" id="edit-slug" class="input" required>
+                    </div><!--s-->
+                    <div class="mb-2" data-t>
+                        <label style="display: block; margin-bottom: 0.5rem;">Excerpt</label>
+                        <textarea id="edit-blurb" class="input" rows="3"></textarea>
+                    </div><!--t-->
+                    <div class="mb-2" data-u>
+                        <label style="display: block; margin-bottom: 0.5rem;">Content (HTML)</label>
+                        <textarea id="edit-text" class="input" rows="10"></textarea>
+                    </div><!--u-->
+                    <div class="flex gap-2" data-v>
+                        <button type="submit" class="button">Save Changes</button>
+                        <button type="button" class="button" onclick="closeModal()">Cancel</button>
+                    </div><!--v-->
+                </form><!--q-->
+            </div><!--p-->
+        </div><!--o-->
 
-        function closeModal() {
-            g.el('#edit-modal').style.display = 'none';
-        }
+        <script src="../../genes.js"></script>
+        <script>
+            function editPost(hash, title, slug, blurb) {
+                g.el('#edit-hash').value = hash;
+                g.el('#edit-title').value = decodeURIComponent(title);
+                g.el('#edit-slug').value = slug;
+                g.el('#edit-blurb').value = decodeURIComponent(blurb);
+                g.el('#edit-text').value = '';
+                g.el('#edit-modal').style.display = 'flex';
+            }
 
-        function savePost(e) {
-            e.preventDefault();
-            const data = new FormData();
-            data.append('action', g.el('#edit-hash').value ? 'update' : 'create');
-            data.append('hash', g.el('#edit-hash').value);
-            data.append('title', g.el('#edit-title').value);
-            data.append('safe_url', g.el('#edit-slug').value);
-            data.append('blurb', g.el('#edit-blurb').value);
-            data.append('text', g.el('#edit-text').value);
-            
-            fetch('', {
-                method: 'POST',
-                body: data
-            })
-            .then(r => r.text())
-            .then(() => {
-                location.reload();
-            })
-            .catch(err => {
-                alert('Error saving post');
-                console.error(err);
-            });
-            
-            return false;
-        }
-    </script>
-</body>
+            function openNewPost() {
+                g.el('#edit-hash').value = '';
+                g.el('#edit-title').value = '';
+                g.el('#edit-slug').value = '';
+                g.el('#edit-blurb').value = '';
+                g.el('#edit-text').value = '';
+                g.el('#edit-modal').style.display = 'flex';
+            }
+
+            function closeModal() {
+                g.el('#edit-modal').style.display = 'none';
+            }
+
+            function savePost(e) {
+                e.preventDefault();
+                const data = new FormData();
+                data.append('action', g.el('#edit-hash').value ? 'update' : 'create');
+                data.append('hash', g.el('#edit-hash').value);
+                data.append('title', g.el('#edit-title').value);
+                data.append('safe_url', g.el('#edit-slug').value);
+                data.append('blurb', g.el('#edit-blurb').value);
+                data.append('text', g.el('#edit-text').value);
+
+                fetch('', {
+                    method: 'POST',
+                    body: data
+                })
+                    .then(r => r.text())
+                    .then(() => {
+                        location.reload();
+                    })
+                    .catch(err => {
+                        alert('Error saving post');
+                        console.error(err);
+                    });
+
+                return false;
+            }
+        </script>
+    </body>
+
 </html>

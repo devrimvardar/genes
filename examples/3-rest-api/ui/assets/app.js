@@ -29,7 +29,7 @@ async function apiRequest(method, endpoint, body = null) {
     }
     
     try {
-        const url = API_BASE + endpoint + '.json';
+        const url = API_BASE + endpoint;
         const response = await fetch(url, options);
         const data = await response.json();
         logAPI(method, endpoint, body, data);
