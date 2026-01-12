@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>genes - Last human-made API & UI framework</title>
+        <link rel="stylesheet" href="../genes.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <a href="index" class="navbar-brand">genes</a>
+                <div class="navbar-menu">
+                    <a href="index" class="nav-link active">Home</a>
+                    <a href="docs" class="nav-link">Docs</a>
+                    <a href="examples" class="nav-link">Examples</a>
+                    <a href="download" class="nav-link">Download</a>
+                    <a href="https://github.com/devrimvardar/genes" class="nav-link">GitHub</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 class="brand">genes</h1>
+                <h2 class="headline">Last human-made API & UI framework</h2>
+                <p class="subtitle">PHP & HTML, CSS, JS</p>
+                <p class="tagline">All vanilla! Zero dependencies! No installation!</p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/devrimvardar/genes" class="btn btn-primary btn-lg">Start Using Genes Now!</a>
+                    <a href="docs" class="btn btn-secondary btn-lg">Read the Docs</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Comparison -->
+        <section class="features-comparison">
+            <div class="container">
+                <div class="row">
+                    <!-- UI Framework Column -->
+                    <div class="col-md-6">
+                        <div class="feature-box">
+                            <h3>UI Framework</h3>
+                            <div class="feature-highlight">
+                                <p><strong>Better than WordPress</strong></p>
+                                <p><strong>Lighter than Node.js</strong></p>
+                                <p><strong>Saner than React/Angular/etc.</strong></p>
+                            </div>
+                            <ul class="feature-list">
+                                <li>CSS framework included</li>
+                                <li>JS framework included</li>
+                                <li>HTML partials & templates</li>
+                                <li>Multi-language support</li>
+                                <li>Zero build tools</li>
+                                <li>~1,300 lines of JavaScript</li>
+                                <li>~1,700 lines of CSS</li>
+                                <li>Works in any browser</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- API Framework Column -->
+                    <div class="col-md-6">
+                        <div class="feature-box">
+                            <h3>API Framework</h3>
+                            <div class="feature-highlight">
+                                <p><strong>Built-in REST API</strong></p>
+                                <p><strong>Auto-initialization from config</strong></p>
+                                <p><strong>CRUD without code</strong></p>
+                            </div>
+                            <ul class="feature-list">
+                                <li>5-table schema included</li>
+                                <li>Filtering & pagination built-in</li>
+                                <li>Multi-tenant ready</li>
+                                <li>Works with/without database</li>
+                                <li>PHP 5.6+ compatible</li>
+                                <li>~5,900 lines of PHP</li>
+                                <li>MySQL & SQLite support</li>
+                                <li>JSON auto-handling</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI-Focused Features -->
+        <section class="ai-features">
+            <div class="container">
+                <h2>Built for AI Services & Human Developers</h2>
+                <p class="section-intro">Genes is designed to be instantly understood by both AI language models and human developers. Clean, readable, self-documenting code with zero magic.</p>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="ai-feature-card">
+                            <h4>Auto-Initialization</h4>
+                            <p>Place a <code>config.json</code> in your data folder. Genes automatically connects to your database and creates the schema. Zero manual setup.</p>
+                            <pre><code>{
+  "database": {
+    "enabled": true,
+    "type": "mysql",
+    "host": "localhost"
+  }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="ai-feature-card">
+                            <h4>Built-in REST API</h4>
+                            <p>Full CRUD on 5 tables without writing a single line of API code. Filtering, pagination, search, and sorting included.</p>
+                            <pre><code>GET  /api/items?filters[type]=todo
+POST /api/items
+PUT  /api/items/:id
+DELETE /api/items/:id</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="ai-feature-card">
+                            <h4>Zero Dependencies</h4>
+                            <p>No Composer. No npm. No build tools. No node_modules folder. Just copy three files and start coding.</p>
+                            <pre><code>genes.php  (~5,900 lines)
+genes.js   (~1,300 lines)
+genes.css  (~1,700 lines)</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Code Examples -->
+        <section class="code-examples">
+            <div class="container">
+                <h2>Get Started in 60 Seconds</h2>
+
+                <div class="code-block-wrapper">
+                    <h4>1. Create index.php</h4>
+                    <pre><code>&lt;?php
+require_once 'genes.php';
+
+g::def("clone", array(
+    "Index" =&gt; function ($bits, $lang, $path) {
+        echo "&lt;h1&gt;Hello, World!&lt;/h1&gt;";
+    }
+));
+
+g::run("route.handle");</code></pre>
+                </div>
+
+                <div class="code-block-wrapper">
+                    <h4>2. Configure routing (data/config.json)</h4>
+                    <pre><code>{
+  "views": {
+    "Index": {
+      "function": "clone.Index",
+      "urls": { "en": "index" }
+    }
+  }
+}</code></pre>
+                </div>
+
+                <div class="code-block-wrapper">
+                    <h4>3. That's it! Open in browser</h4>
+                    <p>Your website is ready. Add database config to enable the built-in REST API with automatic CRUD endpoints.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta">
+            <div class="container">
+                <h2>Great! Now that we've addressed the needs of more than 90% of websites...</h2>
+                <p class="cta-message">Join developers who've chosen simplicity over complexity. Start building with Genes today.</p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/devrimvardar/genes" class="btn btn-primary btn-xl">Get Genes on GitHub</a>
+                    <a href="examples" class="btn btn-secondary btn-xl">View Examples</a>
+                </div>
+                <p class="version-info">Version 2.0 | PHP 5.6+ | MIT License | Zero dependencies</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>genes</h5>
+                        <p>Last human-made API & UI framework</p>
+                        <p>All vanilla! Zero dependencies!</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="index">Home</a></li>
+                            <li><a href="docs">Documentation</a></li>
+                            <li><a href="examples">Examples</a></li>
+                            <li><a href="download">Download</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Resources</h5>
+                        <ul class="footer-links">
+                            <li><a href="https://github.com/devrimvardar/genes/blob/main/README.md">Quick Start</a></li>
+                            <li><a href="https://github.com/devrimvardar/genes/blob/main/CONTRIBUTING.md">Contributing</a></li>
+                            <li><a href="https://github.com/devrimvardar/genes/blob/main/LICENSE">License (MIT)</a></li>
+                            <li><a href="https://github.com/devrimvardar/genes/blob/main/SECURITY.md">Security</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 genes framework | MIT License</p>
+                    <p>Created by <a href="https://devrimvardar.com" target="_blank" rel="noopener">Devrim Vardar</a> | <a href="https://x.com/DevrimVardar" target="_blank" rel="noopener">@DevrimVardar</a></p>
+                    <p class="tagline-footer">Made by humans, for humans (and AI)</p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="../genes.js"></script>
+        <script src="assets/js/main.js"></script>
+    </body>
+
+</html>

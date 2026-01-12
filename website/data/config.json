@@ -1,44 +1,113 @@
 {
+  "clone": {
+    "name": "Genes Website",
+    "domain": "localhost",
+    "type": "platform",
+    "state": "active",
+    "settings": {
+      "theme": "default",
+      "features": []
+    }
+  },
+  "urls": {
+    "cdn": "https://cdn.genes.one/"
+  },
+  "settings": {
+    "debug": true,
+    "timezone": "UTC",
+    "language": "en",
+    "langs": ["en"],
+    "date_format": "Y-m-d H:i:s.u",
+    "log_level": 1,
+    "session_name": "genes_session",
+    "environment": "development"
+  },
+  "application": {
+    "name": "genes",
+    "version": "2.0",
+    "description": "Last human-made API & UI framework"
+  },
+  "meta": {
+    "title": "genes - Last human-made API & UI framework",
+    "description": "All vanilla! Zero dependencies! No installation!",
+    "keywords": "php framework, javascript framework, css framework, zero dependencies, no build tools",
+    "og_image": "ui/img/share.jpg"
+  },
+  "database": {
+    "enabled": false,
+    "type": "mysql",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "name": "",
+    "user": "",
+    "password": "",
+    "charset": "utf8mb4"
+  },
+  "security": {
+    "salt": "tf0EyLG1o7DjwgsNZuXEnV8yTduG45lG89NB5pI7ZHJBsCABEP4nRYttmlFTQWRs",
+    "secret": "mHoFAtFTuxdK0DkrLuT6QL2a4IdRvbptLU8sXQPl9AejD1kRzw8cj63fBu07X3Qm"
+  },
+  "views": {
+    "Index": {
+      "function": "clone.Index",
+      "template": "index",
+      "urls": {
+        "en": "index"
+      }
+    },
+    "Docs": {
+      "function": "clone.Docs",
+      "template": "docs",
+      "urls": {
+        "en": "docs"
+      }
+    },
+    "Examples": {
+      "function": "clone.Examples",
+      "template": "examples",
+      "urls": {
+        "en": "examples"
+      }
+    },
+    "Download": {
+      "function": "clone.Download",
+      "template": "download",
+      "urls": {
+        "en": "download"
+      }
+    }
+  },
   "site": {
-    "name": "Genes Framework",
-    "tagline": "Lightweight PHP & JavaScript Framework",
-    "description": "Zero dependencies, multi-tenant ready, works with or without a database",
+    "name": "genes",
+    "tagline": "Last human-made API & UI framework",
+    "subtitle": "PHP & HTML, CSS, JS",
+    "description": "All vanilla! Zero dependencies! No installation!",
     "version": "2.0",
     "github_url": "https://github.com/devrimvardar/genes",
     "repo_name": "devrimvardar/genes"
   },
-  "features": [
-    {
-      "icon": "⚡",
-      "title": "Zero Dependencies",
-      "description": "No Composer, npm, or build tools required. Just copy files and start coding."
-    },
-    {
-      "icon": "🏢",
-      "title": "Multi-Tenant Ready",
-      "description": "Built-in clone-based isolation for SaaS platforms and multi-site applications."
-    },
-    {
-      "icon": "🗄️",
-      "title": "Database Agnostic",
-      "description": "Works with MySQL, SQLite, or no database at all. Your choice."
-    },
-    {
-      "icon": "🎯",
-      "title": "PHP 5.6+ Compatible",
-      "description": "Runs on both legacy and modern servers without modification."
-    },
-    {
-      "icon": "📦",
-      "title": "Single File Design",
-      "description": "genes.php (~6,400 lines), genes.js (~1,300 lines). That's it."
-    },
-    {
-      "icon": "🤖",
-      "title": "AI-Friendly",
-      "description": "Clear, readable, self-documenting code designed for humans and AI."
-    }
-  ],
+  "features": {
+    "ui": [
+      "Better than WordPress",
+      "Lighter than Node.js",
+      "Saner than React/Angular/etc.",
+      "CSS framework included",
+      "JS framework included",
+      "HTML partials & templates",
+      "Multi-language support",
+      "Zero build tools"
+    ],
+    "api": [
+      "Built-in REST API",
+      "Auto-initialization from config",
+      "5-table schema included",
+      "CRUD without code",
+      "Filtering & pagination",
+      "Multi-tenant ready",
+      "Works with/without database",
+      "PHP 5.6+ compatible"
+    ]
+  },
   "stats": {
     "php_lines": "~6,400",
     "js_lines": "~1,300",

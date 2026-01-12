@@ -33,18 +33,19 @@
         "og_image": "ui/img/share.jpg"
     },
     "database": {
-        "enabled": false,
-        "type": "mysql",
-        "host": "127.0.0.1",
-        "port": 3306,
-        "name": "",
+        "enabled": true,
+        "type": "sqlite",
+        "host": "",
+        "port": 0,
+        "name": "main",
+        "database": "blog.db",
         "user": "",
         "password": "",
         "charset": "utf8mb4"
     },
     "security": {
-        "salt": "sgsqjP1vM5JOtbcJpFk47Pp4oIOqt2UmSaIYnRxZ81OY8QVmMYOrglmliXN1dYfj",
-        "secret": "aCJg4sXhg9YX3L7EtayiFrK2NhY9QZJBnpIuUZTXeAsUvHfRvzuOXEVY3SAygNYT"
+        "salt": "",
+        "secret": ""
     },
     "admin": {
         "name": "Admin User",
@@ -59,7 +60,7 @@
     },
     "setup": {
         "completed": true,
-        "completed_at": "2026-01-11 01:23:51",
+        "completed_at": "2026-01-11 22:33:15",
         "version": "1.0.0"
     },
     "views": {
@@ -67,7 +68,18 @@
             "function": "clone.Index",
             "template": "index",
             "urls": {
-                "en": "index"
+                "en": "index",
+                "tr": "anasayfa",
+                "de": "startseite"
+            }
+        },
+        "Post": {
+            "function": "clone.Post",
+            "template": "post",
+            "urls": {
+                "en": "post",
+                "tr": "yazi",
+                "de": "beitrag"
             }
         },
         "Admin": {
@@ -80,7 +92,59 @@
     },
     "bits": {
         "site_name": {
-            "en": "My Site"
+            "en": "Blog System",
+            "tr": "Blog Sistemi",
+            "de": "Blog-System"
+        },
+        "site_title": {
+            "en": "Multi-Language Blog",
+            "tr": "Çok Dilli Blog",
+            "de": "Mehrsprachiger Blog"
+        },
+        "site_description": {
+            "en": "A demonstration of Genes database features",
+            "tr": "Genes veritabanı özelliklerinin gösterimi",
+            "de": "Eine Demonstration der Genes-Datenbankfunktionen"
+        },
+        "blog_title": {
+            "en": "Recent Posts",
+            "tr": "Son Yazılar",
+            "de": "Neueste Beiträge"
+        },
+        "home": {
+            "en": "Home",
+            "tr": "Ana Sayfa",
+            "de": "Startseite"
+        },
+        "admin": {
+            "en": "Admin",
+            "tr": "Yönetim",
+            "de": "Verwaltung"
+        },
+        "by_author": {
+            "en": "by",
+            "tr": "yazan",
+            "de": "von"
+        },
+        "read_more": {
+            "en": "Read More",
+            "tr": "Devamını Oku",
+            "de": "Weiterlesen"
+        },
+        "previous": {
+            "en": "Previous",
+            "tr": "Önceki",
+            "de": "Zurück"
+        },
+        "next": {
+            "en": "Next",
+            "tr": "Sonraki",
+            "de": "Weiter"
+        },
+        "page": {
+            "en": "Page",
+            "tr": "Sayfa",
+            "de": "Seite"
         }
     },
     "env": {
@@ -93,6 +157,64 @@
                 "mods": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\2-blog-system\\mods\\",
                 "uploads": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\2-blog-system\\uploads\\"
             }
+        }
+    },
+    "routes": {
+        "en": {
+            "/": "Index",
+            "/blog": "Index",
+            "/blog/*": "Post"
+        },
+        "tr": {
+            "/": "Index",
+            "/blog": "Index",
+            "/blog/*": "Post"
+        },
+        "de": {
+            "/": "Index",
+            "/blog": "Index",
+            "/blog/*": "Post"
+        }
+    },
+    "translations": {
+        "en": {
+            "site_title": "Multi-Language Blog",
+            "site_description": "Demonstrating Genes Framework database integration",
+            "blog_title": "Blog Posts",
+            "read_more": "Read More",
+            "by_author": "by",
+            "category": "Category",
+            "related_posts": "Related Posts",
+            "page": "Page",
+            "previous": "Previous",
+            "next": "Next",
+            "back_to_blog": "\u2190 Back to Blog"
+        },
+        "tr": {
+            "site_title": "\u00c7ok Dilli Blog",
+            "site_description": "Genes Framework veritaban\u0131 entegrasyonunu g\u00f6sterme",
+            "blog_title": "Blog Yaz\u0131lar\u0131",
+            "read_more": "Devam\u0131n\u0131 Oku",
+            "by_author": "yazan",
+            "category": "Kategori",
+            "related_posts": "\u0130lgili Yaz\u0131lar",
+            "page": "Sayfa",
+            "previous": "\u00d6nceki",
+            "next": "Sonraki",
+            "back_to_blog": "\u2190 Blo\u011fa D\u00f6n"
+        },
+        "de": {
+            "site_title": "Mehrsprachiger Blog",
+            "site_description": "Genes Framework Datenbankintegration demonstrieren",
+            "blog_title": "Blog-Beitr\u00e4ge",
+            "read_more": "Weiterlesen",
+            "by_author": "von",
+            "category": "Kategorie",
+            "related_posts": "Verwandte Beitr\u00e4ge",
+            "page": "Seite",
+            "previous": "Zur\u00fcck",
+            "next": "Weiter",
+            "back_to_blog": "\u2190 Zur\u00fcck zum Blog"
         }
     },
     "base_url": "https://localhost/dv-public/genes/examples/2-blog-system/",

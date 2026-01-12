@@ -1,0 +1,176 @@
+{
+    "urls": {
+        "genes_ui": "https:\/\/ui.genes.one\/",
+        "genes_cdn": "https:\/\/cdn.genes.one\/",
+        "clone_ui": ""
+    },
+    "settings": {
+        "allow_setup": 0,
+        "reset_pwd": 0,
+        "allow_cors": 0,
+        "api_render_html": 1,
+        "api_serve_html": 0,
+        "api_serve_tmpl": 0,
+        "api_serve_data": 1,
+        "ui_render_html": 0,
+        "ui_handle_urls": 0,
+        "ui_parse_urls": 0,
+        "msg_level": 4,
+        "log_level": 1,
+        "output_types": {
+            "json": true
+        },
+        "cache_renders": 0,
+        "compress_renders": 0,
+        "cache_compress_assets": 0,
+        "langs": [
+            "en"
+        ],
+        "user_types": [
+            "guest",
+            "user",
+            "admin"
+        ],
+        "user_states": [
+            "active",
+            "inactive"
+        ],
+        "timezone": "Europe\/Tallinn",
+        "date_time_format": "Y-m-d H:i:s.u"
+    },
+    "clone": {
+        "chars": "u0phzwfvom8ybinks195et4j2rc673qdgxa",
+        "salt": "mS%,o$=x@aX+^=t$opvavfChM3;bXRZloyE&#O!ns-$;L@Oyt,ua%-VIgvB*;}}N",
+        "secret_salt": "P((FPAlW;40*e^V8v:mgBD5kX|arrR?xa!P,&OfbmvhN+[t:):fjeUl{brQ4eja%",
+        "user_salt": "bHDl3KY,{-.x[HUdaU3cex2k;@VVm+l(K,[rm,o_=fM}s=q2Fy{9KK_RFP%t_fC2",
+        "hash": "bk46z7ydxl1dvz",
+        "alias": "rrkqzq0h396km83a",
+        "name": "Index Something",
+        "contact": "",
+        "open_secret": "vmuAUQAG",
+        "secret": "e3b86da461f60f8d3859e88a921f3269",
+        "clone_create": "20240908203313776"
+    },
+    "admin": {
+        "hash": "bk46z7ydxl1dvz",
+        "alias": "admin",
+        "email": "",
+        "open_pass": "LQO7NWEF",
+        "pass": "10b38d0796909bedf434b340ec6e1044"
+    },
+    "users": [],
+    "db": {
+        "conns": {
+            "default": {
+                "type": "mysql",
+                "path": "127.0.0.1",
+                "name": "nodoncec_genes",
+                "user": "nodoncec_genes",
+                "pass": "pa-gzCI&VGOP",
+                "charset": "utf8"
+            }
+        },
+        "tables": {
+            "clones": [
+                "default",
+                "g_clones"
+            ],
+            "persons": [
+                "default",
+                "g_persons"
+            ],
+            "items": [
+                "default",
+                "g_items"
+            ],
+            "labels": [
+                "default",
+                "g_labels"
+            ],
+            "events": [
+                "default",
+                "g_events"
+            ]
+        }
+    },
+    "views": {
+        "Index": {
+            "urls": {
+                "en": "index"
+            }
+        },
+        "Login": {
+            "urls": {
+                "en": "login"
+            }
+        },
+        "Logout": {
+            "urls": {
+                "en": "logout"
+            }
+        }
+    },
+    "mods": [],
+    "tmpls": [],
+    "bits": {
+        "clone_title": {
+            "en": "A Genes Clone"
+        },
+        "lang_en": {
+            "en": "English"
+        }
+    },
+    "base": [],
+    "rules": {
+        "no": []
+    },
+    "checks": {
+        "db_is_proper": 1
+    },
+    "env": {
+        "localhost_NodOnce_Genes_clones_index": {
+            "paths": {
+                "genes_api_folder": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\api\\",
+                "genes_core_folder": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\api\\core\\",
+                "genes_mods_folder": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\api\\mods\\",
+                "genes_ui_folder": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\ui\\",
+                "genes_ui_tmpls_folder": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\ui\\tmpls\\base\\",
+                "genes_ui_html": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\ui\\tmpls\\base\\root.html",
+                "clone_folder": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\clones\\index\\",
+                "clone_cache_folder": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\clones\\index\\cache\\",
+                "clone_ui_folder": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\clones\\index\\ui\\",
+                "clone_ui_html": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\clones\\index\\ui\\index.html",
+                "clone_data_folder": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\clones\\index\\data\\",
+                "clone_log_file": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\clones\\index\\data\\sys.log",
+                "clone_config_file": "C:\\DV\\OneDrive\\Code\\NodOnce\\Genes\\clones\\index\\data\\config.json",
+                "clone_views_file": "",
+                "clone_mods_file": "",
+                "clone_tmpls_file": "",
+                "clone_bits_file": "",
+                "clone_base_file": ""
+            }
+        },
+        "labs-nodonce-com_str": {
+            "paths": {
+                "genes_api_folder": "\/home\/nodoncec\/_statik\/_labs\/str\/api\/",
+                "genes_core_folder": "\/home\/nodoncec\/_statik\/_labs\/str\/api\/core\/",
+                "genes_mods_folder": "\/home\/nodoncec\/_statik\/_labs\/str\/api\/mods\/",
+                "genes_ui_folder": "\/home\/nodoncec\/_statik\/_labs\/str\/ui\/",
+                "genes_ui_tmpls_folder": "\/home\/nodoncec\/_statik\/_labs\/str\/ui\/tmpls\/base\/",
+                "genes_ui_html": "\/home\/nodoncec\/_statik\/_labs\/str\/ui\/tmpls\/base\/root.html",
+                "clone_folder": "\/home\/nodoncec\/_statik\/_labs\/str\/",
+                "clone_cache_folder": "\/home\/nodoncec\/_statik\/_labs\/str\/cache\/",
+                "clone_ui_folder": "\/home\/nodoncec\/_statik\/_labs\/str\/ui\/",
+                "clone_ui_html": "\/home\/nodoncec\/_statik\/_labs\/str\/ui\/index.html",
+                "clone_data_folder": "\/home\/nodoncec\/_statik\/_labs\/str\/data\/",
+                "clone_log_file": "\/home\/nodoncec\/_statik\/_labs\/str\/data\/sys.log",
+                "clone_config_file": "\/home\/nodoncec\/_statik\/_labs\/str\/data\/config.json",
+                "clone_views_file": "",
+                "clone_mods_file": "",
+                "clone_tmpls_file": "",
+                "clone_bits_file": "",
+                "clone_base_file": ""
+            }
+        }
+    }
+}

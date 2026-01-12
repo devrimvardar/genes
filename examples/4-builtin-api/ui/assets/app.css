@@ -1,0 +1,130 @@
+/* Built-in API Demo Styles */
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.todo-item.completed {
+    background: #f0f0f0;
+}
+
+.todo-item.completed .todo-title {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.todo-content {
+    flex: 1;
+}
+
+.todo-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.todo-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.todo-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.priority-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.priority-high {
+    background: #ff4444;
+    color: white;
+}
+
+.priority-normal {
+    background: #4CAF50;
+    color: white;
+}
+
+.priority-low {
+    background: #2196F3;
+    color: white;
+}
+
+.api-docs {
+    margin-top: 12px;
+}
+
+.api-endpoint {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.api-endpoint:last-child {
+    border-bottom: none;
+}
+
+.api-endpoint code {
+    display: inline-block;
+    margin-right: 8px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.method-get {
+    background: #4CAF50;
+    color: white;
+}
+
+.method-post {
+    background: #2196F3;
+    color: white;
+}
+
+.method-put {
+    background: #FF9800;
+    color: white;
+}
+
+.method-delete {
+    background: #f44336;
+    color: white;
+}
+
+.bg-info {
+    background: #2196F3;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+pre code {
+    display: block;
+    line-height: 1.6;
+}
+
+#apiLog {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+    font-family: monospace;
+}

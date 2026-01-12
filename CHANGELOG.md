@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+- **Official Website**: Complete marketing website built with Genes itself (website/)
+  - Professional landing page showcasing framework features
+  - Interactive documentation page
+  - Examples gallery with live demos
+  - Download/installation guide
+  - Responsive navigation and footer
+  - Author credits (Devrim Vardar - @DevrimVardar)
+- **Example Reorganization**: Restructured examples to match actual use cases
+  - 1-landing-page: Multi-language landing page
+  - 2-blog-system: Complete blog with database
+  - 3-rest-api: Custom REST API implementation
+  - 4-builtin-api: Zero-code REST API demo
+- **Documentation Updates**: Enhanced API documentation and quickstart guides
+
+### Changed
+- Cleaned up example structure (removed unused examples)
+- Updated README with accurate feature descriptions
+- Improved routing system documentation
+
+### Fixed
+- View routing now requires explicit `function` property in config.json
+- Template path resolution for multi-page applications
+- Navigation links and asset paths for base tag compatibility
+
+---
+
 ## [2.0.0] - 2025-10-11
 
 ### Added

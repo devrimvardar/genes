@@ -1298,21 +1298,11 @@ g::def("route", array(
             // Otherwise, detect from SCRIPT_NAME
             elseif (isset($_SERVER['SCRIPT_NAME'])) {
                 $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
-
-                // If SCRIPT_NAME has 3+ path segments, it's a filesystem path (no RewriteBase)
-                // Example: /dv-private/all_clones/expo.live/index.php
-                if (substr_count($scriptName, '/') >= 3) {
-                    // Extract base from REQUEST_URI first segment
-                    $uriParts = explode('/', trim($path, '/'));
-                    if (count($uriParts) > 1) {
-                        $basePath = '/' . $uriParts[0];
-                    }
-                } else {
-                    // SCRIPT_NAME is clean URL path like /expo_live/index.php
-                    $scriptPath = dirname($scriptName);
-                    if ($scriptPath !== '/' && $scriptPath !== '.') {
-                        $basePath = $scriptPath;
-                    }
+                
+                // Get the directory containing index.php
+                $scriptPath = dirname($scriptName);
+                if ($scriptPath !== '/' && $scriptPath !== '.') {
+                    $basePath = $scriptPath;
                 }
             }
 

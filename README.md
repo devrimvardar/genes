@@ -75,21 +75,24 @@ echo "Hello, Genes!";
 
 ### 2. Database App
 
+**`data/config.json`:**
+```json
+{
+    "database": {
+        "enabled": true,
+        "type": "sqlite",
+        "database": "data/app.db"
+    }
+}
+```
+
 **`index.php`:**
 ```php
 <?php
 require_once './genes.php';
 
-// Connect to database
-g::run("db.connect", array(
-    "host" => "localhost",
-    "name" => "mydb",
-    "user" => "root",
-    "pass" => ""
-));
-
-// Create tables
-g::run("db.createSchema");
+// Database auto-connects from config.json
+// Schema auto-creates if database doesn't exist
 
 // Insert data
 $hash = g::run("db.insert", "persons", array(
@@ -102,78 +105,87 @@ $users = g::run("db.select", "persons");
 print_r($users);
 ```
 
-### 3. REST API
+### 3. Built-in REST API
+
+**`data/config.json`:**
+```json
+{
+    "database": {
+        "enabled": true,
+        "type": "sqlite",
+        "database": "data/app.db"
+    }
+}
+```
 
 **`index.php`:**
 ```php
 <?php
 require_once './genes.php';
 
-// Setup
-g::run("db.connect", array(
-    "host" => "localhost",
-    "name" => "mydb",
-    "user" => "root",
-    "pass" => ""
-));
-
-g::run("route.parseUrl");
-$request = g::get("request");
-
-// Handle API requests
-if ($request["segments"][0] === "api") {
-    $table = $request["segments"][1];
-    $result = g::run("api.handle", $table);
-    g::run("api.respond", $result);
-}
+// That's it! API is ready at /api/* routes
+g::run("route.handle");
 ```
 
-**Usage:**
+**Built-in API Endpoints:**
 ```bash
-# GET all users
-curl http://localhost:8000/api/persons
+# List all items
+GET /api/items
 
-# CREATE user
-curl -X POST http://localhost:8000/api/persons \
-  -H "Content-Type: application/json" \
-  -d '{"name":"John","email":"john@example.com"}'
+# Filter items
+GET /api/items?filters[type]=todo
+
+# Get single item
+GET /api/items/:hash
+
+# Create item
+POST /api/items -d '{"type":"todo","title":"My Todo"}'
+
+# Update item
+PUT /api/items/:hash -d '{"state":"completed"}'
+
+# Delete item
+DELETE /api/items/:hash
 ```
+
+Works on all tables: `/api/items`, `/api/persons`, `/api/labels`, `/api/clones`, `/api/events`
 
 ---
 
 ## 📖 Documentation
 
-- **[AI Framework Guide](docs/GENES-AI-FRAMEWORK.md)** - Complete guide for AI coding agents (~40 pages)
-- **[Quick Reference](docs/GENES-QUICKREF.md)** - One-page cheat sheet
-- **[Examples](docs/GENES-EXAMPLES.md)** - Real-world code examples (~20 pages)
-- **[Installation Guide](docs/INSTALLATION.md)** - Detailed setup instructions
+### Getting Started
+- **[Quickstart Guide](docs/QUICKSTART.md)** - Get up and running in 5 minutes
+- **[Examples](examples/)** - Complete working applications
+
+### Reference
 - **[API Reference](docs/API.md)** - Complete function reference
+- **[Database Schema](DATABASE-SCHEMA.md)** - 5-table schema documentation
+- **[Architecture](docs/ARCHITECTURE.md)** - Framework design & philosophy
+- **[Multi-Tenancy](docs/MULTI-TENANCY.md)** - Building multi-tenant apps
 
 ### Core Concepts
 
-#### PHP Backend (Class `g`)
+**The `g` Class** - Everything runs through one global class:
 
 ```php
-// State management
-g::set("key", $value)              // Store data
-g::get("key")                      // Retrieve data
+// Database
+g::run("db.insert", "items", $data)
+g::run("db.select", "items", $conditions)
 
-// Function registry
-g::run("db.select", "persons")     // Execute function
-g::run("auth.login", $email, $pass) // With arguments
+// Templates
+g::run("tpl.renderView", "Index", $data)
+
+// Authentication
+g::run("auth.login", $email, $password)
 ```
 
-#### JavaScript Frontend (Object `g`)
-
-```javascript
-// DOM utilities
-g.el("#id")                        // querySelector
-g.on("click", ".btn", fn)          // Delegated events
-
-// API integration
-g.api.list("persons", callback)    // GET /api/persons
-g.api.create("persons", data, cb)  // POST /api/persons
-```
+**5-Table Schema** - Universal structure for all content:
+- `clones` - Projects/instances (multi-tenant master)
+- `persons` - Users (with clone_id)
+- `items` - Content (posts, products, etc - with clone_id)
+- `labels` - Categories/tags (with clone_id)
+- `events` - Activity log (with clone_id)
 
 ---
 
@@ -211,11 +223,16 @@ See [DATABASE-SCHEMA.md](DATABASE-SCHEMA.md) for complete schema reference.
 
 Check out the [examples/](examples/) folder for complete working applications:
 
-- **Hello World** - Minimal setup
-- **Database CRUD** - Full database operations
-- **REST API** - Complete API server
-- **Blog System** - Real-world blog with auth
-- **Single Page App** - Frontend-driven application
+### [Example 1: Landing Page](examples/1-landing-page/)
+Multi-language landing page with no database. Demonstrates template engine, routing, partials, and responsive CSS.
+
+### [Example 2: Blog System](examples/2-blog-system/)
+Full-featured blog with multi-language support. Shows proper use of the 5-table schema, pagination, and related content.
+
+### [Example 3: REST API / Todo](examples/3-rest-api/)
+Complete RESTful API with CRUD operations. Includes interactive demo UI and proper HTTP method routing.
+
+**[See all examples →](examples/README.md)**
 
 ---
 

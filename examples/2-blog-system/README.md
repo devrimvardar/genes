@@ -1,137 +1,205 @@
-# Example 2: Multi-Tenant Blog System
+# Example 2: Multi-Language Blog System
 
-Complete blog system demonstrating **multi-clone architecture** with proper isolation.
+This example demonstrates how to build a complete multi-language blog system using the Genes Framework with SQLite database integration.
 
-## What This Demonstrates
+## What This Example Teaches
 
-- ✅ Multi-tenant clone-based isolation
-- ✅ Items table for blog posts
-- ✅ Labels for categories and tags
-- ✅ Person (author) relationships
-- ✅ Events for analytics
-- ✅ URL routing and safe_url patterns
-- ✅ Clone context management
+### 1. **Genes Standard Database Schema**
+- Using the 5-table schema: `clones`, `persons`, `items`, `labels`, `events`
+- Blog posts stored in `items` table with `type="post"` and `state="published"`
+- Categories/tags using the `labels` table
+- Flexible JSON fields (`labels`, `meta`, `media`, `data`) for extensibility
 
-## Features
+### 2. **Database Operations**
+- `db.createSchema()` - Creates standard Genes tables
+- `db.insert()` - Adds records with auto-generated hash, timestamps, clone_id
+- `db.select()` - Queries with conditions
+- Using `clone_id` for multi-tenant isolation
 
-- Multiple blogs on single database
-- Automatic clone_id filtering
-- Blog posts with categories
-- Author attribution
-- View tracking (events)
-- Recent posts listing
-- Single post view
+### 3. **Multi-Language Content**
+- Language stored in `labels` JSON field alongside categories
+- Same routing structure for all languages
+- Language-filtered queries in clone functions
+- Translations in config.json
+
+### 4. **Template Features**
+- `data-g-if` for conditional rendering (pagination, related posts)
+- `data-g-for` for loops (post lists)
+- `data-g-bind` for text content
+- `data-g-html` for HTML content (post body)
+- `data-g-attr` for dynamic attributes (links)
+
+### 5. **Advanced Features**
+- Pagination with page query parameter
+- Related posts by category
+- JSON field parsing (labels, meta)
+- Auto-setup on first run
+
+## File Structure
+
+```
+2-blog-system/
+├── index.php              # Main application with database setup
+├── data/
+│   ├── config.json        # Routes, views, translations
+│   └── blog.db            # SQLite database (auto-created)
+├── ui/
+│   ├── index.html         # Blog post list template
+│   ├── post.html          # Single post template
+│   └── assets/
+│       └── app.css        # Blog-specific styles
+├── cache/                 # Template cache
+└── README.md             # This file
+```
+
+## Database Schema Usage
+
+### Items Table (Blog Posts)
+```php
+array(
+    "type" => "post",                    // Content type
+    "state" => "published",              // Visibility state
+    "title" => "Post Title",             // Post title
+    "safe_url" => "post-slug",           // URL slug (unique)
+    "blurb" => "Excerpt...",             // Short description
+    "text" => "<p>Content...</p>",       // Full HTML content
+    "labels" => json_encode(array(       // Language + category
+        "en", "tutorial"
+    )),
+    "meta" => json_encode(array(         // Metadata
+        "author" => "John Doe",
+        "reading_time" => "5 min"
+    ))
+)
+```
+
+### Labels Table (Categories/Languages)
+```php
+array(
+    "type" => "category",                // Label type
+    "key" => "tutorial",                 // Machine-readable key
+    "name" => "Tutorial"                 // Display name
+)
+```
+
+## How It Works
+
+### 1. Setup (First Run)
+- Creates SQLite database at `data/blog.db`
+- Runs `db.createSchema()` to create 5 standard tables
+- Creates blog clone in `clones` table
+- Seeds categories in `labels` table
+- Seeds sample posts in `items` table
+
+### 2. Routing
+- `/blog` → Shows paginated post list
+- `/blog/post-slug` → Shows single post
+- Works for all languages: `/`, `/tr`, `/de`
+
+### 3. Clone Functions
+
+**Index** - Post List:
+- Selects all posts with `type="post"` and `state="published"`
+- Filters by language from `labels` JSON field
+- Sorts by `created_at` descending
+- Paginates results (5 per page)
+
+**Post** - Single Post:
+- Finds post by `safe_url` slug
+- Parses `labels` and `meta` JSON fields
+- Queries related posts (same category + language)
+- Renders single post template
+
+### 4. Template Rendering
+- `data-g-for="post in posts"` loops through results
+- `data-g-bind="post.title"` displays text
+- `data-g-html="post.text"` displays HTML content
+- `data-g-attr="href:/blog/{{post.safe_url}}"` creates dynamic links
 
 ## Running the Example
 
-```bash
-php -S localhost:8001 -t examples/2-blog-system
+1. **Access the blog:**
+   ```
+   http://localhost/examples/2-blog-system/
+   ```
+
+2. **Switch languages:**
+   - English: `/`
+   - Turkish: `/tr`
+   - German: `/de`
+
+3. **Navigate:**
+   - Click post titles to view full content
+   - Use pagination to browse posts
+   - View related posts at bottom of single post page
+
+## Key Takeaways
+
+### ✅ DO:
+- Use `items` table for ALL content (posts, pages, products, etc.)
+- Set `type` field to categorize content
+- Store language in `labels` JSON field
+- Use `safe_url` for URL slugs
+- Use `blurb` for excerpts, `text` for full content
+- Store metadata in `meta` JSON field
+- Configure database in `config.json` (auto-connects and creates schema)
+- Use `db.select()`, `db.insert()`, `db.update()`, `db.delete()` for queries
+
+### ❌ DON'T:
+- Create custom database tables (e.g., `posts`, `articles`)
+- Store language in separate columns
+- Write raw SQL queries
+- Mix languages in the same route
+
+## Adapting for Your Project
+
+### Adding Comments
+Store comments as `items` with `type="comment"` and reference post in `meta`:
+```php
+array(
+    "type" => "comment",
+    "state" => "approved",
+    "text" => "Great post!",
+    "meta" => json_encode(array(
+        "post_hash" => $postHash,
+        "author_name" => "Jane"
+    ))
+)
 ```
 
-Visit: 
-- `http://localhost:8001` - Blog home (list of posts)
-- `http://localhost:8001/?post=my-first-post` - Single post view
-
-## Clone Isolation
-
-This example demonstrates how multiple blogs can coexist:
-
+### Adding Authors
+Use the `persons` table:
 ```php
-// Blog A (clone_id = 'abc123')
-Clone: "Tech Blog"
-Posts:
-  - "Understanding PHP 5.6" (clone_id = 'abc123')
-  - "Database Design" (clone_id = 'abc123')
-
-// Blog B (clone_id = 'def456')
-Clone: "Food Blog"
-Posts:
-  - "Best Pasta Recipes" (clone_id = 'def456')
-  - "Italian Cooking" (clone_id = 'def456')
-
-// Setting context to Blog A ONLY shows Blog A posts
-g::run("db.setClone", "abc123");
-$posts = g::run("db.select", "items", array("type" => "post"));
-// Returns ONLY Tech Blog posts!
-```
-
-## Schema Usage
-
-### items Table (Blog Posts)
-
-```php
-g::run("db.insert", "items", array(
-    "type" => "post",
-    "state" => "published",
-    "title" => "My Blog Post",
-    "safe_url" => "my-blog-post",
-    "blurb" => "Short intro...",
-    "text" => "Full post content here...",
-    "created_by" => $authorHash
-    // clone_id auto-added!
+$person = g::run("db.insert", "persons", array(
+    "type" => "author",
+    "alias" => "johndoe",
+    "name" => "John Doe"
 ));
 ```
 
-### labels Table (Categories)
+Reference in post:
+```php
+"created_by" => $personHash
+```
 
+### Adding Tags
+Store in `labels` table with `type="tag"`:
 ```php
 g::run("db.insert", "labels", array(
-    "type" => "category",
-    "key" => "tech",
-    "name" => "Technology"
-    // clone_id auto-added!
+    "type" => "tag",
+    "key" => "php",
+    "name" => "PHP"
 ));
 ```
 
-### events Table (Analytics)
-
+Reference in post labels:
 ```php
-g::run("db.insert", "events", array(
-    "type" => "post.viewed",
-    "item_id" => $postHash,
-    "data" => json_encode(array("ip" => $_SERVER['REMOTE_ADDR']))
-    // clone_id auto-added!
-));
+"labels" => json_encode(array("en", "tutorial", "php", "database"))
 ```
 
-## Key Patterns
+## Learn More
 
-### 1. Clone Detection
-```php
-// In real app, detect from subdomain or domain
-$clones = g::run("db.select", "clones", array(
-    "domain" => $_SERVER['HTTP_HOST']
-));
-g::run("db.setClone", $clones[0]['hash']);
-```
-
-### 2. Author Relationship
-```php
-// Get post with author info
-$post = g::run("db.get", "items", $postHash);
-$author = g::run("db.get", "persons", $post['created_by']);
-```
-
-### 3. Category Filtering
-```php
-// Filter posts by category (using labels)
-$posts = g::run("db.select", "items", array(
-    "type" => "post",
-    "state" => "published"
-));
-
-// Filter in PHP where labels contain category hash
-$filtered = array();
-foreach ($posts as $post) {
-    $labels = json_decode($post['labels'], true);
-    if (in_array($categoryHash, $labels)) {
-        $filtered[] = $post;
-    }
-}
-```
-
-## Next Steps
-
-- **REST API** → See Example 3
-- **CRUD Basics** → See Example 1
-- **Documentation** → Read `/docs`
+- See `GENES-V2-CAPABILITIES.md` for complete template engine reference
+- See `DATABASE-SCHEMA.md` for full schema documentation
+- Check Example 1 for multi-language routing basics
+- Check Example 3 for REST API implementation

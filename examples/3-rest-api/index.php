@@ -1,440 +1,290 @@
 <?php
 /**
- * Example 3: REST API with Clone Context
+ * Example 3: REST API / Todo System
  * 
  * Demonstrates:
- * - RESTful API endpoints
- * - Multi-tenant clone isolation
- * - JSON request/response
- * - CORS support
- * - Error handling
+ * - Building a RESTful API with Genes Framework
+ * - Using Genes standard schema (items table for todos)
+ * - JSON responses
+ * - CRUD operations (Create, Read, Update, Delete)
+ * - User authentication with persons table
+ * - API routes with /api/* prefix
+ * - Status codes and error handling
  * 
  * PHP 5.6+ Compatible
  */
 
 require_once '../../genes.php';
 
-// ============================================================================
-// CORS HEADERS
-// ============================================================================
-
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Content-Type: application/json");
-
-// Handle preflight OPTIONS request
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
+// Suppress all output and errors for clean JSON responses
+error_reporting(0);
+ini_set('display_errors', '0');
+ob_start();
 
 // ============================================================================
-// SETUP
+// DATABASE SETUP
 // ============================================================================
 
-// Connect to database
-g::run("db.connect", array(
-    "driver" => "sqlite",
-    "name" => "main",
-    "database" => "data/api.db"
-));
-
-// Create schema
-g::run("db.createSchema", "main");
-
-// ============================================================================
-// AUTHENTICATION & CLONE CONTEXT
-// ============================================================================
-
-// In a real application, you would:
-// 1. Get API token from Authorization header
-// 2. Look up token in database to find clone_id
-// 3. Set clone context based on token
-
-// For this demo, we'll get or create a default clone
-$existingClones = g::run("db.select", "clones", array("domain" => "api-demo.local"));
-
-if (!empty($existingClones)) {
-    $clone = $existingClones[0];
-} else {
-    $cloneHash = g::run("db.insert", "clones", array(
-        "name" => "API Demo Clone",
-        "domain" => "api-demo.local",
-        "type" => "api",
-        "state" => "active"
-    ));
-    $clone = g::run("db.get", "clones", $cloneHash);
-}
-
-// Set clone context - ALL API queries now scoped to this clone
-g::run("db.setClone", $clone['hash']);
-
-// ============================================================================
-// ROUTING
-// ============================================================================
-
-// Parse request URL
-$requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
-$requestMethod = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
-
-// Remove query string
-$path = strtok($requestUri, '?');
-
-// Remove leading/trailing slashes
-$path = trim($path, '/');
-
-// Split into segments
-$segments = !empty($path) ? explode('/', $path) : array();
-
-// API routes should start with 'api'
-if (empty($segments) || $segments[0] !== 'api') {
-    sendError("Invalid API endpoint", 404);
-}
-
-// Remove 'api' from segments
-array_shift($segments);
-
-// Get resource and ID
-$resource = isset($segments[0]) ? $segments[0] : '';
-$id = isset($segments[1]) ? $segments[1] : null;
-
-// Route to appropriate handler
-switch ($resource) {
-    case 'posts':
-        handlePosts($requestMethod, $id);
-        break;
+function setupTodoAPI() {
+    // Database auto-connects from config.json (database.enabled = true)
+    // Schema auto-creates during initialization if needed
+    $dbPath = __DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'todos.db';
     
-    case 'persons':
-        handlePersons($requestMethod, $id);
-        break;
+    // Get or create clone
+    $clones = g::run("db.select", "clones", array("domain" => "todo.local"), "main");
     
-    case 'labels':
-        handleLabels($requestMethod, $id);
-        break;
-    
-    case 'events':
-        handleEvents($requestMethod, $id);
-        break;
-    
-    case '':
-        // API root - show available endpoints
-        sendSuccess(array(
-            "message" => "Genes Framework REST API",
-            "version" => "2.0",
-            "endpoints" => array(
-                "GET /api/posts" => "List all posts",
-                "GET /api/posts/:hash" => "Get single post",
-                "POST /api/posts" => "Create post",
-                "PUT /api/posts/:hash" => "Update post",
-                "DELETE /api/posts/:hash" => "Delete post",
-                "GET /api/persons" => "List all persons",
-                "GET /api/labels" => "List all labels",
-                "GET /api/events" => "List all events"
-            ),
-            "clone" => array(
-                "hash" => $clone['hash'],
-                "name" => $clone['name']
-            )
-        ));
-        break;
-    
-    default:
-        sendError("Unknown resource: " . htmlspecialchars($resource), 404);
-}
-
-// ============================================================================
-// HANDLERS
-// ============================================================================
-
-function handlePosts($method, $id) {
-    switch ($method) {
-        case 'GET':
-            if ($id) {
-                // Get single post
-                $post = g::run("db.get", "items", $id);
-                if ($post && $post['type'] === 'post') {
-                    sendSuccess($post);
-                } else {
-                    sendError("Post not found", 404);
-                }
-            } else {
-                // List posts
-                $posts = g::run("db.select", "items",
-                    array("type" => "post"),
-                    "main",
-                    array("order" => "created_at DESC", "limit" => 50)
-                );
-                sendSuccess($posts);
-            }
-            break;
-        
-        case 'POST':
-            // Create post
-            $data = getJsonInput();
-            
-            if (empty($data['title'])) {
-                sendError("Title is required", 400);
-            }
-            
-            $postData = array(
-                "type" => "post",
-                "state" => isset($data['state']) ? $data['state'] : "draft",
-                "title" => $data['title'],
-                "blurb" => isset($data['blurb']) ? $data['blurb'] : "",
-                "text" => isset($data['text']) ? $data['text'] : "",
-                "safe_url" => isset($data['safe_url']) ? $data['safe_url'] : generateSlug($data['title'])
-            );
-            
-            $hash = g::run("db.insert", "items", $postData);
-            
-            if ($hash) {
-                $post = g::run("db.get", "items", $hash);
-                
-                // Log event
-                g::run("db.insert", "events", array(
-                    "type" => "post.created",
-                    "item_id" => $hash,
-                    "data" => json_encode(array("title" => $postData['title']))
-                ));
-                
-                sendSuccess($post, 201);
-            } else {
-                sendError("Failed to create post", 500);
-            }
-            break;
-        
-        case 'PUT':
-            // Update post
-            if (!$id) {
-                sendError("Post ID required", 400);
-            }
-            
-            $data = getJsonInput();
-            
-            $updateData = array();
-            if (isset($data['title'])) $updateData['title'] = $data['title'];
-            if (isset($data['blurb'])) $updateData['blurb'] = $data['blurb'];
-            if (isset($data['text'])) $updateData['text'] = $data['text'];
-            if (isset($data['state'])) $updateData['state'] = $data['state'];
-            if (isset($data['safe_url'])) $updateData['safe_url'] = $data['safe_url'];
-            
-            if (empty($updateData)) {
-                sendError("No data to update", 400);
-            }
-            
-            $result = g::run("db.update", "items", $updateData, array("hash" => $id));
-            
-            if ($result) {
-                $post = g::run("db.get", "items", $id);
-                
-                // Log event
-                g::run("db.insert", "events", array(
-                    "type" => "post.updated",
-                    "item_id" => $id,
-                    "data" => json_encode($updateData)
-                ));
-                
-                sendSuccess($post);
-            } else {
-                sendError("Failed to update post", 500);
-            }
-            break;
-        
-        case 'DELETE':
-            // Delete post (soft delete)
-            if (!$id) {
-                sendError("Post ID required", 400);
-            }
-            
-            $result = g::run("db.delete", "items", array("hash" => $id));
-            
-            if ($result) {
-                // Log event
-                g::run("db.insert", "events", array(
-                    "type" => "post.deleted",
-                    "item_id" => $id
-                ));
-                
-                sendSuccess(array("deleted" => true, "hash" => $id));
-            } else {
-                sendError("Failed to delete post", 500);
-            }
-            break;
-        
-        default:
-            sendError("Method not allowed", 405);
-    }
-}
-
-function handlePersons($method, $id) {
-    switch ($method) {
-        case 'GET':
-            if ($id) {
-                // Get single person
-                $person = g::run("db.get", "persons", $id);
-                if ($person) {
-                    // Remove sensitive data
-                    unset($person['password']);
-                    sendSuccess($person);
-                } else {
-                    sendError("Person not found", 404);
-                }
-            } else {
-                // List persons
-                $persons = g::run("db.select", "persons",
-                    array(),
-                    "main",
-                    array("order" => "created_at DESC", "limit" => 50)
-                );
-                
-                // Remove passwords
-                foreach ($persons as &$person) {
-                    unset($person['password']);
-                }
-                
-                sendSuccess($persons);
-            }
-            break;
-        
-        case 'POST':
-            // Create person
-            $data = getJsonInput();
-            
-            if (empty($data['email']) || empty($data['name'])) {
-                sendError("Email and name are required", 400);
-            }
-            
-            $personData = array(
-                "email" => $data['email'],
-                "name" => $data['name'],
-                "alias" => isset($data['alias']) ? $data['alias'] : null,
-                "type" => isset($data['type']) ? $data['type'] : "user",
-                "state" => isset($data['state']) ? $data['state'] : "active"
-            );
-            
-            if (isset($data['password'])) {
-                $personData['password'] = g::run("crypt.hashPassword", $data['password']);
-            }
-            
-            $hash = g::run("db.insert", "persons", $personData);
-            
-            if ($hash) {
-                $person = g::run("db.get", "persons", $hash);
-                unset($person['password']);
-                sendSuccess($person, 201);
-            } else {
-                sendError("Failed to create person (email might already exist)", 400);
-            }
-            break;
-        
-        default:
-            sendError("Method not allowed", 405);
-    }
-}
-
-function handleLabels($method, $id) {
-    switch ($method) {
-        case 'GET':
-            if ($id) {
-                $label = g::run("db.get", "labels", $id);
-                if ($label) {
-                    sendSuccess($label);
-                } else {
-                    sendError("Label not found", 404);
-                }
-            } else {
-                $labels = g::run("db.select", "labels",
-                    array(),
-                    "main",
-                    array("order" => "type, name")
-                );
-                sendSuccess($labels);
-            }
-            break;
-        
-        case 'POST':
-            $data = getJsonInput();
-            
-            if (empty($data['type']) || empty($data['key']) || empty($data['name'])) {
-                sendError("Type, key, and name are required", 400);
-            }
-            
-            $labelData = array(
-                "type" => $data['type'],
-                "key" => $data['key'],
-                "name" => $data['name'],
-                "state" => isset($data['state']) ? $data['state'] : "active"
-            );
-            
-            $hash = g::run("db.insert", "labels", $labelData);
-            
-            if ($hash) {
-                $label = g::run("db.get", "labels", $hash);
-                sendSuccess($label, 201);
-            } else {
-                sendError("Failed to create label (might already exist)", 400);
-            }
-            break;
-        
-        default:
-            sendError("Method not allowed", 405);
-    }
-}
-
-function handleEvents($method, $id) {
-    if ($method === 'GET') {
-        $events = g::run("db.select", "events",
-            array(),
-            "main",
-            array("order" => "created_at DESC", "limit" => 50)
-        );
-        sendSuccess($events);
+    if (empty($clones)) {
+        $cloneHash = g::run("db.insert", "clones", array(
+            "type" => "api",
+            "name" => "Todo API",
+            "domain" => "todo.local"
+        ), "main");
     } else {
-        sendError("Method not allowed", 405);
+        $cloneHash = $clones[0]['hash'];
+    }
+    
+    g::run("db.setClone", $cloneHash);
+    
+    // Create demo user if none exists
+    $users = g::run("db.select", "persons", array("type" => "user"), "main");
+    if (empty($users)) {
+        g::run("db.insert", "persons", array(
+            "type" => "user",
+            "alias" => "demo",
+            "name" => "Demo User",
+            "email" => "demo@example.com",
+            "password" => password_hash("demo123", PASSWORD_DEFAULT)
+        ), "main");
     }
 }
+
+setupTodoAPI();
 
 // ============================================================================
 // HELPER FUNCTIONS
 // ============================================================================
 
-function getJsonInput() {
-    $input = file_get_contents('php://input');
-    $data = json_decode($input, true);
-    return $data ? $data : array();
+function jsonResponse($data, $code = 200) {
+    ob_clean(); // Clear any buffered output
+    http_response_code($code);
+    header('Content-Type: application/json');
+    echo json_encode($data);
+    exit;
 }
 
-function sendSuccess($data, $code = 200) {
-    global $clone;
+function getRequestBody() {
+    $body = file_get_contents('php://input');
+    return json_decode($body, true);
+}
+
+function getCurrentUser() {
+    // Simple demo: get first user (in production, use sessions/JWT)
+    $users = g::run("db.select", "persons", array("type" => "user"), "main");
+    return !empty($users) ? $users[0] : null;
+}
+
+// ============================================================================
+// CLONE FUNCTIONS
+// ============================================================================
+
+g::def("clone", array(
     
-    http_response_code($code);
-    echo json_encode(array(
-        "success" => true,
-        "data" => $data,
-        "meta" => array(
-            "clone_id" => $clone['hash'],
-            "timestamp" => date('Y-m-d H:i:s')
-        )
-    ));
-    exit;
-}
+    // Web UI
+    "Index" => function ($bits, $lang, $path) {
+        echo g::run("tpl.renderView", "Index", array(
+            "bits" => $bits,
+            "lang" => $lang
+        ));
+    },
+    
+    // API: /todos - Handle all todo operations
+    "Todos" => function ($bits, $lang, $path) {
+        $method = $_SERVER['REQUEST_METHOD'];
+        $user = getCurrentUser();
+        if (!$user) jsonResponse(array("error" => "Unauthorized"), 401);
+        
+        $request = g::get("request");
+        $segments = isset($request['route_segments']) ? $request['route_segments'] : array();
+        
+        // Handle .json suffix in segments
+        if (!empty($segments[0]) && substr($segments[0], -5) === '.json') {
+            $segments[0] = substr($segments[0], 0, -5);
+        }
+        
+        // If there's a segment, it's /todos/:id (single todo operations)
+        if (!empty($segments[0])) {
+            $todoId = $segments[0];
+            
+            if ($method === 'GET') {
+                // Get single todo
+                $todos = g::run("db.select", "items", array(
+                    "type" => "todo",
+                    "hash" => $todoId
+                ), "main");
+                
+                if (empty($todos)) {
+                    jsonResponse(array("error" => "Todo not found"), 404);
+                }
+                
+                $todo = $todos[0];
+                $meta = json_decode($todo['meta'], true);
+                if (!is_array($meta)) $meta = array();
+                
+                jsonResponse(array(
+                    "success" => true,
+                    "data" => array(
+                        "id" => $todo['hash'],
+                        "title" => $todo['title'],
+                        "completed" => $todo['state'] === 'completed',
+                        "priority" => isset($meta['priority']) ? $meta['priority'] : 'normal',
+                        "due_date" => $todo['end_at'],
+                        "created_at" => $todo['created_at']
+                    )
+                ));
+            } elseif ($method === 'PUT') {
+                // Update todo
+                $body = getRequestBody();
+                if (!$body) {
+                    jsonResponse(array("error" => "Invalid request body"), 400);
+                }
+                
+                $todos = g::run("db.select", "items", array(
+                    "type" => "todo",
+                    "hash" => $todoId
+                ), "main");
+                
+                if (empty($todos)) {
+                    jsonResponse(array("error" => "Todo not found"), 404);
+                }
+                
+                $updates = array();
+                
+                if (isset($body['title'])) {
+                    $updates['title'] = $body['title'];
+                }
+                
+                if (isset($body['description'])) {
+                    $updates['text'] = $body['description'];
+                }
+                
+                if (isset($body['due_date'])) {
+                    $updates['end_at'] = $body['due_date'];
+                }
+                
+                if (isset($body['completed'])) {
+                    $updates['state'] = $body['completed'] ? 'completed' : 'pending';
+                }
+                
+                if (isset($body['priority'])) {
+                    $todo = $todos[0];
+                    $meta = json_decode($todo['meta'], true);
+                    if (!$meta) $meta = array();
+                    $meta['priority'] = $body['priority'];
+                    $updates['meta'] = json_encode($meta);
+                }
+                
+                if (!empty($updates)) {
+                    g::run("db.update", "items", $updates, array("hash" => $todoId), "main");
+                }
+                
+                jsonResponse(array(
+                    "success" => true,
+                    "message" => "Todo updated successfully"
+                ));
+            } elseif ($method === 'DELETE') {
+                // Delete todo
+                $todos = g::run("db.select", "items", array(
+                    "type" => "todo",
+                    "hash" => $todoId
+                ), "main");
+                
+                if (empty($todos)) {
+                    jsonResponse(array("error" => "Todo not found"), 404);
+                }
+                
+                // Hard delete the todo
+                g::run("db.delete", "items", array("hash" => $todoId), true, "main");
+                
+                jsonResponse(array(
+                    "success" => true,
+                    "message" => "Todo deleted successfully"
+                ));
+            } else {
+                jsonResponse(array("error" => "Method not allowed: $method"), 405);
+            }
+        }
+        
+        // No segment means /todos (list or create)
+        if ($method === 'GET') {
+            // List all todos
+            try {
+                $user = getCurrentUser();
+                if (!$user) jsonResponse(array("error" => "Unauthorized"), 401);
+                
+                $todos = g::run("db.select", "items", array(
+                    "type" => "todo"
+                ), "main");
+                
+                if (!is_array($todos)) {
+                    $todos = array();
+                }
+                
+                // Parse JSON fields and format response
+                $result = array();
+                foreach ($todos as $todo) {
+                    $meta = json_decode($todo['meta'], true);
+                    if (!is_array($meta)) $meta = array();
+                    
+                    $result[] = array(
+                        "id" => $todo['hash'],
+                        "title" => $todo['title'],
+                        "completed" => $todo['state'] === 'completed',
+                        "priority" => isset($meta['priority']) ? $meta['priority'] : 'normal',
+                        "due_date" => $todo['end_at'],
+                        "created_at" => $todo['created_at']
+                    );
+                }
+                
+                jsonResponse(array(
+                    "success" => true,
+                    "data" => $result,
+                    "count" => count($result)
+                ));
+            } catch (Exception $e) {
+                jsonResponse(array("success" => false, "error" => $e->getMessage()), 500);
+            }
+        } elseif ($method === 'POST') {
+            // Create new todo
+            $user = getCurrentUser();
+            if (!$user) jsonResponse(array("error" => "Unauthorized"), 401);
+            
+            $body = getRequestBody();
+            
+            if (empty($body['title'])) {
+                jsonResponse(array("error" => "Title is required"), 400);
+            }
+            
+            $meta = array();
+            if (isset($body['priority'])) {
+                $meta['priority'] = $body['priority'];
+            }
+            
+            $hash = g::run("db.insert", "items", array(
+                "type" => "todo",
+                "state" => "pending",
+                "title" => $body['title'],
+                "text" => isset($body['description']) ? $body['description'] : '',
+                "end_at" => isset($body['due_date']) ? $body['due_date'] : null,
+                "meta" => json_encode($meta)
+            ), "main");
+            
+            jsonResponse(array(
+                "success" => true,
+                "message" => "Todo created successfully",
+                "data" => array("id" => $hash)
+            ), 201);
+        }
+    }
+));
 
-function sendError($message, $code = 400) {
-    http_response_code($code);
-    echo json_encode(array(
-        "success" => false,
-        "error" => $message,
-        "code" => $code
-    ));
-    exit;
-}
-
-function generateSlug($text) {
-    // Simple slug generation
-    $text = strtolower($text);
-    $text = preg_replace('/[^a-z0-9]+/', '-', $text);
-    $text = trim($text, '-');
-    return $text;
-}
-?>
+g::run("route.handle");

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>genes ui framework layouts</title>
+        <meta name="title" content="genes ui framework layouts">
+        <meta name="description" content="genes ui framework layouts">
+
+        <base href="{{meta.url.base}}">
+        <link rel="canonical" href="{{meta.url.base}}{{meta.url.clean}}">
+
+        <meta property="og:url" content="{{meta.url.base}}{{meta.url.clean}}" />
+        <meta property="og:title" content="genes ui framework layouts" />
+        <meta property="og:description" content="genes ui framework layouts" />
+        <meta property="og:image" content="./share.jpg" />
+
+        <link rel="icon" type="image/png" href="./favicon.png">
+        <meta name="robots" content="max-image-preview:large" />
+        <link rel="image_src" href="./share.jpg" />
+
+        <link rel="stylesheet" href="../../ui/assets/css/genes.reset.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.layout.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.layout.rems.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.comps.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.fonts.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.fonticon.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.flags.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.colors.css">
+
+        <link rel="stylesheet" href="./assets/app.css">
+
+        <script src="../../ui/assets/js/genes.core.js"></script>
+        <script src="../../ui/assets/js/genes.comps.js"></script>
+        <script src="../../ui/assets/js/genes.ext.js"></script>
+    </head>
+
+    <body>
+        <div id="root" class="mc w96r mihfh bs1r bgc_w om_mw ot_tw" style="--mw:100%;--tw:100%;">
+            <div id="header" class="p4r bob1 ot_tp om_mp" style="--mp:2rem;--tp:2rem;">
+                <a href="index.html"><h1 class="dib">Corporate</h1></a>
+                <div class="flr p075r pr0">
+                    <div class="menu om_dn">
+                        <form class="dib">
+                            <input type="text" class="w14r">
+                            <a href="#" class="button link i dib"><i class="icon_search"></i></a>
+                        </form>
+                        <a href="services.html" class="button bold link">Services</a>
+                        <a href="about.html" class="button bold link">About</a>
+                        <a href="contact.html" class="button bold link">Contact</a>
+                    </div>
+                    <div class="dn g-drop om_dib">
+                        <a class="button open"><i class="icon_menu"></i></a>
+                        <div class="menu dn">
+                            <form class="dib item">
+                                <input type="text" class="w14r">
+                                <a href="#" class="button link i dib"><i class="icon_search"></i></a>
+                            </form>
+                            <a href="services.html" class="item bold">Services</a>
+                            <a href="about.html" class="item bold">About</a>
+                            <a href="contact.html" class="item bold">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="main" class="fw p4r bob1 vops ot_tw ot_tp om_mw om_mp om_db" style="--mw:100%;--mp:2rem;--tw:100%;--tp:2rem;">
+                <div class="left dib w1o2 cols vac ot_tw ot_tp om_mw om_mp om_db" style="--mw:100%;--mp:0 0 2rem 0;--tw:100%;--tp:0 0 2rem 0;">
+                    <h3 class="db om_mfs" style="--mfs:2rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+                    <p class="db">Nunc rhoncus, odio sed hendrerit consequat, lectus mi vulputate magna, eget ullamcorper nunc magna in neque. Nam massa tellus, euismod id luctus eget, tempor in diam.</p>
+                </div>
+                <div class="dib w1o2 h30r br1r cols om_mw" style="--mw:100%; background-image: url('./assets/corporate.jpg');background-size: cover;"></div>
+            </div>
+
+            <div class="row newsletter">
+                <h4 class="w1o2 dib pl4r">Keep in Touch: <em>You want to say something?<br>You want us to reach you when
+                        something new happens?</em></h4>
+                <form id="contact_form" class="w1o2 dib g-form pl4r">
+                    <input class="name_surname w1o2" name="name_surname" type="text" placeholder="Name Surname" required>
+                    <input class="email w1o2" name="email" type="email" placeholder="Email" required>
+                    <textarea class="fw h6r message" name="message" placeholder="Please write anything you would like to say..." required></textarea>
+                    <input type="checkbox" value="yes" name="subscribe" class="subscribe" id="subscribe" required><label class="w-10r" for="subscribe">Reach for any news, I accept that my email is saved.</label>
+                    <input class="w10r flr button primary g-submit" type="submit" value="Send Message"
+                           data-g="subject:Nodonce-Contact Form;form:#contact_form;post:./post=contact-form;" disabled>
+                </form>
+            </div>
+
+            <div id="footer">
+                <div id="left" class="dib p4r taj w1o2 ot_tw ot_tp om_mw om_mp" style="--mw:100%;--mp:2rem;--tw:100%;--tp:2rem;">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non libero feugiat, viverra lectus ullamcorper, maximus massa. Cras semper orci mi, sed tincidunt dolor dapibus non.</p>
+                </div>
+                <div id="right" class="dib p4r tar w1o2 ot_tw ot_tp om_mw om_mp" style="--mw:100%;--mp:2rem;--tw:100%;--tp:2rem;">
+                    <a href="#" class="button link i dib"><i class="gi twitterx darker"></i></a>
+                    <a href="#" class="button link i dib"><i class="gi instagram"></i></a>
+                    <a href="#" class="button link i dib"><i class="gi linkedin"></i></a>
+                    <p>&copy; Genes, 2024.</p>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

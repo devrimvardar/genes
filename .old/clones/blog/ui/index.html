@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>genes ui framework layouts</title>
+        <meta name="title" content="genes ui framework layouts">
+        <meta name="description" content="genes ui framework layouts">
+
+        <base href="{{meta.url.base}}">
+        <link rel="canonical" href="{{meta.url.base}}{{meta.url.clean}}">
+
+        <meta property="og:url" content="{{meta.url.base}}{{meta.url.clean}}" />
+        <meta property="og:title" content="genes ui framework layouts" />
+        <meta property="og:description" content="genes ui framework layouts" />
+        <meta property="og:image" content="./share.jpg" />
+
+        <link rel="icon" type="image/png" href="./favicon.png">
+        <meta name="robots" content="max-image-preview:large" />
+        <link rel="image_src" href="./share.jpg" />
+
+        <link rel="stylesheet" href="../../ui/assets/css/genes.reset.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.layout.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.layout.rems.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.comps.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.fonts.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.fonticon.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.flags.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.colors.css">
+
+        <script src="../../ui/assets/js/genes.core.js"></script>
+        <script src="../../ui/assets/js/genes.comps.js"></script>
+        <script src="../../ui/assets/js/genes.ext.js"></script>
+    </head>
+
+    <body>
+        <div id="root">
+            <div class="p1r bob1">
+                <a href="{{bits.link_index}}" class="dib">
+                    <h1>{{bits.clone_title}}</h1>
+                </a>
+                <a href="./" class="dib button mt1r ml1r">English</a>
+                <a href="./tr" class="dib button mt1r ml1r">Türkçe</a>
+            </div>
+            <div class="p1r bob1 w48r">
+                <a href="{{bits.blog.link}}" class="dib button link">{{bits.blog.title}}</a>
+                <a href="{{bits.about.link}}" class="dib button link">{{bits.about.title}}</a>
+                <a href="{{bits.contact.link}}" class="dib button link">{{bits.contact.title}}</a>
+                <div class="flr">
+                    <del g="if:meta.links.main.px{gt:1}" paging>
+                        <p class="p1r">
+                            <del g="if:meta.links.main.pp{set:1}" pp><a href="{{meta.links.main.pp}}">&laquo;</a></del><!--pp-->
+                            <b>{{meta.links.main.pc}} / {{meta.links.main.px}}</b>
+                            <del g="if:meta.links.main.pn{set:1}" pn><a href="{{meta.links.main.pn}}">&raquo;</a></del><!--pn-->
+                        </p>
+                    </del><!--paging-->
+                </div>
+            </div>
+            <del g="if:data.main.mode{is:loop};each:data.main.list" loop>
+                <article class="p1r w48r">
+                    <a href="{{g_alias}}">
+                        <del g="if:featured_img{set:1}" ft_img><img class="w16r flr ml1r" src="{{featured_img}}"></del><!--ft_img-->
+                        <h2>{{g_name}}</h2>
+                        <p>{{g_blurb}}</p>
+                        <time class="fs1r">{{tss}}</time>
+                    </a>
+                </article>
+            </del><!--loop-->
+            <del g="if:data.main.mode{is:single};each:data.main.list" solo>
+                <article class="p1r w48r">
+                    <h2>{{g_name}}</h2>
+                    <h5>{{g_blurb}}</h5>
+                    <time class="fs1r">{{tss}}</time>
+                    <div class="taj p1r">{{g_text}}</div>
+                    <del g="if:featured_img{set:1}" ft_img><img class="fw mt2r" src="{{featured_img}}"></del><!--ft_img-->
+                </article>
+            </del><!--solo-->
+            <del g="if:data.sidebar.count{gt:0}" sidebar>
+                <div class="p1r">
+                    <h5>Do not miss!</h5>
+                    <ul>
+                        <del g="each:data.sidebar.list" sll>
+                            <li><a class="db" href="{{g_alias}}">{{g_name}}</a></li>
+                        </del><!--sll-->
+                    </ul>
+                </div>
+            </del><!--sidebar-->
+            <del g="if:meta.url.bare{is:about,hakkinda}" pabo>
+                <div class="p1r bob1">
+                    <h2>{{bits.about.title}}</h2>
+                    <p class="w28r taj p1r">{{bits.t1}}</p>
+                </div>
+            </del><!--pabo-->
+            <del g="if:meta.url.bare{is:contact,iletisim};use:inc.contact.html" pcon></del><!--pcon-->
+
+        </div>
+    </body>
+
+</html>

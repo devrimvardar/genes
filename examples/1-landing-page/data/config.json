@@ -1,0 +1,175 @@
+{
+    "clone": {
+        "name": "My Clone",
+        "domain": "localhost",
+        "type": "platform",
+        "state": "active",
+        "settings": {
+            "theme": "default",
+            "features": []
+        }
+    },
+    "urls": {
+        "cdn": "https://cdn.genes.one/"
+    },
+    "settings": {
+        "debug": true,
+        "timezone": "UTC",
+        "language": "en",
+        "langs": ["en", "tr", "de"],
+        "date_format": "Y-m-d H:i:s.u",
+        "log_level": 1,
+        "session_name": "genes_session",
+        "environment": "development"
+    },
+    "application": {
+        "name": "Genes App",
+        "version": "1.0.0",
+        "description": "Built with Genes Framework"
+    },
+    "meta": {
+        "title": "Genes App",
+        "description": "Built with Genes Framework",
+        "keywords": "",
+        "og_image": "ui/img/share.jpg"
+    },
+    "database": {
+        "enabled": false,
+        "type": "mysql",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "name": "",
+        "user": "",
+        "password": "",
+        "charset": "utf8mb4"
+    },
+    "security": {
+        "salt": "tf0EyLG1o7DjwgsNZuXEnV8yTduG45lG89NB5pI7ZHJBsCABEP4nRYttmlFTQWRs",
+        "secret": "mHoFAtFTuxdK0DkrLuT6QL2a4IdRvbptLU8sXQPl9AejD1kRzw8cj63fBu07X3Qm"
+    },
+    "admin": {
+        "name": "Admin User",
+        "alias": "admin",
+        "email": "admin@localhost",
+        "password": "admin123",
+        "type": "admin",
+        "state": "active"
+    },
+    "seed": {
+        "labels": []
+    },
+    "setup": {
+        "completed": false
+    },
+    "views": {
+        "Index": {
+            "function": "clone.Index",
+            "template": "index",
+            "urls": {
+                "en": "index",
+                "tr": "anasayfa",
+                "de": "startseite"
+            }
+        },
+        "Product": {
+            "function": "clone.Product",
+            "template": "index",
+            "urls": {
+                "en": "product",
+                "tr": "urun",
+                "de": "produkt"
+            }
+        },
+        "Pricing": {
+            "function": "clone.Pricing",
+            "template": "index",
+            "urls": {
+                "en": "pricing",
+                "tr": "fiyatlandirma",
+                "de": "preise"
+            }
+        },
+        "About": {
+            "function": "clone.About",
+            "template": "index",
+            "urls": {
+                "en": "about",
+                "tr": "hakkinda",
+                "de": "uber-uns"
+            }
+        },
+        "Contact": {
+            "function": "clone.Contact",
+            "template": "index",
+            "urls": {
+                "en": "contact",
+                "tr": "iletisim",
+                "de": "kontakt"
+            }
+        }
+    },
+    "bits": {
+        "site_name": {
+            "en": "Genes Framework",
+            "tr": "Genes Framework",
+            "de": "Genes Framework"
+        },
+        "home": {
+            "en": "Home",
+            "tr": "Ana Sayfa",
+            "de": "Startseite"
+        },
+        "product": {
+            "en": "Product",
+            "tr": "Ürün",
+            "de": "Produkt"
+        },
+        "pricing": {
+            "en": "Pricing",
+            "tr": "Fiyatlandırma",
+            "de": "Preise"
+        },
+        "about": {
+            "en": "About",
+            "tr": "Hakkında",
+            "de": "Über uns"
+        },
+        "contact": {
+            "en": "Contact",
+            "tr": "İletişim",
+            "de": "Kontakt"
+        },
+        "welcome": {
+            "en": "Welcome to Genes",
+            "tr": "Genes'e Hoş Geldiniz",
+            "de": "Willkommen bei Genes"
+        },
+        "subtitle": {
+            "en": "Zero-dependency PHP framework for building modern web apps",
+            "tr": "Modern web uygulamaları için bağımlılıksız PHP framework",
+            "de": "Zero-Dependency PHP-Framework für moderne Web-Apps"
+        },
+        "get_started": {
+            "en": "Get Started",
+            "tr": "Başlayın",
+            "de": "Loslegen"
+        },
+        "learn_more": {
+            "en": "Learn More",
+            "tr": "Daha Fazla",
+            "de": "Mehr erfahren"
+        }
+    },
+    "env": {
+        "https_localhost_dv-public_genes_examples_1-landing-page": {
+            "base_url": "https://localhost/dv-public/genes/examples/1-landing-page/",
+            "paths": {
+                "data": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\1-landing-page\\data\\",
+                "cache": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\1-landing-page\\cache\\",
+                "ui": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\1-landing-page\\ui\\",
+                "mods": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\1-landing-page\\mods\\",
+                "uploads": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\1-landing-page\\uploads\\"
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+# Genes Framework - URL Rewriting
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Allow REST API methods
+    RewriteCond %{REQUEST_METHOD} ^(PUT|DELETE|PATCH)$
+    RewriteRule .* - [E=HTTP_METHOD:%{REQUEST_METHOD}]
+    
+    # Redirect all requests to index.php except existing files/directories
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    # Allow REST API methods
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "^(config\.json|\.env|composer\.json|composer\.lock)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

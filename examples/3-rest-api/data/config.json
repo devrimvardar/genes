@@ -33,18 +33,19 @@
         "og_image": "ui/img/share.jpg"
     },
     "database": {
-        "enabled": false,
-        "type": "mysql",
-        "host": "127.0.0.1",
-        "port": 3306,
-        "name": "",
+        "enabled": true,
+        "type": "sqlite",
+        "host": "",
+        "port": 0,
+        "name": "main",
+        "database": "todos.db",
         "user": "",
         "password": "",
         "charset": "utf8mb4"
     },
     "security": {
-        "salt": "XKmyRNYuhAp0d3gnAPJY6G5ZpH9yuqBO4G9M1xQ3oIQ43LzywmnRWOfNe1X6KUaI",
-        "secret": "DaDRLQ8l10s8yxMSeUtfVY765xU58BKzWv9nXnObzqEjHiVhZYRQiz1yD7V7n1sJ"
+        "salt": "",
+        "secret": ""
     },
     "admin": {
         "name": "Admin User",
@@ -59,7 +60,7 @@
     },
     "setup": {
         "completed": true,
-        "completed_at": "2026-01-11 01:24:02",
+        "completed_at": "2026-01-11 22:33:19",
         "version": "1.0.0"
     },
     "views": {
@@ -70,37 +71,25 @@
                 "en": "index"
             }
         },
-        "Admin": {
-            "function": "clone.Admin",
-            "template": "admin",
+        "Todos": {
+            "function": "clone.Todos",
             "urls": {
-                "en": "admin"
+                "en": "todos"
             }
         }
     },
     "bits": {
         "site_name": {
-            "en": "My Site"
+            "en": "Todo API Demo"
+        },
+        "site_title": {
+            "en": "REST API Demo"
+        },
+        "site_description": {
+            "en": "Interactive REST API demonstration with Genes Framework"
+        },
+        "api_endpoint": {
+            "en": "/todos"
         }
-    },
-    "env": {
-        "https_localhost_dv-public_genes_examples_3-rest-api": {
-            "base_url": "https://localhost/dv-public/genes/examples/3-rest-api/",
-            "paths": {
-                "data": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\3-rest-api\\data\\",
-                "cache": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\3-rest-api\\cache\\",
-                "ui": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\3-rest-api\\ui\\",
-                "mods": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\3-rest-api\\mods\\",
-                "uploads": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\3-rest-api\\uploads\\"
-            }
-        }
-    },
-    "base_url": "https://localhost/dv-public/genes/examples/3-rest-api/",
-    "paths": {
-        "data": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\3-rest-api\\data\\",
-        "cache": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\3-rest-api\\cache\\",
-        "ui": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\3-rest-api\\ui\\",
-        "mods": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\3-rest-api\\mods\\",
-        "uploads": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\3-rest-api\\uploads\\"
     }
 }

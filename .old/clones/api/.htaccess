@@ -1,0 +1,60 @@
+# BEGIN GENES
+# Header set X-Robots-Tag "noindex, nofollow"
+
+# Force simple error message for requests for non-existent or forbidden files.
+ErrorDocument 403 "Sorry, access to this page is forbidden."
+ErrorDocument 404 "The requested file was not found."
+
+<IfModule mod_rewrite.c>
+
+# Turn on URL rewriting
+RewriteEngine On
+Options +FollowSymLinks
+Options -Indexes
+
+# Protect hidden files from being viewed
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
+Order Allow,Deny
+Deny from all
+</FilesMatch>
+
+# Allow system php files to work
+<Files ~ "(index)\.(php|html)$">
+Order Deny,Allow
+Allow From All
+</Files>
+
+# FORCE HTTPS REDIRECT
+# Redirect http/https www to https non-www
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+# Redirect http non-www to https non-www
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# PREVENT DATA FOLDER REACH
+RewriteRule ^data/ - [F]
+
+# :: IF STRONGER SERVER-SIDE :: API ONLY / API RENDERED UI
+# :: Unmark the lines below to handled everything by th API
+# :: Allow any files or directories that exist to be displayed directly other go to index.php
+RewriteCond %{REQUEST_FILENAME} !\.(gif|jpe?g|png|js|css|swf|ico|txt|pdf|xml|eot|svg|ttf|woff|woff2|mp3|zip|webmanifest)$
+RewriteCond %{REQUEST_URI} !^(.)$
+RewriteCond %{REQUEST_URI} !(index.php)$
+RewriteRule ^(.*) index.php?$1 [L,NC]
+
+# :: IF STRONGER CLIENT-SIDE :: COMPLETE SEPARATION OF API & UI
+# :: Still json requests must be handled by the API
+#RewriteCond %{QUERY_STRING} ^$
+#RewriteRule ^(.*\.json)$ index.php?$1 [L,NC]
+# :: Everything else is handled by the UI
+#RewriteCond %{QUERY_STRING} ^$
+# :: Allow any files or directories that exist to be displayed directly other go to index.html
+#RewriteCond %{REQUEST_FILENAME} !\.(gif|jpe?g|png|js|css|swf|ico|txt|pdf|xml|eot|svg|ttf|woff|woff2|mp3|zip|webmanifest)$
+#RewriteCond %{REQUEST_URI} !^(.)$
+#RewriteCond %{REQUEST_URI} !(ui/index.html)$ [NC]
+#RewriteRule ^(.*)$ ui/index.html?$1 [L,NC]
+
+</IfModule>
+# END GENES

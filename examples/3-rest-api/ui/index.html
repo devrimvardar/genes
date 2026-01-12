@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo API Demo</title>
+    <link rel="stylesheet" href="../../genes.css">
+    <link rel="stylesheet" href="ui/assets/app.css">
+</head>
+<body>
+    <div class="container">
+        <header class="py-2 border-b">
+            <h1>Todo API Demo</h1>
+            <p class="text-muted">Interactive REST API demonstration using Genes Framework</p>
+        </header>
+
+        <main class="py-3">
+            <div class="grid grid-2 gap-3">
+                <!-- Todo Form -->
+                <section class="p-3 border rounded">
+                    <h2>Create Todo</h2>
+                    <form id="todoForm">
+                        <div class="mb-2">
+                            <label>Title *</label>
+                            <input type="text" id="todoTitle" class="input" required>
+                        </div>
+                        <div class="mb-2">
+                            <label>Description</label>
+                            <textarea id="todoDescription" class="input" rows="3"></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <label>Priority</label>
+                            <select id="todoPriority" class="input">
+                                <option value="low">Low</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Due Date</label>
+                            <input type="date" id="todoDueDate" class="input">
+                        </div>
+                        <button type="submit" class="btn">Create Todo</button>
+                    </form>
+                </section>
+
+                <!-- API Documentation -->
+                <section class="p-3 border rounded bg-light">
+                    <h2>API Endpoints</h2>
+                    <div class="api-docs">
+                        <div class="api-endpoint">
+                            <code class="method-get">GET</code>
+                            <code>/todos</code>
+                            <p class="text-sm text-muted">List all todos</p>
+                        </div>
+                        <div class="api-endpoint">
+                            <code class="method-get">GET</code>
+                            <code>/todos/:id</code>
+                            <p class="text-sm text-muted">Get single todo</p>
+                        </div>
+                        <div class="api-endpoint">
+                            <code class="method-post">POST</code>
+                            <code>/todos</code>
+                            <p class="text-sm text-muted">Create new todo</p>
+                        </div>
+                        <div class="api-endpoint">
+                            <code class="method-put">PUT</code>
+                            <code>/todos/:id</code>
+                            <p class="text-sm text-muted">Update todo</p>
+                        </div>
+                        <div class="api-endpoint">
+                            <code class="method-delete">DELETE</code>
+                            <code>/todos/:id</code>
+                            <p class="text-sm text-muted">Delete todo</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Todo List -->
+            <section class="mt-4 p-3 border rounded">
+                <div class="flex flex-between mb-3" style="align-items: center;">
+                    <h2 style="margin-bottom: 0;">Your Todos</h2>
+                    <button id="refreshBtn" class="btn btn-sm">Refresh</button>
+                </div>
+                <div id="todoList">
+                    <p class="text-muted">Loading todos...</p>
+                </div>
+            </section>
+
+            <!-- API Response Log -->
+            <section class="mt-4 p-3 border rounded" style="background: #1a1a1a;">
+                <h3 style="color: #fff;">API Response Log</h3>
+                <pre id="apiLog" class="text-sm" style="color: #fff;"></pre>
+            </section>
+        </main>
+
+        <footer class="py-2 border-t text-center text-muted">
+            <p>Example 3: REST API / Todo System | Genes Framework</p>
+        </footer>
+    </div>
+
+    <script src="../../genes.js"></script>
+    <script src="ui/assets/app.js"></script>
+</body>
+</html>

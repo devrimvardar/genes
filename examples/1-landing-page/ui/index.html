@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{bits.site_name}}</title>
+    <meta name="description" content="{{bits.subtitle}}">
+    
+    <!-- Genes CSS Framework -->
+    <link rel="stylesheet" href="../../genes.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="ui/assets/app.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="p-4 flex-between" style="border-bottom: 1px solid var(--border);">
+        <div>
+            <h2 data-g-bind="bits.site_name" data-a>Loading...</h2><!--a-->
+        </div>
+        
+        <div class="flex gap-2">
+            <!-- Navigation Links -->
+            <a href="index" class="nav-link" data-g-if="lang:en" data-b>{{bits.home}}</a><!--b-->
+            <a href="anasayfa" class="nav-link" data-g-if="lang:tr" data-c>{{bits.home}}</a><!--c-->
+            <a href="startseite" class="nav-link" data-g-if="lang:de" data-d>{{bits.home}}</a><!--d-->
+            
+            <a href="product" class="nav-link" data-g-if="lang:en" data-e>{{bits.product}}</a><!--e-->
+            <a href="urun" class="nav-link" data-g-if="lang:tr" data-f>{{bits.product}}</a><!--f-->
+            <a href="produkt" class="nav-link" data-g-if="lang:de" data-g>{{bits.product}}</a><!--g-->
+            
+            <a href="pricing" class="nav-link" data-g-if="lang:en" data-h>{{bits.pricing}}</a><!--h-->
+            <a href="fiyatlandirma" class="nav-link" data-g-if="lang:tr" data-i>{{bits.pricing}}</a><!--i-->
+            <a href="preise" class="nav-link" data-g-if="lang:de" data-j>{{bits.pricing}}</a><!--j-->
+            
+            <a href="about" class="nav-link" data-g-if="lang:en" data-k>{{bits.about}}</a><!--k-->
+            <a href="hakkinda" class="nav-link" data-g-if="lang:tr" data-l>{{bits.about}}</a><!--l-->
+            <a href="uber-uns" class="nav-link" data-g-if="lang:de" data-m>{{bits.about}}</a><!--m-->
+            
+            <a href="contact" class="nav-link" data-g-if="lang:en" data-n>{{bits.contact}}</a><!--n-->
+            <a href="iletisim" class="nav-link" data-g-if="lang:tr" data-o>{{bits.contact}}</a><!--o-->
+            <a href="kontakt" class="nav-link" data-g-if="lang:de" data-p>{{bits.contact}}</a><!--p-->
+            
+            <!-- Language Switcher -->
+            <div class="lang-switcher">
+                <a href="index" class="lang-btn" title="English">EN</a>
+                <a href="anasayfa" class="lang-btn" title="Türkçe">TR</a>
+                <a href="startseite" class="lang-btn" title="Deutsch">DE</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="container p-4">
+        
+        <!-- Hero Section - Show on home page only -->
+        <section data-g-if="current_page:home" class="hero-section p-4" data-q>
+            <div class="flex-center flex-col" style="min-height: 50vh;">
+                <h1 class="hero-title" data-g-bind="bits.welcome" data-r>Welcome</h1><!--r-->
+                <p class="hero-subtitle" data-g-bind="bits.subtitle" data-s>Subtitle</p><!--s-->
+                <button class="cta-button mt-2" data-g-bind="bits.get_started" data-t>Get Started</button><!--t-->
+            </div>
+        </section><!--q-->
+        
+        <!-- Features Grid - Show on home page only -->
+        <section data-g-if="current_page:home" class="p-4" data-u>
+            <div class="grid gap-2" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                <!-- Loop through features array -->
+                <div data-g-for="feature in features" class="feature-card p-3" data-v>
+                    <div class="feature-icon">{{feature.icon}}</div>
+                    <h3 class="feature-title">{{feature.title}}</h3>
+                    <p class="feature-description">{{feature.description}}</p>
+                </div><!--v-->
+            </div>
+        </section><!--u-->
+        
+        <!-- Stats Section - Show on home page only -->
+        <section data-g-if="current_page:home" class="stats-section p-4" data-w>
+            <div class="flex justify-around flex-wrap gap-2">
+                <div data-g-for="stat in stats" class="stat-item" data-x>
+                    <div class="stat-value">{{stat.value}}</div>
+                    <div class="stat-label">{{stat.label}}</div>
+                </div><!--x-->
+            </div>
+        </section><!--w-->
+        
+        <!-- Product Page Content -->
+        <section data-g-if="show_product:true" class="content-section p-4" data-y>
+            <h1 data-g-bind="bits.title" data-z>Product</h1><!--z-->
+            <p data-g-bind="bits.subtitle" class="subtitle" data-aa>Subtitle</p><!--aa-->
+            <div class="mt-2">
+                <!-- Load product content partial -->
+                <div data-g-load="product-content" data-ab></div><!--ab-->
+            </div>
+        </section><!--y-->
+        
+        <!-- Pricing Page Content -->
+        <section data-g-if="show_pricing:true" class="content-section p-4" data-ac>
+            <h1 data-g-bind="bits.title" data-ad>Pricing</h1><!--ad-->
+            <p data-g-bind="bits.subtitle" class="subtitle" data-ae>Subtitle</p><!--ae-->
+            
+            <div class="grid gap-2 mt-2" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                <div data-g-for="plan in plans" class="pricing-card p-3" data-af>
+                    <h3>{{plan.name}}</h3>
+                    <div class="price">{{plan.price}}</div>
+                    <ul class="feature-list">
+                        <li data-g-for="feature in plan.features" data-ag>{{feature}}</li><!--ag-->
+                    </ul>
+                </div><!--af-->
+            </div>
+        </section><!--ac-->
+        
+        <!-- About Page Content -->
+        <section data-g-if="show_about:true" class="content-section p-4" data-ah>
+            <h1 data-g-bind="bits.title" data-ai>About</h1><!--ai-->
+            <p data-g-bind="bits.subtitle" class="subtitle" data-aj>Subtitle</p><!--aj-->
+            <div class="mt-2" data-g-html="bits.description" data-ak>Description</div><!--ak-->
+        </section><!--ah-->
+        
+        <!-- Contact Page Content -->
+        <section data-g-if="show_contact:true" class="content-section p-4" data-al>
+            <h1 data-g-bind="bits.title" data-am>Contact</h1><!--am-->
+            <p data-g-bind="bits.subtitle" class="subtitle" data-an>Subtitle</p><!--an-->
+            
+            <!-- Load contact form partial -->
+            <div data-g-load="contact-form" class="mt-2" data-ao></div><!--ao-->
+        </section><!--al-->
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="p-4 flex-center" style="border-top: 1px solid var(--border); margin-top: 4rem;">
+        <p data-g-bind="bits.footer_text" data-ap>Footer text</p><!--ap-->
+    </footer>
+    
+    <!-- Genes JavaScript Framework -->
+    <script src="../../genes.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="ui/assets/app.js"></script>
+</body>
+</html>

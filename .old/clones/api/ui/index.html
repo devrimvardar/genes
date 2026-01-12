@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>genes ui framework layouts</title>
+        <meta name="title" content="genes ui framework layouts">
+        <meta name="description" content="genes ui framework layouts">
+
+        <base href="{{meta.url.base}}">
+        <link rel="canonical" href="{{meta.url.base}}{{meta.url.clean}}">
+
+        <meta property="og:url" content="{{meta.url.base}}{{meta.url.clean}}" />
+        <meta property="og:title" content="genes ui framework layouts" />
+        <meta property="og:description" content="genes ui framework layouts" />
+        <meta property="og:image" content="./share.jpg" />
+
+        <link rel="icon" type="image/png" href="./favicon.png">
+        <meta name="robots" content="max-image-preview:large" />
+        <link rel="image_src" href="./share.jpg" />
+
+        <link rel="stylesheet" href="../../ui/assets/css/genes.reset.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.layout.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.layout.rems.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.comps.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.fonts.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.fonticon.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.flags.css">
+        <link rel="stylesheet" href="../../ui/assets/css/genes.colors.css">
+
+        <script src="../../ui/assets/js/genes.core.js"></script>
+        <script src="../../ui/assets/js/genes.comps.js"></script>
+        <script src="../../ui/assets/js/genes.ext.js"></script>
+
+        <link rel="stylesheet" href="./ui/assets/app.css">
+        <script src="./ui/assets/app.js"></script>
+    </head>
+
+    <body>
+        <div id="root">
+            <div id="g-msgs"></div>
+            <div class="p1r bob1">
+                <a href="{{bits.link_index}}" class="dib">
+                    <h1>{{bits.clone_title}}</h1>
+                </a>
+            </div>
+
+            <div class="p1r bob1">
+                <h5 class="dn dib mt05r mr05r user">Welcome, <em class="alias"></em>!</h5>
+                <a href="#" class="dn dib mr05r button warning addtask g-toggle user" data-g="to:form.task">Add Task</a>
+                <a href="#" class="dn dib mr05r button i o error logout user"><i class="o icon_logout"></i></a>
+                <a href="#" class="dib mr05r button login g-toggle guest" data-g="to:form.login">Login</a>
+                <a href="#" class="dib mr05r button success register g-toggle guest" data-g="to:form.register">Register</a>
+            </div>
+            <form class="dn tog p1r bob1 login guest">
+                <h5 class="dib w6r mt05r mr05r">Login</h5>
+                <input type="text" class="w8r u">
+                <input type="password" class="w8r p">
+                <input type="submit" value="Login">
+            </form>
+            <form class="dn tog p1r bob1 register guest">
+                <h5 class="dib w6r mt05r mr05r">Register</h5>
+                <input type="text" class="w8r u">
+                <input type="password" class="w8r p">
+                <input type="submit" class="button success" value="Register">
+                <p><em>
+                        Can be anything in the email format, just remember to login with it.
+                        <br>As this is a demo no email integrations are made.
+                    </em>
+                </p>
+            </form>
+            <form class="dn p1r bob1 task user">
+                <h5 class="dib w6r mt05r mr05r"><b class="s">Add</b> Task</h5>
+                <input type="text" class="w8r ty" placeholder="Type">
+                <input type="text" class="w24r ta" placeholder="Task">
+                <input type="submit" class="s" value="Add">
+                <button type="reset" class="button i o link r"><i class="icon_cancel"></i></button>
+            </form>
+            <div class="p1r bob1 guest">
+                <h4>Task List</h4>
+                <p class="w28r taj p1r">This is a very basic todo application.
+                    <br>Register and Login to do add-remove tasks.
+                    <br>Users and the data is kept in the json file.
+                    <br>Of course you can keep it wherever you like.
+                </p>
+            </div>
+            <div class="dn w48r p1r bob1 user list">
+                <table class="stripes fw">
+                    <thead>
+                        <tr>
+                            <td class="w8r">Type</td>
+                            <td class="w24r">Task</td>
+                            <td class="tac"><i class="icon_ok"></i></td>
+                            <td class="tac"><i class="icon_tasks"></i></td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,113 @@
+{
+    "clone": {
+        "name": "Built-in API Demo",
+        "domain": "localhost",
+        "type": "platform",
+        "state": "active",
+        "settings": {
+            "theme": "default",
+            "features": []
+        }
+    },
+    "urls": {
+        "cdn": "https://cdn.genes.one/"
+    },
+    "settings": {
+        "debug": true,
+        "timezone": "UTC",
+        "language": "en",
+        "date_format": "Y-m-d H:i:s.u",
+        "log_level": 1,
+        "session_name": "genes_session",
+        "environment": "development"
+    },
+    "application": {
+        "name": "Built-in API Demo",
+        "version": "1.0.0",
+        "description": "Demonstrating Genes Framework's built-in REST API"
+    },
+    "meta": {
+        "title": "Genes Built-in API Demo",
+        "description": "Using Genes Framework's automatic REST API system",
+        "keywords": "genes, framework, rest api, crud",
+        "og_image": "ui/img/share.jpg"
+    },
+    "database": {
+        "enabled": true,
+        "type": "sqlite",
+        "host": "",
+        "port": 0,
+        "name": "main",
+        "user": "",
+        "password": "",
+        "charset": "utf8mb4",
+        "database": "app.db"
+    },
+    "security": {
+        "salt": "",
+        "secret": ""
+    },
+    "admin": {
+        "name": "Admin User",
+        "alias": "admin",
+        "email": "admin@localhost",
+        "password": "admin123",
+        "type": "admin",
+        "state": "active"
+    },
+    "seed": {
+        "labels": []
+    },
+    "setup": {
+        "completed": true,
+        "completed_at": "2026-01-12 00:48:54",
+        "version": "1.0.0"
+    },
+    "views": {
+        "Index": {
+            "function": "clone.Index",
+            "template": "index",
+            "urls": {
+                "en": "index"
+            }
+        },
+        "Admin": {
+            "function": "clone.Admin",
+            "template": "admin",
+            "urls": {
+                "en": "admin"
+            }
+        }
+    },
+    "bits": {
+        "site_name": {
+            "en": "Built-in API Demo"
+        },
+        "site_title": {
+            "en": "Genes Framework Built-in REST API"
+        },
+        "site_description": {
+            "en": "Automatic REST API for all database tables - no code required!"
+        }
+    },
+    "env": {
+        "https_localhost_dv-public_genes_examples_4-builtin-api": {
+            "base_url": "https://localhost/dv-public/genes/examples/4-builtin-api/",
+            "paths": {
+                "data": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\4-builtin-api\\data\\",
+                "cache": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\4-builtin-api\\cache\\",
+                "ui": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\4-builtin-api\\ui\\",
+                "mods": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\4-builtin-api\\mods\\",
+                "uploads": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\4-builtin-api\\uploads\\"
+            }
+        }
+    },
+    "base_url": "https://localhost/dv-public/genes/examples/4-builtin-api/",
+    "paths": {
+        "data": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\4-builtin-api\\data\\",
+        "cache": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\4-builtin-api\\cache\\",
+        "ui": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\4-builtin-api\\ui\\",
+        "mods": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\4-builtin-api\\mods\\",
+        "uploads": "C:\\DV\\OneDrive\\Code\\dv-public\\genes\\examples\\4-builtin-api\\uploads\\"
+    }
+}
