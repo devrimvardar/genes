@@ -5,7 +5,7 @@ Get up and running with Genes Framework in 5 minutes.
 ## What is Genes?
 
 Genes is a **single-file framework** consisting of just 3 files:
-- **genes.php** (~5,900 lines) - Complete backend framework
+- **genes.php** (~6,400 lines) - Complete backend framework
 - **genes.js** (~1,300 lines) - Frontend library  
 - **genes.css** (~1,700 lines) - Responsive CSS framework
 

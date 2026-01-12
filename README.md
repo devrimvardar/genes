@@ -12,9 +12,9 @@
 
 ## 🎯 What is Genes?
 
-**Genes** is a complete full-stack framework contained in just **3 files** (~9,000 lines total):
+**Genes** is a complete full-stack framework contained in just **3 files** (~9,400 lines total):
 
-- **`genes.php`** (~5,900 lines) - Full backend framework with database, auth, routing, API, templating
+- **`genes.php`** (~6,400 lines) - Full backend framework with database, auth, routing, API, templating
 - **`genes.js`** (~1,300 lines) - Frontend library with DOM utilities, AJAX, events, state management
 - **`genes.css`** (~1,700 lines) - Responsive CSS framework with dark/light themes
 
