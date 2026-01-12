@@ -5,10 +5,10 @@
  * ============================================================================
  * A lightweight, single-file PHP framework for rapid web development
  * 
- * @version     2.0.0
- * @date        2025-10-06
+ * @version     2.0.1
+ * @date        2026-01-12
  * @author      Devrim Vardar
- * @copyright   (c) 2024-2025 NodOnce OÜ
+ * @copyright   (c) 2024-2026 NodOnce OÜ
  * @license     MIT
  * @link        https://genes.one
  * 
@@ -559,12 +559,20 @@ g::def("core", array(
         $protocol = $isHttps ? 'https://' : 'http://';
         $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
 
-        // Use detected base path from route parsing, or fallback to SCRIPT_NAME
-        $basePath = g::get("route.basePath");
-        if (!$basePath && isset($_SERVER['SCRIPT_NAME'])) {
-            $scriptPath = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
-            if ($scriptPath !== '/' && $scriptPath !== '.') {
-                $basePath = $scriptPath;
+        // Get the detected base path from parseUrl (same smart detection)
+        $request = g::get("request");
+        $basePath = '';
+        
+        if ($request && isset($request['path'])) {
+            // Extract base path by comparing REQUEST_URI with the cleaned path
+            $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+            $pathOnly = parse_url($requestUri, PHP_URL_PATH);
+            $cleanPath = $request['path'];
+            
+            // The base path is what was stripped: REQUEST_URI - clean path
+            if ($pathOnly !== $cleanPath && strpos($pathOnly, $cleanPath) !== false) {
+                $basePath = substr($pathOnly, 0, strlen($pathOnly) - strlen($cleanPath));
+                $basePath = rtrim($basePath, '/');
             }
         }
 
@@ -1289,25 +1297,57 @@ g::def("route", array(
         }
 
         // Auto-detect and remove base path (for apps in subfolders)
-        $basePath = g::get("route.basePath");
-        if (!$basePath) {
-            // Use CONTEXT_PREFIX if available (set by Apache when RewriteBase is used)
-            if (!empty($_SERVER['CONTEXT_PREFIX'])) {
-                $basePath = str_replace('\\', '/', $_SERVER['CONTEXT_PREFIX']);
-            }
-            // Otherwise, detect from SCRIPT_NAME
-            elseif (isset($_SERVER['SCRIPT_NAME'])) {
-                $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
-                
-                // Get the directory containing index.php
-                $scriptPath = dirname($scriptName);
-                if ($scriptPath !== '/' && $scriptPath !== '.') {
-                    $basePath = $scriptPath;
+        // Note: Don't use cached basePath - detect fresh each time to handle nested apps
+        // Note: Don't use CONTEXT_PREFIX as it may be set globally and not reflect nested apps
+        $basePath = null;
+        
+        // Check if this is a static file request - skip routing if so
+        if (preg_match('/\.(css|js|jpg|jpeg|png|gif|svg|ico|woff|woff2|ttf|eot|pdf|zip|json|xml)$/i', $path)) {
+            // This is a static file - don't apply routing
+            $basePath = '';
+        } else {
+            // Smart detection: analyze URL structure against known routes
+            // Get config to find known routes
+            $config = g::get("config");
+            $knownRoutes = array('index'); // 'index' is always a known route
+            
+            if ($config && isset($config["views"])) {
+                foreach ($config["views"] as $view) {
+                    if (isset($view["urls"])) {
+                        foreach ($view["urls"] as $url) {
+                            $knownRoutes[] = $url;
+                        }
+                    }
                 }
             }
-
-            if ($basePath) {
-                g::set("route.basePath", $basePath);
+            
+            // Split REQUEST_URI into segments
+            $pathOnly = parse_url($requestUri, PHP_URL_PATH);
+            $pathOnly = rtrim($pathOnly, '/'); // Remove trailing slash
+            $segments = array_values(array_filter(explode('/', $pathOnly)));
+            
+            // Try to find the base path by checking segments from the end
+            $foundBase = false;
+            for ($i = count($segments) - 1; $i >= 0; $i--) {
+                $segment = $segments[$i];
+                if (in_array($segment, $knownRoutes)) {
+                    // This segment is a known route
+                    // Everything before it is the base path
+                    if ($i > 0) {
+                        $baseSegments = array_slice($segments, 0, $i);
+                        $basePath = '/' . implode('/', $baseSegments);
+                    } else {
+                        $basePath = '';
+                    }
+                    $foundBase = true;
+                    break;
+                }
+            }
+            
+            // If no known route found in URL, assume everything is base (accessing root of app)
+            if (!$foundBase && count($segments) > 0) {
+                // Treat all segments as base path (user is accessing root of app)
+                $basePath = '/' . implode('/', $segments);
             }
         }
 

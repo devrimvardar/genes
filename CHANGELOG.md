@@ -10,29 +10,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- **Official Website**: Complete marketing website built with Genes itself (website/)
-  - Professional landing page showcasing framework features
-  - Interactive documentation page
-  - Examples gallery with live demos
-  - Download/installation guide
-  - Responsive navigation and footer
-  - Author credits (Devrim Vardar - @DevrimVardar)
-- **Example Reorganization**: Restructured examples to match actual use cases
-  - 1-landing-page: Multi-language landing page
-  - 2-blog-system: Complete blog with database
-  - 3-rest-api: Custom REST API implementation
-  - 4-builtin-api: Zero-code REST API demo
-- **Documentation Updates**: Enhanced API documentation and quickstart guides
 
 ### Changed
-- Cleaned up example structure (removed unused examples)
-- Updated README with accurate feature descriptions
-- Improved routing system documentation
 
 ### Fixed
-- View routing now requires explicit `function` property in config.json
-- Template path resolution for multi-page applications
-- Navigation links and asset paths for base tag compatibility
+
+---
+
+## [2.0.1] - 2026-01-12
+
+### Changed
+- **Smart Base Path Detection**: Enhanced routing to automatically detect base paths for nested applications
+  - `route.parseUrl()` now analyzes URL structure against known routes from config.json
+  - Removes dependency on `CONTEXT_PREFIX` for more flexible deployment
+  - Each application (main + nested) detects its own base path independently
+  - Static files (.css, .js, images) are automatically excluded from routing
+- **Improved Base URL Generation**: Updated `core.getBaseUrl()` to calculate paths from parsed request data
+  - Removed fallback to `SCRIPT_NAME` which could return physical paths instead of URL paths
+  - Always returns URL-based paths (e.g., `/myapp/`) instead of physical paths (e.g., `/var/www/myapp/`)
+  - Better support for applications in subdirectories and reverse proxy setups
+
+### Fixed
+- Base path detection for applications deployed in subdirectories
+- URL generation now consistently uses URL paths instead of physical filesystem paths
 
 ---
 
