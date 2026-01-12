@@ -79,6 +79,19 @@ Demonstrates:
 - Route parameter extraction
 - When to build custom vs use built-in
 
+---
+
+### [Example 4: Built-in REST API](4-builtin-api/)
+**Zero-Code API | Config-Driven | Auto CRUD**
+
+Demonstrates:
+- Using Genes' built-in REST API (api.handle)
+- Zero code - all configuration in config.json
+- Automatic CRUD endpoints for all tables
+- Built-in filtering, pagination, sorting
+- API testing UI included
+- When to use built-in vs custom API
+
 **Key Files:**
 - `index.php` - Custom API handlers (~300 lines)
 - `data/config.json` - View routing configuration

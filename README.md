@@ -6,13 +6,15 @@
 [![PHP Version](https://img.shields.io/badge/PHP-5.6%2B-blue)](https://php.net)
 [![Framework](https://img.shields.io/badge/Framework-Single--File-green)]()
 
+**[🌐 Official Website](https://github.com/devrimvardar/genes/tree/main/website)** | **[📖 Documentation](docs/)** | **[💡 Examples](examples/)**
+
 ---
 
 ## 🎯 What is Genes?
 
-**Genes** is a complete full-stack framework contained in just **3 files** (~9,400 lines total):
+**Genes** is a complete full-stack framework contained in just **3 files** (~9,000 lines total):
 
-- **`genes.php`** (~6,400 lines) - Full backend framework with database, auth, routing, API, templating
+- **`genes.php`** (~5,900 lines) - Full backend framework with database, auth, routing, API, templating
 - **`genes.js`** (~1,300 lines) - Frontend library with DOM utilities, AJAX, events, state management
 - **`genes.css`** (~1,700 lines) - Responsive CSS framework with dark/light themes
 
@@ -55,7 +57,7 @@ php -S localhost:8000
 ```bash
 git clone https://github.com/devrimvardar/genes.git
 cd genes
-cd examples/1-hello-world
+cd examples/1-landing-page
 php -S localhost:8000
 ```
 
@@ -229,8 +231,11 @@ Multi-language landing page with no database. Demonstrates template engine, rout
 ### [Example 2: Blog System](examples/2-blog-system/)
 Full-featured blog with multi-language support. Shows proper use of the 5-table schema, pagination, and related content.
 
-### [Example 3: REST API / Todo](examples/3-rest-api/)
-Complete RESTful API with CRUD operations. Includes interactive demo UI and proper HTTP method routing.
+### [Example 3: Custom REST API](examples/3-rest-api/)
+Manual REST API implementation with CRUD operations. Learning exercise for building custom APIs from scratch.
+
+### [Example 4: Built-in REST API](examples/4-builtin-api/)
+Zero-code REST API using Genes' built-in API functionality. Demonstrates config-driven automatic CRUD endpoints.
 
 **[See all examples →](examples/README.md)**
 
@@ -252,6 +257,8 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 MIT License - see [LICENSE](LICENSE) file for details
 
 Copyright (c) 2024-2026 NodOnce OÜ
+
+**Created by [Devrim Vardar](https://devrimvardar.com)** | [@DevrimVardar](https://x.com/DevrimVardar)
 
 ---
 
