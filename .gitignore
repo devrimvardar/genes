@@ -21,6 +21,11 @@ package-lock.json
 Thumbs.db
 desktop.ini
 
+# Archive/Backup
+.old/
+.backup/
+*.bak
+
 # Project specific
 data/config.json
 data/*.db
