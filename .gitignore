@@ -23,6 +23,8 @@ desktop.ini
 
 # Archive/Backup
 .old/
+.docs/
+.genes/
 .backup/
 *.bak
 
