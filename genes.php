@@ -38,6 +38,9 @@ class g
         $ref = $value;
     }
 
+    // Set timezone early to avoid warnings
+    private static $initialized = false;
+
     public static function get($key)
     {
         return self::find($key);
@@ -169,6 +172,9 @@ defined('UI_TEMPLATE') or define('UI_TEMPLATE', UI_FOLDER . 'index.html');
 
 // URLs
 defined('GENES_CDN_URL') or define('GENES_CDN_URL', 'https://cdn.genes.one/');
+
+// Set default timezone early to prevent warnings
+@date_default_timezone_set('UTC');
 
 // ============================================================================
 // CORE FUNCTIONS
@@ -562,13 +568,13 @@ g::def("core", array(
         // Get the detected base path from parseUrl (same smart detection)
         $request = g::get("request");
         $basePath = '';
-        
+
         if ($request && isset($request['path'])) {
             // Extract base path by comparing REQUEST_URI with the cleaned path
             $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
             $pathOnly = parse_url($requestUri, PHP_URL_PATH);
             $cleanPath = $request['path'];
-            
+
             // The base path is what was stripped: REQUEST_URI - clean path
             if ($pathOnly !== $cleanPath && strpos($pathOnly, $cleanPath) !== false) {
                 $basePath = substr($pathOnly, 0, strlen($pathOnly) - strlen($cleanPath));
@@ -1302,57 +1308,23 @@ g::def("route", array(
         }
 
         // Auto-detect and remove base path (for apps in subfolders)
-        // Note: Don't use cached basePath - detect fresh each time to handle nested apps
-        // Note: Don't use CONTEXT_PREFIX as it may be set globally and not reflect nested apps
-        $basePath = null;
-        
-        // Check if this is a static file request - skip routing if so
-        if (preg_match('/\.(css|js|jpg|jpeg|png|gif|svg|ico|woff|woff2|ttf|eot|pdf|zip|json|xml)$/i', $path)) {
-            // This is a static file - don't apply routing
-            $basePath = '';
-        } else {
-            // Smart detection: analyze URL structure against known routes
-            // Get config to find known routes
-            $config = g::get("config");
-            $knownRoutes = array('index', 'api'); // 'index' and 'api' are always known routes
-            
-            if ($config && isset($config["views"])) {
-                foreach ($config["views"] as $view) {
-                    if (isset($view["urls"])) {
-                        foreach ($view["urls"] as $url) {
-                            $knownRoutes[] = $url;
-                        }
-                    }
-                }
-            }
-            
-            // Split REQUEST_URI into segments
-            $pathOnly = parse_url($requestUri, PHP_URL_PATH);
-            $pathOnly = rtrim($pathOnly, '/'); // Remove trailing slash
-            $segments = array_values(array_filter(explode('/', $pathOnly)));
-            
-            // Try to find the base path by checking segments from the end
-            $foundBase = false;
-            for ($i = count($segments) - 1; $i >= 0; $i--) {
-                $segment = $segments[$i];
-                if (in_array($segment, $knownRoutes)) {
-                    // This segment is a known route
-                    // Everything before it is the base path
-                    if ($i > 0) {
-                        $baseSegments = array_slice($segments, 0, $i);
-                        $basePath = '/' . implode('/', $baseSegments);
-                    } else {
-                        $basePath = '';
-                    }
-                    $foundBase = true;
-                    break;
-                }
-            }
-            
-            // If no known route found in URL, assume everything is base (accessing root of app)
-            if (!$foundBase && count($segments) > 0) {
-                // Treat all segments as base path (user is accessing root of app)
-                $basePath = '/' . implode('/', $segments);
+        // Extract the actual web-accessible base path by comparing SCRIPT_NAME with REQUEST_URI
+        $scriptName = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
+        $requestPath = $path; // This is the path from REQUEST_URI
+
+        // Get the directory name from SCRIPT_NAME (e.g., /dv-private/genes_one/index.php -> genes_one)
+        $scriptDir = dirname($scriptName);
+        $scriptDirName = basename($scriptDir);
+
+        // Find where this directory name appears in the REQUEST_URI
+        $basePath = '';
+        if ($scriptDirName && strpos($requestPath, $scriptDirName) !== false) {
+            // Find the position of the script directory in the request path
+            $pos = strpos($requestPath, '/' . $scriptDirName);
+            if ($pos !== false) {
+                // Extract everything up to and including the directory name as base path
+                $basePath = substr($requestPath, 0, $pos + strlen($scriptDirName) + 1);
+                $basePath = rtrim($basePath, '/');
             }
         }
 
@@ -1362,6 +1334,13 @@ g::def("route", array(
             if (empty($path) || $path[0] !== '/') {
                 $path = '/' . $path;
             }
+        }
+
+        // Ensure path has leading slash
+        if (empty($path)) {
+            $path = '/';
+        } elseif ($path[0] !== '/') {
+            $path = '/' . $path;
         }
 
         // Parse query string into array
@@ -1962,6 +1941,18 @@ g::def("route", array(
                     break 2;
                 }
             }
+        }
+
+        // If no match found, immediately return 404
+        if (!$matchedView) {
+            http_response_code(404);
+
+            if (g::has("clone.NotFound")) {
+                $lang = g::run("route.detectLanguage");
+                return g::run("clone.NotFound", array(), $lang, $path);
+            }
+            echo "404 - Page Not Found";
+            exit;
         }
 
         // Fallback to auto-detect if no language was set from URL
@@ -5775,10 +5766,10 @@ g::def("tpl", array(
 
         // Clean up: Remove all data-g-* attributes from rendered HTML
         $html = preg_replace('/\s+data-g-[a-z]+="[^"]*"/i', '', $html);
-        
+
         // Clean up: Remove marker attributes (data-a, data-b, etc.)
         $html = preg_replace('/\s+data-[a-z](?=[\s>])/i', '', $html);
-        
+
         // Clean up: Remove marker comments (<!--a-->, <!--b-->, etc.)
         $html = preg_replace('/<!--[a-z]-->/i', '', $html);
 
@@ -5805,6 +5796,48 @@ g::def("tpl", array(
 
         // Get view config
         $viewConfig = isset($views[$viewName]) ? $views[$viewName] : null;
+
+        // ============================================================
+        // VALIDATION: Check for unhandled route segments or query params
+        // ============================================================
+        $request = g::get("request");
+
+        // Check if view allows additional segments (like /blog/post-slug)
+        $allowSegments = isset($options['allowSegments']) ? $options['allowSegments'] : false;
+
+        // Check if view allows query parameters (like /docs;section;topic)
+        $allowParams = isset($options['allowParams']) ? $options['allowParams'] : false;
+
+        // Check for unexpected route segments (path segments after the matched route)
+        if (!$allowSegments && $request && isset($request['route_segments']) && !empty($request['route_segments'])) {
+            // Unexpected segments found - this is a 404
+            http_response_code(404);
+
+            if (g::has("clone.NotFound")) {
+                $lang = isset($data['lang']) ? $data['lang'] : g::run("route.detectLanguage");
+                $bits = isset($data['bits']) ? $data['bits'] : array();
+                return g::run("clone.NotFound", $bits, $lang, $request['path']);
+            }
+
+            echo "404 - Page Not Found";
+            exit;
+        }
+
+        // Check for unexpected query parameters (from semicolon-delimited URL)
+        if (!$allowParams && $request && isset($request['query']) && !empty($request['query'])) {
+            // Unexpected query params found - this is a 404
+            http_response_code(404);
+
+            if (g::has("clone.NotFound")) {
+                $lang = isset($data['lang']) ? $data['lang'] : g::run("route.detectLanguage");
+                $bits = isset($data['bits']) ? $data['bits'] : array();
+                return g::run("clone.NotFound", $bits, $lang, $request['path']);
+            }
+
+            echo "404 - Page Not Found";
+            exit;
+        }
+        // ============================================================
 
         // Determine template name
         $templateName = null;
@@ -5871,9 +5904,9 @@ g::def("tpl", array(
             // Parse the rendered HTML to extract just the middle and right columns
             $doc = new DOMDocument();
             @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $rendered);
-            
+
             $result = '';
-            
+
             // Extract middle column (feed)
             $middleColumn = $doc->getElementById('feed');
             if (!$middleColumn) {
@@ -5884,7 +5917,7 @@ g::def("tpl", array(
                     $middleColumn = $nodes->item(0);
                 }
             }
-            
+
             // Extract right column (details)  
             $rightColumn = $doc->getElementById('details');
             if (!$rightColumn) {
@@ -5894,7 +5927,7 @@ g::def("tpl", array(
                     $rightColumn = $nodes->item(0);
                 }
             }
-            
+
             // Build partial HTML response
             if ($middleColumn) {
                 $result .= $doc->saveHTML($middleColumn);
@@ -5902,7 +5935,7 @@ g::def("tpl", array(
             if ($rightColumn) {
                 $result .= $doc->saveHTML($rightColumn);
             }
-            
+
             // If we successfully extracted columns, return them
             // Otherwise fall back to full HTML
             if (!empty($result)) {
@@ -6021,13 +6054,13 @@ g::def("tpl", array(
         if (strpos($condition, ':') !== false) {
             list($path, $expected) = explode(':', $condition, 2);
             $value = g::run("tpl._getValue", $path, $data);
-            
+
             // Type-aware comparison
             if ($expected === 'true') $expected = true;
             else if ($expected === 'false') $expected = false;
             else if ($expected === 'null') $expected = null;
             else if (is_numeric($expected)) $expected = $expected + 0; // Convert to int/float
-            
+
             $result = ($value == $expected);
             return $negated ? !$result : $result;
         }
@@ -6035,7 +6068,7 @@ g::def("tpl", array(
         // Simple truthy check
         $value = g::run("tpl._getValue", $condition, $data);
         $result = !empty($value);
-        
+
         return $negated ? !$result : $result;
     },
 
@@ -6219,13 +6252,13 @@ g::def("tpl", array(
      */
     "_processLoad" => function ($html, $element, $data, $config) {
         $partialName = $element['attrs']['load'];
-        
+
         // Check if data-g-with attribute specifies a data path
         $contextData = $data;
         if (isset($element['attrs']['with'])) {
             $dataPath = $element['attrs']['with'];
             $specificData = g::run("tpl._getValue", $dataPath, $data);
-            
+
             if ($specificData !== null) {
                 // Merge specific data with parent data (specific data takes precedence)
                 if (is_array($specificData)) {
