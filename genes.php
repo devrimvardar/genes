@@ -187,6 +187,7 @@ g::def("core", array(
         g::set("system.memory.start", memory_get_usage());
 
         g::run("core.prepareConfig");
+        g::run("core.detectDomain");
         g::run("core.setEnvironment");
         g::run("core.createFolders");
         g::run("core.setApplicationInfo");
@@ -501,22 +502,78 @@ g::def("core", array(
         }
 
         $seconds = floor($timestamp);
-        $milliseconds = round(($timestamp - $seconds) * 1000);
-
-        if ($milliseconds < 10) {
-            $milliseconds = "00" . $milliseconds;
-        } elseif ($milliseconds < 100) {
-            $milliseconds = "0" . $milliseconds;
-        }
+        $milliseconds = sprintf("%03d", round(($timestamp - $seconds) * 1000));
 
         $format = g::get("config.settings.date_format");
         if (!$format) {
-            $format = "Y-m-d H:i:s.u";
+            $format = "Y-m-d H:i:s";
         }
-        $formatted = date($format, $seconds);
-        $formatted = str_replace('.u', '.' . $milliseconds, $formatted);
+        
+        // Replace .u with milliseconds, or append if no .u found
+        if (strpos($format, '.u') !== false) {
+            $formatted = date($format, $seconds);
+            $formatted = str_replace('.u', '.' . $milliseconds, $formatted);
+        } else {
+            $formatted = date($format, $seconds) . '.' . $milliseconds;
+        }
 
         return $formatted;
+    },
+
+    /**
+     * Detect current domain from config rules (no hardcoded domains!)
+     */
+    "detectDomain" => function () {
+        $config = g::get("config");
+        
+        // Get domain detection rules from config
+        $domainRules = isset($config["domain_rules"]) ? $config["domain_rules"] : array();
+        $defaultDomain = isset($config["default_domain"]) ? $config["default_domain"] : null;
+        
+        // Get current host
+        $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+        $host = preg_replace('/:\d+$/', '', $host); // Remove port
+        
+        // Get subdirectory from REQUEST_URI (not SCRIPT_NAME)
+        $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        $requestPath = parse_url($requestUri, PHP_URL_PATH);
+        $pathParts = array_filter(explode('/', trim($requestPath, '/')));
+        $subdir = !empty($pathParts) ? $pathParts[0] : '';
+        
+        // Build full identifier (host + subdir for localhost)
+        $fullIdentifier = $host;
+        if ($subdir && strpos($host, 'localhost') !== false) {
+            $fullIdentifier = $host . '/' . $subdir;
+        }
+        
+        // Match against rules
+        foreach ($domainRules as $pattern => $domainKey) {
+            // Simple exact match
+            if ($pattern === $fullIdentifier) {
+                g::set("current_domain", $domainKey);
+                g::run("core.log", "[DOMAIN] Detected: $domainKey (matched: $pattern)");
+                return $domainKey;
+            }
+            
+            // Wildcard match (e.g., *.expo.live)
+            if (strpos($pattern, '*') !== false && fnmatch($pattern, $fullIdentifier)) {
+                g::set("current_domain", $domainKey);
+                g::run("core.log", "[DOMAIN] Detected: $domainKey (wildcard: $pattern)");
+                return $domainKey;
+            }
+        }
+        
+        // Fallback to default
+        if ($defaultDomain) {
+            g::set("current_domain", $defaultDomain);
+            g::run("core.log", "[DOMAIN] Using default: $defaultDomain");
+            return $defaultDomain;
+        }
+        
+        // Ultimate fallback
+        g::set("current_domain", "expo.live");
+        g::run("core.log", "[DOMAIN] Ultimate fallback: expo.live");
+        return "expo.live";
     },
 
     "arrayMergeRecursive" => function ($array1, $array2) {
@@ -565,12 +622,15 @@ g::def("core", array(
         $protocol = $isHttps ? 'https://' : 'http://';
         $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
 
-        // Get the detected base path from parseUrl (same smart detection)
+        // Get the detected base path from request (includes domain identifier)
         $request = g::get("request");
         $basePath = '';
 
-        if ($request && isset($request['path'])) {
-            // Extract base path by comparing REQUEST_URI with the cleaned path
+        // First check if we have a domain_base_path (the subdirectory used for domain detection)
+        if ($request && isset($request['domain_base_path']) && $request['domain_base_path']) {
+            $basePath = $request['domain_base_path'];
+        } else if ($request && isset($request['path'])) {
+            // Fallback: Extract base path by comparing REQUEST_URI with the cleaned path
             $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
             $pathOnly = parse_url($requestUri, PHP_URL_PATH);
             $cleanPath = $request['path'];
@@ -1292,19 +1352,32 @@ g::def("route", array(
         // Get request URI (path + query string)
         $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
 
-        // Split path and query string (support both ? and ; delimiters)
+        // CRITICAL: Split path and query string FIRST (support both ? and ; delimiters)
+        // This must happen before ANY other processing to prevent query params from contaminating the path
         $path = $requestUri;
         $queryString = '';
 
-        // Check for semicolon first (preferred), then question mark
-        if (strpos($requestUri, ';') !== false) {
-            $parts = explode(';', $requestUri, 2);
-            $path = $parts[0];
-            $queryString = isset($parts[1]) ? $parts[1] : '';
-        } elseif (strpos($requestUri, '?') !== false) {
-            $parts = explode('?', $requestUri, 2);
-            $path = $parts[0];
-            $queryString = isset($parts[1]) ? $parts[1] : '';
+        // Check for question mark first (most common), then semicolon
+        $queryPos = strpos($requestUri, '?');
+        $semiPos = strpos($requestUri, ';');
+        
+        if ($queryPos !== false || $semiPos !== false) {
+            // Use whichever comes first
+            $splitPos = false;
+            $splitChar = '';
+            
+            if ($queryPos !== false && ($semiPos === false || $queryPos < $semiPos)) {
+                $splitPos = $queryPos;
+                $splitChar = '?';
+            } elseif ($semiPos !== false) {
+                $splitPos = $semiPos;
+                $splitChar = ';';
+            }
+            
+            if ($splitPos !== false) {
+                $path = substr($requestUri, 0, $splitPos);
+                $queryString = substr($requestUri, $splitPos + 1);
+            }
         }
 
         // Auto-detect and remove base path (for apps in subfolders)
@@ -1842,11 +1915,10 @@ g::def("route", array(
      */
     "handle" => function () {
         $config = g::get("config");
-        $request = g::get("request");
-
-        if (!$request) {
-            $request = g::run("route.parseUrl");
-        }
+        
+        // ALWAYS parse the URL fresh to ensure query strings are properly stripped
+        // This prevents issues with UTM parameters and other query strings breaking routing
+        $request = g::run("route.parseUrl");
 
         $path = $request['path'];
         $isJson = false;
@@ -1906,6 +1978,19 @@ g::def("route", array(
         $path = trim($path, '/');
         $pathSegments = !empty($path) ? explode('/', $path) : array();
 
+        // DEFENSIVE: Strip query parameters from each segment (in case they leaked through)
+        // This prevents URLs like /s/hash?utm_source=chatgpt from breaking the routing
+        $pathSegments = array_map(function($segment) {
+            // Remove everything after ? or ; from each segment
+            if (strpos($segment, '?') !== false) {
+                $segment = substr($segment, 0, strpos($segment, '?'));
+            }
+            if (strpos($segment, ';') !== false) {
+                $segment = substr($segment, 0, strpos($segment, ';'));
+            }
+            return $segment;
+        }, $pathSegments);
+
         // First segment is the route, rest are additional route segments
         // If empty path, default to 'index'
         if (empty($pathSegments)) {
@@ -1920,9 +2005,64 @@ g::def("route", array(
         $request['route_segments'] = $additionalSegments;
         g::set("request", $request);
 
-        // Get views from config
+        // Get current domain and domain config
+        $currentDomain = g::get("current_domain");
+        
+        // Strip domain identifier subdirectory from path if present
+        // (e.g., /rockers_im/album/... becomes /album/...)
+        $domainRules = isset($config["domain_rules"]) ? $config["domain_rules"] : array();
+        $host = isset($_SERVER['HTTP_HOST']) ? preg_replace('/:\d+$/', '', $_SERVER['HTTP_HOST']) : 'localhost';
+        
+        $domainBasePath = ''; // Store the subdirectory that was stripped
+        
+        // Check if first segment matches a domain identifier
+        if (!empty($pathSegments)) {
+            $firstSegment = $pathSegments[0];
+            $checkIdentifier = $host . '/' . $firstSegment;
+            
+            // If this matches a domain rule, strip it
+            foreach ($domainRules as $pattern => $domainKey) {
+                if ($pattern === $checkIdentifier && $domainKey === $currentDomain) {
+                    // Store the base path before removing it
+                    $domainBasePath = '/' . $firstSegment;
+                    
+                    // Remove first segment (domain identifier)
+                    $pathSegments = array_slice($pathSegments, 1);
+                    
+                    // Update route path and segments
+                    if (empty($pathSegments)) {
+                        $routePath = 'index';
+                        $additionalSegments = array();
+                    } else {
+                        $routePath = $pathSegments[0];
+                        $additionalSegments = array_slice($pathSegments, 1);
+                    }
+                    
+                    // Update request with base path
+                    $request['route_segments'] = $additionalSegments;
+                    $request['domain_base_path'] = $domainBasePath;
+                    g::set("request", $request);
+                    break;
+                }
+            }
+        }
+        
+        // Get base views from config
         $views = isset($config["views"]) ? $config["views"] : array();
         $bits = isset($config["bits"]) ? $config["bits"] : array();
+        
+        // Get domain-specific configuration
+        $domainConfig = isset($config["domains"][$currentDomain]) 
+            ? $config["domains"][$currentDomain] 
+            : array();
+        
+        // Merge domain-specific view overrides
+        if (isset($domainConfig["views_override"])) {
+            $views = array_merge($views, $domainConfig["views_override"]);
+        }
+        
+        // Store domain config for later use in views
+        g::set("domain_config", $domainConfig);
 
         // Find matching view and detect language from URL
         $matchedView = null;
@@ -2035,30 +2175,7 @@ g::def("route", array(
                     echo "<p>Make sure you have <code>g::def('clone', array(...))</code> in your index.php</p>";
                 }
             }
-        }
-
-        // 404
-        g::run("log.info", "Route not found: $path (lang: $lang)");
-
-        if (g::has("clone.NotFound")) {
-            return g::run("clone.NotFound", array(), $lang, $path);
-        } else {
-            http_response_code(404);
-
-            // Show helpful error in debug mode
-            if (g::get("config.settings.debug")) {
-                echo "<h1>404 - Route Not Found (Debug Mode)</h1>";
-                echo "<p>Requested path: <code>$path</code></p>";
-                echo "<p>Language: <code>$lang</code></p>";
-                echo "<h3>Available Views:</h3><ul>";
-                foreach ($views as $vName => $vConfig) {
-                    echo "<li><strong>$vName</strong>: " . (isset($vConfig["urls"]) ? implode(", ", $vConfig["urls"]) : "no URLs") . "</li>";
-                }
-                echo "</ul>";
-            } else {
-                echo "404 - Page Not Found";
-            }
-        }
+        } // Close if ($matchedView)
     },
 
     /**
@@ -4347,7 +4464,14 @@ g::def("auth", array(
             return false;
         }
 
-        return isset($_SESSION['auth_user']) ? $_SESSION['auth_user'] : false;
+        $user = isset($_SESSION['auth_user']) ? $_SESSION['auth_user'] : false;
+        
+        if ($user && isset($user['meta']) && is_string($user['meta'])) {
+            // Decode meta field if it's a JSON string
+            $user['meta'] = json_decode($user['meta'], true);
+        }
+        
+        return $user;
     },
 
     /**
@@ -5792,7 +5916,16 @@ g::def("tpl", array(
      */
     "renderView" => function ($viewName, $data = array(), $options = array()) {
         $config = g::get("config");
+        
+        // Get views - merge domain-specific overrides
         $views = isset($config["views"]) ? $config["views"] : array();
+        $currentDomain = g::get("current_domain");
+        $domainConfig = isset($config["domains"][$currentDomain]) ? $config["domains"][$currentDomain] : array();
+        
+        // Merge domain-specific view overrides
+        if (isset($domainConfig["views_override"])) {
+            $views = array_merge($views, $domainConfig["views_override"]);
+        }
 
         // Get view config
         $viewConfig = isset($views[$viewName]) ? $views[$viewName] : null;
@@ -5823,20 +5956,8 @@ g::def("tpl", array(
             exit;
         }
 
-        // Check for unexpected query parameters (from semicolon-delimited URL)
-        if (!$allowParams && $request && isset($request['query']) && !empty($request['query'])) {
-            // Unexpected query params found - this is a 404
-            http_response_code(404);
-
-            if (g::has("clone.NotFound")) {
-                $lang = isset($data['lang']) ? $data['lang'] : g::run("route.detectLanguage");
-                $bits = isset($data['bits']) ? $data['bits'] : array();
-                return g::run("clone.NotFound", $bits, $lang, $request['path']);
-            }
-
-            echo "404 - Page Not Found";
-            exit;
-        }
+        // Note: Standard URL query parameters (from ? in URL) are always allowed
+        // Only semicolon-delimited params need special handling if needed in the future
         // ============================================================
 
         // Determine template name
@@ -5855,17 +5976,33 @@ g::def("tpl", array(
             $templateName = 'index';
         }
 
-        // Load template
+        // Get current domain theme
+        $currentDomain = g::get("current_domain");
+        $domainConfig = g::get("domain_config");
+        $theme = isset($domainConfig['theme']) ? $domainConfig['theme'] : 'expo';
+        $circle = isset($domainConfig['circle']) ? $domainConfig['circle'] : null;
+
+        // Load template - try circles folder first, then UI folder
+        $templatePaths = array();
+        
+        // If circle is defined, prioritize circles/{circle}/templates/
+        if ($circle) {
+            $templatePaths[] = './circles/' . $circle . '/templates';
+        }
+        
+        // Then try UI folder with theme
+        $templatePaths[] = UI_FOLDER . $theme;           // ui/rockers/, ui/expo/, etc.
+        $templatePaths[] = UI_FOLDER . 'expo';            // Fallback to expo templates
+        $templatePaths[] = UI_FOLDER;                     // Fallback to root ui/
+        $templatePaths[] = DATA_FOLDER . 'templates';
+        $templatePaths[] = UI_FOLDER . 'tmpls';
+
         $html = g::run("tpl.load", $templateName, array(
-            "paths" => array(
-                UI_FOLDER,
-                DATA_FOLDER . 'templates',
-                UI_FOLDER . 'tmpls'
-            )
+            "paths" => $templatePaths
         ));
 
         if ($html === false) {
-            g::run("log.error", "Template not found for view: $viewName (template: $templateName)");
+            g::run("log.error", "Template not found for view: $viewName (template: $templateName, theme: $theme, circle: $circle)");
             return false;
         }
 
@@ -6431,8 +6568,12 @@ if (!defined('GENES_NO_AUTO_INIT')) {
             $path = $request && isset($request['path']) ? $request['path'] : 'CLI';
             $method = $request && isset($request['method']) ? $request['method'] : 'CLI';
 
-            // Log directly
-            $timestamp = date('Y-m-d H:i:s.u');
+            // Create timestamp with milliseconds (direct implementation for shutdown context)
+            $now = microtime(true);
+            $seconds = floor($now);
+            $milliseconds = sprintf("%03d", round(($now - $seconds) * 1000));
+            $timestamp = date('Y-m-d H:i:s', $seconds) . '.' . $milliseconds;
+            
             $logMessage = "Request: $method $path | Time: {$duration}ms | Memory: {$memory}KB";
             $logEntry = "[$timestamp] [PERF] $logMessage\n";
             @file_put_contents($logFile, $logEntry, FILE_APPEND);
