@@ -23,6 +23,7 @@ this specification.
 ```css
 * { box-sizing: border-box; padding: 0; margin: 0; line-height: 1em }
 html { -webkit-text-size-adjust: 100% }
+html, body { overflow-x: clip }
 @media (max-width: 639px) { html { font-size: 3.125vw } }
 @media (min-width: 640px) and (max-width: 1279px) { html { font-size: 1.5625vw } }
 @media (min-width: 1280px) { html { font-size: .78125vw } }
