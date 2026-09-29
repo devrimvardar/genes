@@ -5,7 +5,7 @@ Genes is an AI-readable specification for generating dependency-free PHP website
 It helps coding LLMs create consistent projects with routing, localization, fixed
 responsive layouts, JSON, SQLite, templates, assets and lightweight administration.
 
-Specification: https://genes.one/genes.md
+Specification: https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md
 Repository: https://github.com/devrimvardar/genes
 Documentation: https://genes.one/en/docs/
 Examples: https://genes.one/en/examples/
