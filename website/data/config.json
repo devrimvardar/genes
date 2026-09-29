@@ -1,4 +1,4 @@
 {
-  "site": {"name":"Genes","url":"https://genes.one","base_path":"","local_base_path":"/genes","default_locale":"en","locales":["en","tr"]},
+  "site": {"name":"Genes","url":"https://genes.one","base_path":"","local_base_path":"/genes","default_locale":"en","locales":["en","tr","fi"]},
   "theme": {"title":"Genes — AI-readable website specification","description":"Give an AI one file and get a real website."}
 }

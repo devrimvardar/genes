@@ -1,19 +1,19 @@
 {
   "common": {
-    "nav": {"home":{"en":"Home","tr":"Ana Sayfa"},"github":{"en":"GitHub","tr":"GitHub"}},
-    "footer": {"en":"Made for humans and AI.","tr":"İnsanlar ve yapay zekâ için."}
+    "nav": {"home":{"en":"Home","tr":"Ana Sayfa","fi":"Etusivu"},"github":{"en":"GitHub","tr":"GitHub","fi":"GitHub"}},
+    "footer": {"en":"Made for humans and AI.","tr":"İnsanlar ve yapay zekâ için.","fi":"Ihmisille ja tekoälylle."}
   },
   "home": {
-    "eyebrow":{"en":"AI-readable web building","tr":"Yapay zekâ ile web geliştirme"},
-    "title":{"en":"Give an AI one file. Get a real website.","tr":"Yapay zekâya tek dosya ver. Gerçek bir site al."},
-    "text":{"en":"Genes is a compact specification that helps an LLM create a consistent, dependency-free PHP website without inventing the architecture every time.","tr":"Genes, bir LLM'in her seferinde mimariyi yeniden icat etmeden tutarlı ve bağımlılıksız bir PHP sitesi oluşturmasına yardım eden kompakt bir spesifikasyondur."},
-    "button":{"en":"Download genes.md","tr":"genes.md indir"},
-    "section_title":{"en":"One clear source of truth.","tr":"Tek ve net bir kaynak."},
-    "section_text":{"en":"Layouts, routing, localization, JSON, SQLite, templates, assets and admin rules are defined once. The generated project remains yours.","tr":"Layout, routing, localization, JSON, SQLite, template, asset ve admin kuralları bir kez tanımlanır. Oluşturulan proje tamamen senin olur."},
+    "eyebrow":{"en":"AI-readable web building","tr":"Yapay zekâ ile web geliştirme","fi":"Tekoälylle luotu web-kehitys"},
+    "title":{"en":"Give an AI one file. Get a real website.","tr":"Yapay zekâya tek dosya ver. Gerçek bir site al.","fi":"Anna tekoälylle yksi tiedosto. Saat oikean verkkosivuston."},
+    "text":{"en":"Genes is a compact specification that helps an LLM create a consistent, dependency-free PHP website without inventing the architecture every time.","tr":"Genes, bir LLM'in her seferinde mimariyi yeniden icat etmeden tutarlı ve bağımlılıksız bir PHP sitesi oluşturmasına yardım eden kompakt bir spesifikasyondur.","fi":"Genes on kompakti määrittely, joka auttaa kielimallia luomaan yhtenäisen ja riippumattoman PHP-sivuston ilman uuden arkkitehtuurin keksimistä joka kerta."},
+    "button":{"en":"Download genes.md","tr":"genes.md indir","fi":"Lataa genes.md"},
+    "section_title":{"en":"One clear source of truth.","tr":"Tek ve net bir kaynak.","fi":"Yksi selkeä totuuden lähde."},
+    "section_text":{"en":"Layouts, routing, localization, JSON, SQLite, templates, assets and admin rules are defined once. The generated project remains yours.","tr":"Layout, routing, localization, JSON, SQLite, template, asset ve admin kuralları bir kez tanımlanır. Oluşturulan proje tamamen senin olur.","fi":"Asettelu, reititys, lokalisointi, JSON, SQLite, mallit, resurssit ja hallintasäännöt määritellään kerran. Luotu projekti pysyy sinun omana."},
     "cards":[
-      {"title":{"en":"One specification","tr":"Tek spesifikasyon"},"text":{"en":"Give the same compact rules to every coding LLM.","tr":"Aynı kompakt kuralları her coding LLM'e ver."}},
-      {"title":{"en":"Your project","tr":"Senin projen"},"text":{"en":"The AI generates plain PHP, HTML, CSS, JSON and SQLite files.","tr":"AI düz PHP, HTML, CSS, JSON ve SQLite dosyaları üretir."}},
-      {"title":{"en":"No lock-in","tr":"Bağımlılık yok"},"text":{"en":"Genes guides creation; it does not own the application.","tr":"Genes üretimi yönlendirir; uygulamanın sahibi değildir."}}
+      {"title":{"en":"One specification","tr":"Tek spesifikasyon","fi":"Yksi määrittely"},"text":{"en":"Give the same compact rules to every coding LLM.","tr":"Aynı kompakt kuralları her coding LLM'e ver.","fi":"Anna samat tiiviit säännöt jokaiselle koodaavalle kielimallille."}},
+      {"title":{"en":"Your project","tr":"Senin projen","fi":"Oma projektisi"},"text":{"en":"The AI generates plain PHP, HTML, CSS, JSON and SQLite files.","tr":"AI düz PHP, HTML, CSS, JSON ve SQLite dosyaları üretir.","fi":"Tekoäly luo tavalliset PHP-, HTML-, CSS-, JSON- ja SQLite-tiedostot."}},
+      {"title":{"en":"No lock-in","tr":"Bağımlılık yok","fi":"Ei toimittajalukkoa"},"text":{"en":"Genes guides creation; it does not own the application.","tr":"Genes üretimi yönlendirir; uygulamanın sahibi değildir.","fi":"Genes ohjaa luomista, mutta ei omista sovellusta."}}
     ]
   }
 }
