@@ -3,7 +3,7 @@ declare(strict_types=1);
 $c=json_decode(file_get_contents(__DIR__.'/data/config.json'),true,512,JSON_THROW_ON_ERROR);
 $d=json_decode(file_get_contents(__DIR__.'/data/content.json'),true,512,JSON_THROW_ON_ERROR);
 $ls=$c['site']['locales'];$def=$c['site']['default_locale'];$raw=trim(parse_url($_SERVER['REQUEST_URI']??'/',PHP_URL_PATH)??'/','/');$base=rtrim($c['site']['base_path']??'','/');$base=($base==='/'?'':$base);$path=$base&&($raw===trim($base,'/')||substr($raw,0,strlen(trim($base,'/'))+1)===trim($base,'/').'/')?trim(substr($raw,strlen(trim($base,'/'))),'/'):$raw;
-$parts=$path?explode('/',$path):[];$locale=in_array($parts[0]??'', $ls,true)?array_shift($parts):$def;$root=$base?'/'.$base:'';$origin=((!empty($_SERVER['HTTPS'])&&$_SERVER['HTTPS']!=='off')?'https':'http').'://'.($_SERVER['HTTP_HOST']??'localhost');$rootUrl=$origin.$root;
+$parts=$path?explode('/',$path):[];$locale=in_array($parts[0]??'', $ls,true)?array_shift($parts):$def;$root=$base;$origin=((!empty($_SERVER['HTTPS'])&&$_SERVER['HTTPS']!=='off')?'https':'http').'://'.($_SERVER['HTTP_HOST']??'localhost');$rootUrl=$origin.$root;
 function tr($v,$l,$d){if(!is_array($v))return $v;if(array_key_exists($l,$v))return $v[$l];if(array_key_exists($d,$v))return $v[$d];foreach($v as $k=>$x)$v[$k]=tr($x,$l,$d);return $v;}
 function e($v){return htmlspecialchars((string)$v,ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8');}
 $page=$parts[0]??'home';$content=$d[$page]??null;if(!$content){http_response_code(404);$page='home';$content=$d['home'];}$content=tr($content,$locale,$def);$common=tr($d['common']??[],$locale,$def);$switch=$locale==='en'?'tr':'en';
