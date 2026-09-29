@@ -47,6 +47,15 @@
     "section_text":{"en":"Read the source on GitHub, inspect the example website, or download the raw specification directly.","tr":"Kaynağı GitHub'da oku, örnek siteyi incele veya ham spesifikasyonu doğrudan indir.","fi":"Lue lähdekoodi GitHubissa, tutustu esimerkkisivustoon tai lataa määrittely suoraan."},
     "cards":[]
   },
+  "articles_index": {
+    "eyebrow":{"en":"Articles","tr":"Makaleler","fi":"Artikkelit"},
+    "title":{"en":"Practical notes for building PHP websites with AI.","tr":"AI ile PHP siteleri oluşturmak için pratik notlar.","fi":"Käytännön ohjeita PHP-sivustojen rakentamiseen tekoälyllä."},
+    "text":{"en":"Guides for AI-assisted PHP development, affordable shared hosting and simple FTP deployment.","tr":"AI destekli PHP geliştirme, uygun fiyatlı shared hosting ve basit FTP deployment için rehberler.","fi":"Oppaita tekoälyavusteiseen PHP-kehitykseen, edulliseen jaettuun hostingiin ja helppoon FTP-käyttöönottoon."},
+    "button":{"en":"Read the specification","tr":"Spesifikasyonu oku","fi":"Lue määrittely"},
+    "section_title":{"en":"Start with a practical answer.","tr":"Pratik bir cevapla başla.","fi":"Aloita käytännön vastauksesta."},
+    "section_text":{"en":"Each article answers a real question and connects the answer to the Genes specification and example project.","tr":"Her makale gerçek bir soruyu yanıtlar ve cevabı Genes spesifikasyonuna ve örnek projeye bağlar.","fi":"Jokainen artikkeli vastaa todelliseen kysymykseen ja yhdistää vastauksen Genes-määrittelyyn ja esimerkkiprojektiin."},
+    "cards":[]
+  },
   "articles": {
     "ai-php-on-shared-hosting": {
       "eyebrow":{"en":"Shared hosting","tr":"Shared hosting","fi":"Jaettu hosting"},
