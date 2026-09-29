@@ -1,6 +1,6 @@
 {
   "common": {
-    "nav": {"home":{"en":"Home","tr":"Ana Sayfa","fi":"Etusivu"},"github":{"en":"GitHub","tr":"GitHub","fi":"GitHub"}},
+    "nav": {"home":{"en":"Home","tr":"Ana Sayfa","fi":"Etusivu"},"docs":{"en":"Docs","tr":"Doküman","fi":"Ohjeet"},"examples":{"en":"Examples","tr":"Örnekler","fi":"Esimerkit"},"download":{"en":"Download","tr":"İndir","fi":"Lataa"},"github":{"en":"GitHub","tr":"GitHub","fi":"GitHub"}},
     "footer": {"en":"Made for humans and AI.","tr":"İnsanlar ve yapay zekâ için.","fi":"Ihmisille ja tekoälylle."}
   },
   "home": {
@@ -15,5 +15,36 @@
       {"title":{"en":"Your project","tr":"Senin projen","fi":"Oma projektisi"},"text":{"en":"The AI generates plain PHP, HTML, CSS, JSON and SQLite files.","tr":"AI düz PHP, HTML, CSS, JSON ve SQLite dosyaları üretir.","fi":"Tekoäly luo tavalliset PHP-, HTML-, CSS-, JSON- ja SQLite-tiedostot."}},
       {"title":{"en":"No lock-in","tr":"Bağımlılık yok","fi":"Ei toimittajalukkoa"},"text":{"en":"Genes guides creation; it does not own the application.","tr":"Genes üretimi yönlendirir; uygulamanın sahibi değildir.","fi":"Genes ohjaa luomista, mutta ei omista sovellusta."}}
     ]
+  },
+  "docs": {
+    "eyebrow":{"en":"The specification","tr":"Spesifikasyon","fi":"Määrittely"},
+    "title":{"en":"A clear contract between you and your coding AI.","tr":"Seninle coding AI arasında net bir sözleşme.","fi":"Selkeä sopimus sinun ja koodaavan tekoälyn välillä."},
+    "text":{"en":"Genes defines the project structure before the model writes code: fixed responsive canvases, routing, localization, JSON, SQLite, templates, assets and lightweight administration.","tr":"Genes model kod yazmadan önce proje yapısını tanımlar: sabit responsive canvaslar, routing, localization, JSON, SQLite, template, asset ve hafif admin.","fi":"Genes määrittelee projektin rakenteen ennen koodin kirjoittamista: responsiiviset canvas-koot, reititys, lokalisointi, JSON, SQLite, mallit, resurssit ja kevyt hallinta."},
+    "button":{"en":"Read genes.md","tr":"genes.md oku","fi":"Lue genes.md"},
+    "section_title":{"en":"Use the same foundation every time.","tr":"Her seferinde aynı temeli kullan.","fi":"Käytä samaa perustaa joka kerta."},
+    "section_text":{"en":"Download the specification, place it beside your project, and ask ChatGPT, Claude, Cursor, Copilot or another coding LLM to follow it.","tr":"Spesifikasyonu indir, projenin yanına koy ve ChatGPT, Claude, Cursor, Copilot veya başka bir coding LLM'den buna uymasını iste.","fi":"Lataa määrittely, sijoita se projektisi viereen ja pyydä ChatGPT:tä, Claudea, Cursor­­ia, Copilotia tai muuta koodaavaa kielimallia noudattamaan sitä."},
+    "cards":[
+      {"title":{"en":"Read first","tr":"Önce oku","fi":"Lue ensin"},"text":{"en":"The model reads the rules before creating files.","tr":"Model dosyaları oluşturmadan önce kuralları okur.","fi":"Malli lukee säännöt ennen tiedostojen luomista."}},
+      {"title":{"en":"Generate plainly","tr":"Sade üret","fi":"Luo selkeästi"},"text":{"en":"The result is plain PHP, HTML, CSS and data files.","tr":"Sonuç düz PHP, HTML, CSS ve veri dosyalarıdır.","fi":"Tuloksena ovat tavalliset PHP-, HTML-, CSS- ja datatiedostot."}},
+      {"title":{"en":"Keep control","tr":"Kontrol sende","fi":"Pidä hallinta"},"text":{"en":"There is no hosted runtime or vendor lock-in.","tr":"Hosted runtime veya vendor lock-in yoktur.","fi":"Palveluntarjoajan runtimea tai toimittajalukkoa ei ole."}}
+    ]
+  },
+  "examples": {
+    "eyebrow":{"en":"Practical examples","tr":"Pratik örnekler","fi":"Käytännön esimerkit"},
+    "title":{"en":"Generate the kind of PHP site you actually need.","tr":"Gerçekten ihtiyacın olan PHP sitesini üret.","fi":"Luo tarvitsemasi PHP-sivusto."},
+    "text":{"en":"Use Genes for a multilingual landing page, a corporate site, a SQLite-managed news section, a blog, an admin dashboard or a custom combination.","tr":"Genes'i çok dilli landing page, kurumsal site, SQLite ile yönetilen haber bölümü, blog, admin dashboard veya özel kombinasyon için kullan.","fi":"Käytä Genes-määrittelyä monikieliseen laskeutumissivuun, yrityssivustoon, SQLite-hallittuun uutisosioon, blogiin, hallintapaneeliin tai omaan yhdistelmään."},
+    "button":{"en":"View the repository","tr":"Repository'yi görüntüle","fi":"Avaa repository"},
+    "section_title":{"en":"One specification, many project shapes.","tr":"Tek spesifikasyon, birçok proje şekli.","fi":"Yksi määrittely, monta projektimuotoa."},
+    "section_text":{"en":"Genes does not force every site into one semantic type. Each generated project chooses the pages, data sources and layout it needs.","tr":"Genes her siteyi tek bir semantic type'a zorlamaz. Her üretilen proje ihtiyacı olan sayfaları, veri kaynaklarını ve layoutu seçer.","fi":"Genes ei pakota kaikkia sivustoja yhteen semanttiseen tyyppiin. Jokainen projekti valitsee tarvitsemansa sivut, tietolähteet ja asettelun."},
+    "cards":[]
+  },
+  "download": {
+    "eyebrow":{"en":"Open and portable","tr":"Açık ve taşınabilir","fi":"Avoin ja siirrettävä"},
+    "title":{"en":"Download genes.md and start with a better brief.","tr":"genes.md indir ve daha iyi bir brief ile başla.","fi":"Lataa genes.md ja aloita paremmalla määrittelyllä."},
+    "text":{"en":"Genes is free, dependency-free and designed to be placed directly in the project folder where your coding AI can read it.","tr":"Genes ücretsizdir, bağımlılık içermez ve coding AI'ın okuyabileceği şekilde doğrudan proje klasörüne konmak için tasarlanmıştır.","fi":"Genes on ilmainen, riippuvuuksista vapaa ja suunniteltu sijoitettavaksi suoraan projektikansioon, jossa koodaava tekoäly voi lukea sen."},
+    "button":{"en":"Download the specification","tr":"Spesifikasyonu indir","fi":"Lataa määrittely"},
+    "section_title":{"en":"Source, example and specification in one place.","tr":"Kaynak, örnek ve spesifikasyon tek yerde.","fi":"Lähdekoodi, esimerkki ja määrittely yhdessä paikassa."},
+    "section_text":{"en":"Read the source on GitHub, inspect the example website, or download the raw specification directly.","tr":"Kaynağı GitHub'da oku, örnek siteyi incele veya ham spesifikasyonu doğrudan indir.","fi":"Lue lähdekoodi GitHubissa, tutustu esimerkkisivustoon tai lataa määrittely suoraan."},
+    "cards":[]
   }
 }

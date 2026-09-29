@@ -1,6 +1,8 @@
 # Genes
 
 Genes is an AI-readable specification for generating small, dependency-free PHP websites.
+It is an AI-friendly PHP website starter for ChatGPT, Claude, Cursor, Copilot and other
+coding LLMs.
 
 Give `genes.md` to an LLM, describe the site you want, and let it generate the project.
 
@@ -20,6 +22,22 @@ Read genes.md and create a two-language corporate website with a SQLite-managed 
 Genes is a specification, not a runtime framework. The generated project is the application.
 
 Website: https://genes.one/
+
+Documentation: https://genes.one/en/docs/
+
+Examples: https://genes.one/en/examples/
+
+Download: https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md
+
+## Links
+
+- [Genes website](https://genes.one/)
+- [Genes specification](genes.md)
+- [GitHub repository](https://github.com/devrimvardar/genes)
+- [Rxions](https://rxions.com/)
+- [Rxions on LinkedIn](https://www.linkedin.com/company/rxions-oy/)
+- [Devrim Vardar](https://devrimvardar.com/)
+- [Devrim Vardar on X](https://x.com/DevrimVardar)
 
 ## Website deployment
 
