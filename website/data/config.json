@@ -1,0 +1,4 @@
+{
+  "site": {"name":"Genes","url":"https://genes.one","default_locale":"en","locales":["en","tr"]},
+  "theme": {"title":"Genes — AI-readable website specification","description":"Give an AI one file and get a real website."}
+}

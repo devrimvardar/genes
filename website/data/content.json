@@ -1,0 +1,19 @@
+{
+  "common": {
+    "nav": {"home":{"en":"Home","tr":"Ana Sayfa"},"github":{"en":"GitHub","tr":"GitHub"}},
+    "footer": {"en":"Made for humans and AI.","tr":"İnsanlar ve yapay zekâ için."}
+  },
+  "home": {
+    "eyebrow":{"en":"AI-readable web building","tr":"Yapay zekâ ile web geliştirme"},
+    "title":{"en":"Give an AI one file. Get a real website.","tr":"Yapay zekâya tek dosya ver. Gerçek bir site al."},
+    "text":{"en":"Genes is a compact specification that helps an LLM create a consistent, dependency-free PHP website without inventing the architecture every time.","tr":"Genes, bir LLM'in her seferinde mimariyi yeniden icat etmeden tutarlı ve bağımlılıksız bir PHP sitesi oluşturmasına yardım eden kompakt bir spesifikasyondur."},
+    "button":{"en":"Download genes.md","tr":"genes.md indir"},
+    "section_title":{"en":"One clear source of truth.","tr":"Tek ve net bir kaynak."},
+    "section_text":{"en":"Layouts, routing, localization, JSON, SQLite, templates, assets and admin rules are defined once. The generated project remains yours.","tr":"Layout, routing, localization, JSON, SQLite, template, asset ve admin kuralları bir kez tanımlanır. Oluşturulan proje tamamen senin olur."},
+    "cards":[
+      {"title":{"en":"One specification","tr":"Tek spesifikasyon"},"text":{"en":"Give the same compact rules to every coding LLM.","tr":"Aynı kompakt kuralları her coding LLM'e ver."}},
+      {"title":{"en":"Your project","tr":"Senin projen"},"text":{"en":"The AI generates plain PHP, HTML, CSS, JSON and SQLite files.","tr":"AI düz PHP, HTML, CSS, JSON ve SQLite dosyaları üretir."}},
+      {"title":{"en":"No lock-in","tr":"Bağımlılık yok"},"text":{"en":"Genes guides creation; it does not own the application.","tr":"Genes üretimi yönlendirir; uygulamanın sahibi değildir."}}
+    ]
+  }
+}
