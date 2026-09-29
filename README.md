@@ -20,3 +20,10 @@ Read genes.md and create a two-language corporate website with a SQLite-managed 
 Genes is a specification, not a runtime framework. The generated project is the application.
 
 Website: https://genes.one/
+
+## Website deployment
+
+The example site is in `website/`. Upload the contents of that folder to the
+web root with FTP, or serve it from a subdirectory such as `/genes/`. The site
+detects its base path automatically and keeps localized routes working in both
+locations.
