@@ -1,12 +1,31 @@
 # Genes
 
-Genes is an AI-readable specification for generating dependency-free PHP websites.
+> Genes is a single Markdown specification (genes.md) that coding LLMs read to generate
+> dependency-free PHP websites that run on ordinary $5 shared hosting.
 
-It helps coding LLMs create consistent projects with routing, localization, fixed
-responsive layouts, JSON, SQLite, templates, assets and lightweight administration.
+Give genes.md to ChatGPT, Claude, Cursor, Copilot or another coding AI, describe the
+site, and it generates a consistent project: one index.php entry point, URL routing,
+multi-language content in JSON, an optional SQLite database with a CMS admin
+dashboard, a fixed three-breakpoint responsive layout, SEO metadata and security
+defaults. Deploy by uploading the folder with FTP. No Node.js, Composer or build step.
 
-Specification: https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md
-Repository: https://github.com/devrimvardar/genes
-Documentation: https://genes.one/en/docs/
-Examples: https://genes.one/en/examples/
-Download: https://genes.one/en/download/
+## Specification
+
+- [genes.md](https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md): the full specification to give to an LLM
+- [GitHub repository](https://github.com/devrimvardar/genes): source, license (MIT) and this website
+
+## Example
+
+- [Corporate example (.zip)](https://genes.one/downloads/genes-corporate-example.zip): a complete three-language corporate site with SQLite news, an admin, and a contact form, generated from genes.md
+
+## Pages
+
+- [Documentation](https://genes.one/en/docs): how the specification is structured
+- [Examples](https://genes.one/en/examples): what you can build with it
+- [Download](https://genes.one/en/download): how to start a project
+
+## Articles
+
+- [Can AI build a PHP website on a $5 shared hosting plan?](https://genes.one/en/articles/ai-php-on-shared-hosting)
+- [How to ask an AI to build a PHP website](https://genes.one/en/articles/how-to-ask-ai-to-build-php)
+- [Deploy an AI-generated PHP website with FTP](https://genes.one/en/articles/ftp-deployment-for-ai-php-sites)

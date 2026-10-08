@@ -1,0 +1,4 @@
+data/content.sqlite
+data/error.log
+data/setup-token.txt
+assets/items/*/

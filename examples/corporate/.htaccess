@@ -1,0 +1,40 @@
+Options -Indexes
+DirectoryIndex index.php
+RewriteEngine On
+
+# Force HTTPS in production. Local hosts are skipped.
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$
+RewriteCond %{HTTP_HOST} !\.(test|localhost)(:\d+)?$
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Private folders, dotfiles, and data files.
+RewriteRule ^(app|data|templates|migrations)(/|$) - [F,L]
+RewriteRule (^|/)\. - [F,L]
+RewriteRule \.(sqlite|sqlite3|db|sql|log)$ - [F,L]
+
+# Public base path, for example /project when the site is in a subdirectory.
+RewriteCond %{REQUEST_URI}::$0 ^(/.+)/(.*)::\2$
+RewriteRule .* - [E=BASE:%1]
+
+# Everything that is not a real file goes to index.php.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ %{ENV:BASE}/index.php [L]
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/json application/xml image/svg+xml
+</IfModule>

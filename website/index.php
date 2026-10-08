@@ -1,13 +1,157 @@
 <?php
 declare(strict_types=1);
-$c=json_decode(file_get_contents(__DIR__.'/data/config.json'),true,512,JSON_THROW_ON_ERROR);
-$d=json_decode(file_get_contents(__DIR__.'/data/content.json'),true,512,JSON_THROW_ON_ERROR);
-$ls=$c['site']['locales'];$def=$c['site']['default_locale'];$raw=trim(parse_url($_SERVER['REQUEST_URI']??'/',PHP_URL_PATH)??'/','/');$host=$_SERVER['HTTP_HOST']??'';$configuredBase=stripos($host,'localhost')!==false?($c['site']['local_base_path']??''):($c['site']['base_path']??'');$base=rtrim($configuredBase,'/');$base=($base==='/'?'':$base);$path=$base&&($raw===trim($base,'/')||substr($raw,0,strlen(trim($base,'/'))+1)===trim($base,'/').'/')?trim(substr($raw,strlen(trim($base,'/'))),'/'):$raw;
-$parts=$path?explode('/',$path):[];$locale=in_array($parts[0]??'', $ls,true)?array_shift($parts):$def;$root=$base;$origin=((!empty($_SERVER['HTTPS'])&&$_SERVER['HTTPS']!=='off')?'https':'http').'://'.($_SERVER['HTTP_HOST']??'localhost');$rootUrl=$origin.$root;
-function tr($v,$l,$d){if(!is_array($v))return $v;if(array_key_exists($l,$v))return $v[$l];if(array_key_exists($d,$v))return $v[$d];foreach($v as $k=>$x)$v[$k]=tr($x,$l,$d);return $v;}
-function e($v){return htmlspecialchars((string)$v,ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8');}
-$articleSlug=($parts[0]??'')==='articles'?($parts[1]??''):'';$page=$articleSlug?'articles/'.$articleSlug:($parts[0]??'home');$content=$articleSlug?($d['articles'][$articleSlug]??null):($page==='articles'?($d['articles_index']??null):($d[$page]??null));if(!$content){http_response_code(404);$page='home';$content=$d['home'];}$content=tr($content,$locale,$def);$common=tr($d['common']??[],$locale,$def);$pageUrl=$page==='home'?'':implode('/',array_map('rawurlencode',explode('/',$page)));$canonical=$rootUrl.'/'.($locale?:$def).($pageUrl?'/'.$pageUrl:'').'/';
-$ga='<script async src="https://www.googletagmanager.com/gtag/js?id=G-TYGWB7TRQV"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-TYGWB7TRQV");</script>';$articleCss='<style>.article-list{display:grid;gap:2rem;margin-top:5rem}.article-list p{margin:0}.article-list a{display:block;border:1px solid #40504a;color:#d4ef72;font-size:2rem;line-height:1.2;padding:2.4rem}.article-list a:hover{background:#18231f;color:#f5f3eb}</style>';$articleMenu='<a href="'.e($rootUrl.'/'.$locale.'/articles/').'">'.e($common['nav']['articles']).'</a>';$docsLink='<a href="'.e($rootUrl.'/'.$locale.'/docs/').'">'.e($common['nav']['docs']).'</a>';$articleList='';foreach(array_keys($d['articles']??[])as $slug){$articleList.='<p><a href="'.e($rootUrl.'/'.$locale.'/articles/'.$slug.'/').'">'.e(tr($d['articles'][$slug]['title']??$slug,$locale,$def)).'</a></p>';}$articleList='<div class="article-list">'.$articleList.'</div>';ob_start(function($html)use($articleMenu,$docsLink,$ga,$articleCss,$articleList,$page){$html=str_replace('<head>','<head>'.$ga.$articleCss,$html);$html=str_replace($docsLink,$articleMenu.$docsLink,$html);$html=str_replace('%2F','/',$html);return $page==='articles'?str_replace('<footer class="footer">',$articleList.'<footer class="footer">',$html):$html;});
-?><!doctype html><html lang="<?=e($locale)?>"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title><?=e($content['title']??$c['theme']['title'])?> | Genes</title><meta name="description" content="<?=e($content['text']??$c['theme']['description'])?>"><link rel="canonical" href="<?=e($canonical)?>"><?php foreach($ls as $alternate):?><link rel="alternate" hreflang="<?=e($alternate)?>" href="<?=e($rootUrl.'/'.$alternate.($page==='home'?'':'/'.rawurlencode($page)).'/')?>"><?php endforeach;?><link rel="alternate" hreflang="x-default" href="<?=e($rootUrl.'/'.$def.($page==='home'?'':'/'.rawurlencode($page)).'/')?>"><meta property="og:type" content="website"><meta property="og:title" content="<?=e($content['title']??$c['theme']['title'])?>"><meta property="og:description" content="<?=e($content['text']??$c['theme']['description'])?>"><meta property="og:url" content="<?=e($canonical)?>"><script type="application/ld+json"><?=json_encode(['@context'=>'https://schema.org','@type'=>'SoftwareSourceCode','name'=>'Genes','description'=>$content['text']??$c['theme']['description'],'codeRepository'=>'https://github.com/devrimvardar/genes','programmingLanguage'=>'PHP','license'=>'https://opensource.org/licenses/MIT'],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)?></script><style>
-*{box-sizing:border-box;margin:0;padding:0;line-height:1em}html{-webkit-text-size-adjust:100%}html,body{overflow-x:clip}@media(max-width:639px){html{font-size:3.125vw}}@media(min-width:640px) and (max-width:1279px){html{font-size:1.5625vw}}@media(min-width:1280px){html{font-size:.78125vw}}body{background:#101413;color:#f5f3eb;font-family:system-ui,sans-serif}.site{width:128rem;min-height:100vh;margin:auto;padding:3rem 7rem;background:linear-gradient(135deg,#18231f,#101413)}a{color:inherit;text-decoration:none}.nav{display:flex;justify-content:space-between;align-items:center;padding-bottom:3rem;border-bottom:1px solid #40504a}.brand{font-size:2.4rem;font-weight:800}.links{display:flex;gap:3rem;color:#b8c4bd;font-size:1.4rem}.hero{max-width:85rem;padding:15rem 0 12rem}.eyebrow{color:#d4ef72;font-size:1.3rem;letter-spacing:.12rem;text-transform:uppercase;margin-bottom:3rem}.hero h1{font-size:8rem;line-height:.98;max-width:80rem;margin-bottom:3rem}.hero p{color:#b8c4bd;font-size:2rem;line-height:1.5;max-width:65rem}.button{display:inline-block;background:#d4ef72;color:#101413;padding:1.8rem 2.4rem;margin-top:4rem;font-size:1.5rem;font-weight:700}.section{display:grid;grid-template-columns:32rem 1fr;gap:8rem;padding:8rem 0;border-top:1px solid #40504a}.section h2{font-size:4rem;line-height:1}.section p{color:#b8c4bd;font-size:2rem;line-height:1.5;max-width:65rem}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:4rem}.card{border:1px solid #40504a;padding:3rem;min-height:18rem}.card h3{font-size:2rem;margin-bottom:2rem}.card p{font-size:1.5rem;line-height:1.5;color:#b8c4bd}.footer{padding-top:5rem;color:#78877f;font-size:1.3rem}@media(max-width:1279px){.site{width:64rem;padding:3rem}.hero{padding:10rem 0}.hero h1{font-size:6rem}.cards{grid-template-columns:1fr}.section{grid-template-columns:1fr;gap:3rem}}@media(max-width:639px){.site{width:32rem;padding:2rem}.links{gap:1rem;font-size:1.2rem}.hero{padding:8rem 0}.hero h1{font-size:4.5rem}.hero p{font-size:1.7rem}.section{padding:5rem 0}.section h2{font-size:3rem}}
-</style></head><body><main class="site"><nav class="nav"><a class="brand" href="<?=e($rootUrl)?>/">genes</a><div class="links"><a href="<?=e($rootUrl)?>/<?=e($locale)?>/"><?=e($common['nav']['home'])?></a><a href="<?=e($rootUrl)?>/<?=e($locale)?>/docs/"><?=e($common['nav']['docs'])?></a><a href="<?=e($rootUrl)?>/<?=e($locale)?>/examples/"><?=e($common['nav']['examples'])?></a><a href="<?=e($rootUrl)?>/<?=e($locale)?>/download/"><?=e($common['nav']['download'])?></a><a href="https://github.com/devrimvardar/genes"><?=e($common['nav']['github'])?></a><?php foreach($ls as $language):if($language!==$locale):?><a href="<?=e($rootUrl)?>/<?=e($language)?>/<?=e($page==='home'?'':rawurlencode($page).'/')?>"><?=e(strtoupper($language))?></a><?php endif;endforeach;?></div></nav><section class="hero"><div class="eyebrow"><?=e($content['eyebrow'])?></div><h1><?=e($content['title'])?></h1><p><?=e($content['text'])?></p><a class="button" href="<?=e($page==='download'?'https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md':'https://github.com/devrimvardar/genes')?>"><?=e($content['button'])?></a></section><section class="section"><h2><?=e($content['section_title'])?></h2><div><p><?=e($content['section_text'])?></p><div class="cards"><?php foreach($content['cards'] as $card):?><article class="card"><h3><?=e($card['title'])?></h3><p><?=e($card['text'])?></p></article><?php endforeach;?></div></div></section><footer class="footer"><?=e($common['footer'])?> · <a href="https://rxions.com/">Rxions</a> · <a href="https://www.linkedin.com/company/rxions-oy/">LinkedIn</a> · <a href="https://devrimvardar.com/">Devrim Vardar</a> · <a href="https://x.com/DevrimVardar">X</a></footer></main></body></html>
+
+$local = in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true);
+ini_set('display_errors', $local ? '1' : '0');
+ini_set('log_errors', '1');
+ini_set('error_log', __DIR__ . '/data/error.log');
+
+// PHP built-in server: serve existing files directly.
+if (PHP_SAPI === 'cli-server' && is_file(__DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))) {
+    return false;
+}
+
+define('BASE', rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/'));
+
+function e($value): string {
+    return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+function url(string $path = ''): string {
+    return BASE . '/' . ltrim($path, '/');
+}
+
+function localize($value, string $locale, string $default, array $locales) {
+    if (!is_array($value)) return $value;
+    if ($value && !array_diff(array_keys($value), $locales)) {
+        return $value[$locale] ?? $value[$default] ?? '';
+    }
+    foreach ($value as $key => $item) $value[$key] = localize($item, $locale, $default, $locales);
+    return $value;
+}
+
+function route(string $uri, array $locales, string $default): array {
+    $path = parse_url($uri, PHP_URL_PATH) ?: '/';
+    if (BASE !== '' && ($path === BASE || strpos($path, BASE . '/') === 0)) {
+        $path = substr($path, strlen(BASE));
+    }
+    $parts = array_values(array_filter(explode('/', trim($path, '/')), 'strlen'));
+    $hasLocale = in_array($parts[0] ?? '', $locales, true);
+    $locale = $hasLocale ? array_shift($parts) : $default;
+    return [$locale, $parts[0] ?? 'home', $parts[1] ?? null, count($parts) > 2, $hasLocale];
+}
+
+function page_path(string $locale, string $page, ?string $slug = null): string {
+    if ($page === 'home' || $page === '404') return $locale . '/';
+    return $locale . '/' . $page . ($slug !== null ? '/' . $slug : '');
+}
+
+function make_view(array $config, array $content, string $locale, string $page, ?string $slug): array {
+    $locales = $config['site']['locales'];
+    $default = $config['site']['default_locale'];
+    $valid = preg_match('/^[a-z0-9-]+$/', $page) && $page !== 'common' && $page !== '404' && isset($content[$page]);
+    $pageData = $valid ? $content[$page] : null;
+    if ($pageData && $slug !== null) {
+        $pageData = preg_match('/^[a-z0-9-]+$/', $slug) ? ($pageData['items'][$slug] ?? null) : null;
+    }
+    if (!$pageData) {
+        http_response_code(404);
+        $page = '404';
+        $slug = null;
+        $pageData = $content['404'];
+    }
+    $view = [
+        'site' => $config['site'], 'theme' => $config['theme'],
+        'analytics' => $config['analytics'] ?? [],
+        'locale' => $locale, 'locales' => $locales, 'page' => $page, 'slug' => $slug,
+        'common' => localize($content['common'], $locale, $default, $locales),
+        'content' => localize($pageData, $locale, $default, $locales),
+    ];
+    $view['meta'] = make_meta($view);
+    return $view;
+}
+
+function make_meta(array $view): array {
+    $site = rtrim($view['site']['url'], '/') . '/';
+    $page = $view['page'];
+    $content = $view['content'];
+    $title = $content['title'] ?? $view['theme']['title'];
+    $description = $content['description'] ?? $content['text'] ?? $view['theme']['description'];
+    $alternates = [];
+    foreach ($view['locales'] as $locale) {
+        $alternates[$locale] = $site . page_path($locale, $page, $view['slug']);
+    }
+    $canonical = $page === '404' ? null : $alternates[$view['locale']];
+
+    $schema = ['@context' => 'https://schema.org'];
+    if ($page === 'home') {
+        $schema += [
+            '@type' => 'SoftwareSourceCode', 'name' => $view['site']['name'], 'description' => $description,
+            'url' => $canonical, 'codeRepository' => 'https://github.com/devrimvardar/genes',
+            'programmingLanguage' => 'PHP', 'license' => 'https://opensource.org/licenses/MIT',
+            'author' => ['@type' => 'Person', 'name' => 'Devrim Vardar', 'url' => 'https://devrimvardar.com/'],
+        ];
+    } elseif ($view['slug'] !== null) {
+        $schema += [
+            '@type' => 'Article', 'headline' => $title, 'description' => $description,
+            'url' => $canonical, 'inLanguage' => $view['locale'],
+            'author' => ['@type' => 'Person', 'name' => 'Devrim Vardar', 'url' => 'https://devrimvardar.com/'],
+        ];
+    } else {
+        $schema += ['@type' => 'WebPage', 'name' => $title, 'description' => $description, 'url' => $canonical, 'inLanguage' => $view['locale']];
+    }
+
+    return [
+        'title' => $page === 'home' ? $view['theme']['title'] : $title . ' | ' . $view['site']['name'],
+        'description' => $description,
+        'canonical' => $canonical,
+        'alternates' => $canonical ? $alternates : [],
+        'default_url' => $alternates[$view['site']['default_locale']],
+        'robots' => $page === '404' ? 'noindex' : null,
+        'schema' => $page === '404' ? null : $schema,
+    ];
+}
+
+function render(array $view): void {
+    extract($view, EXTR_SKIP);
+    require __DIR__ . '/templates/layout.php';
+}
+
+function render_sitemap(array $config, array $content): void {
+    $site = rtrim($config['site']['url'], '/') . '/';
+    header('Content-Type: application/xml; charset=utf-8');
+    echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+    foreach ($config['site']['locales'] as $locale) {
+        foreach ($content as $page => $data) {
+            $page = (string) $page; // PHP turns the "404" key into an integer
+            if ($page === 'common' || $page === '404') continue;
+            echo '  <url><loc>' . e($site . page_path($locale, $page)) . '</loc></url>' . "\n";
+            foreach (array_keys($data['items'] ?? []) as $slug) {
+                echo '  <url><loc>' . e($site . page_path($locale, $page, $slug)) . '</loc></url>' . "\n";
+            }
+        }
+    }
+    echo '</urlset>' . "\n";
+}
+
+$config = json_decode(file_get_contents(__DIR__ . '/data/config.json'), true, 512, JSON_THROW_ON_ERROR);
+$content = json_decode(file_get_contents(__DIR__ . '/data/content.json'), true, 512, JSON_THROW_ON_ERROR);
+
+$csp = "default-src 'self'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; "
+     . "script-src 'self' https://www.googletagmanager.com; "
+     . "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; "
+     . "frame-ancestors 'self'";
+header('X-Content-Type-Options: nosniff');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+header('X-Frame-Options: SAMEORIGIN');
+header('Content-Security-Policy: ' . $csp);
+
+[$locale, $page, $slug, $extra, $hasLocale] = route($_SERVER['REQUEST_URI'] ?? '/', $config['site']['locales'], $config['site']['default_locale']);
+
+if (!$hasLocale && $page === 'sitemap.xml' && $slug === null) {
+    render_sitemap($config, $content);
+    exit;
+}
+
+render(make_view($config, $content, $locale, $extra ? '404' : $page, $slug));

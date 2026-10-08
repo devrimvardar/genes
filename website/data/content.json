@@ -1,88 +1,499 @@
 {
-  "common": {
-    "nav": {"home":{"en":"Home","tr":"Ana Sayfa","fi":"Etusivu"},"docs":{"en":"Docs","tr":"Doküman","fi":"Ohjeet"},"examples":{"en":"Examples","tr":"Örnekler","fi":"Esimerkit"},"download":{"en":"Download","tr":"İndir","fi":"Lataa"},"articles":{"en":"Articles","tr":"Makaleler","fi":"Artikkelit"},"github":{"en":"GitHub","tr":"GitHub","fi":"GitHub"}},
-    "footer": {"en":"Made for humans and AI.","tr":"İnsanlar ve yapay zekâ için.","fi":"Ihmisille ja tekoälylle."}
-  },
-  "home": {
-    "eyebrow":{"en":"AI-readable web building","tr":"Yapay zekâ ile web geliştirme","fi":"Tekoälylle luotu web-kehitys"},
-    "title":{"en":"Give an AI one file. Get a real website.","tr":"Yapay zekâya tek dosya ver. Gerçek bir site al.","fi":"Anna tekoälylle yksi tiedosto. Saat oikean verkkosivuston."},
-    "text":{"en":"Genes is a compact specification that helps an LLM create a consistent, dependency-free PHP website without inventing the architecture every time.","tr":"Genes, bir LLM'in her seferinde mimariyi yeniden icat etmeden tutarlı ve bağımlılıksız bir PHP sitesi oluşturmasına yardım eden kompakt bir spesifikasyondur.","fi":"Genes on kompakti määrittely, joka auttaa kielimallia luomaan yhtenäisen ja riippumattoman PHP-sivuston ilman uuden arkkitehtuurin keksimistä joka kerta."},
-    "button":{"en":"Download genes.md","tr":"genes.md indir","fi":"Lataa genes.md"},
-    "section_title":{"en":"One clear source of truth.","tr":"Tek ve net bir kaynak.","fi":"Yksi selkeä totuuden lähde."},
-    "section_text":{"en":"Layouts, routing, localization, JSON, SQLite, templates, assets and admin rules are defined once. The generated project remains yours.","tr":"Layout, routing, localization, JSON, SQLite, template, asset ve admin kuralları bir kez tanımlanır. Oluşturulan proje tamamen senin olur.","fi":"Asettelu, reititys, lokalisointi, JSON, SQLite, mallit, resurssit ja hallintasäännöt määritellään kerran. Luotu projekti pysyy sinun omana."},
-    "cards":[
-      {"title":{"en":"One specification","tr":"Tek spesifikasyon","fi":"Yksi määrittely"},"text":{"en":"Give the same compact rules to every coding LLM.","tr":"Aynı kompakt kuralları her coding LLM'e ver.","fi":"Anna samat tiiviit säännöt jokaiselle koodaavalle kielimallille."}},
-      {"title":{"en":"Your project","tr":"Senin projen","fi":"Oma projektisi"},"text":{"en":"The AI generates plain PHP, HTML, CSS, JSON and SQLite files.","tr":"AI düz PHP, HTML, CSS, JSON ve SQLite dosyaları üretir.","fi":"Tekoäly luo tavalliset PHP-, HTML-, CSS-, JSON- ja SQLite-tiedostot."}},
-      {"title":{"en":"No lock-in","tr":"Bağımlılık yok","fi":"Ei toimittajalukkoa"},"text":{"en":"Genes guides creation; it does not own the application.","tr":"Genes üretimi yönlendirir; uygulamanın sahibi değildir.","fi":"Genes ohjaa luomista, mutta ei omista sovellusta."}}
-    ]
-  },
-  "docs": {
-    "eyebrow":{"en":"The specification","tr":"Spesifikasyon","fi":"Määrittely"},
-    "title":{"en":"A clear contract between you and your coding AI.","tr":"Seninle coding AI arasında net bir sözleşme.","fi":"Selkeä sopimus sinun ja koodaavan tekoälyn välillä."},
-    "text":{"en":"Genes defines the project structure before the model writes code: fixed responsive canvases, routing, localization, JSON, SQLite, templates, assets and lightweight administration.","tr":"Genes model kod yazmadan önce proje yapısını tanımlar: sabit responsive canvaslar, routing, localization, JSON, SQLite, template, asset ve hafif admin.","fi":"Genes määrittelee projektin rakenteen ennen koodin kirjoittamista: responsiiviset canvas-koot, reititys, lokalisointi, JSON, SQLite, mallit, resurssit ja kevyt hallinta."},
-    "button":{"en":"Read genes.md","tr":"genes.md oku","fi":"Lue genes.md"},
-    "section_title":{"en":"Use the same foundation every time.","tr":"Her seferinde aynı temeli kullan.","fi":"Käytä samaa perustaa joka kerta."},
-    "section_text":{"en":"Download the specification, place it beside your project, and ask ChatGPT, Claude, Cursor, Copilot or another coding LLM to follow it.","tr":"Spesifikasyonu indir, projenin yanına koy ve ChatGPT, Claude, Cursor, Copilot veya başka bir coding LLM'den buna uymasını iste.","fi":"Lataa määrittely, sijoita se projektisi viereen ja pyydä ChatGPT:tä, Claudea, Cursor­­ia, Copilotia tai muuta koodaavaa kielimallia noudattamaan sitä."},
-    "cards":[
-      {"title":{"en":"Read first","tr":"Önce oku","fi":"Lue ensin"},"text":{"en":"The model reads the rules before creating files.","tr":"Model dosyaları oluşturmadan önce kuralları okur.","fi":"Malli lukee säännöt ennen tiedostojen luomista."}},
-      {"title":{"en":"Generate plainly","tr":"Sade üret","fi":"Luo selkeästi"},"text":{"en":"The result is plain PHP, HTML, CSS and data files.","tr":"Sonuç düz PHP, HTML, CSS ve veri dosyalarıdır.","fi":"Tuloksena ovat tavalliset PHP-, HTML-, CSS- ja datatiedostot."}},
-      {"title":{"en":"Keep control","tr":"Kontrol sende","fi":"Pidä hallinta"},"text":{"en":"There is no hosted runtime or vendor lock-in.","tr":"Hosted runtime veya vendor lock-in yoktur.","fi":"Palveluntarjoajan runtimea tai toimittajalukkoa ei ole."}}
-    ]
-  },
-  "examples": {
-    "eyebrow":{"en":"Practical examples","tr":"Pratik örnekler","fi":"Käytännön esimerkit"},
-    "title":{"en":"Generate the kind of PHP site you actually need.","tr":"Gerçekten ihtiyacın olan PHP sitesini üret.","fi":"Luo tarvitsemasi PHP-sivusto."},
-    "text":{"en":"Use Genes for a multilingual landing page, a corporate site, a SQLite-managed news section, a blog, an admin dashboard or a custom combination.","tr":"Genes'i çok dilli landing page, kurumsal site, SQLite ile yönetilen haber bölümü, blog, admin dashboard veya özel kombinasyon için kullan.","fi":"Käytä Genes-määrittelyä monikieliseen laskeutumissivuun, yrityssivustoon, SQLite-hallittuun uutisosioon, blogiin, hallintapaneeliin tai omaan yhdistelmään."},
-    "button":{"en":"View the repository","tr":"Repository'yi görüntüle","fi":"Avaa repository"},
-    "section_title":{"en":"One specification, many project shapes.","tr":"Tek spesifikasyon, birçok proje şekli.","fi":"Yksi määrittely, monta projektimuotoa."},
-    "section_text":{"en":"Genes does not force every site into one semantic type. Each generated project chooses the pages, data sources and layout it needs.","tr":"Genes her siteyi tek bir semantic type'a zorlamaz. Her üretilen proje ihtiyacı olan sayfaları, veri kaynaklarını ve layoutu seçer.","fi":"Genes ei pakota kaikkia sivustoja yhteen semanttiseen tyyppiin. Jokainen projekti valitsee tarvitsemansa sivut, tietolähteet ja asettelun."},
-    "cards":[]
-  },
-  "download": {
-    "eyebrow":{"en":"Open and portable","tr":"Açık ve taşınabilir","fi":"Avoin ja siirrettävä"},
-    "title":{"en":"Download genes.md and start with a better brief.","tr":"genes.md indir ve daha iyi bir brief ile başla.","fi":"Lataa genes.md ja aloita paremmalla määrittelyllä."},
-    "text":{"en":"Genes is free, dependency-free and designed to be placed directly in the project folder where your coding AI can read it.","tr":"Genes ücretsizdir, bağımlılık içermez ve coding AI'ın okuyabileceği şekilde doğrudan proje klasörüne konmak için tasarlanmıştır.","fi":"Genes on ilmainen, riippuvuuksista vapaa ja suunniteltu sijoitettavaksi suoraan projektikansioon, jossa koodaava tekoäly voi lukea sen."},
-    "button":{"en":"Download the specification","tr":"Spesifikasyonu indir","fi":"Lataa määrittely"},
-    "section_title":{"en":"Source, example and specification in one place.","tr":"Kaynak, örnek ve spesifikasyon tek yerde.","fi":"Lähdekoodi, esimerkki ja määrittely yhdessä paikassa."},
-    "section_text":{"en":"Read the source on GitHub, inspect the example website, or download the raw specification directly.","tr":"Kaynağı GitHub'da oku, örnek siteyi incele veya ham spesifikasyonu doğrudan indir.","fi":"Lue lähdekoodi GitHubissa, tutustu esimerkkisivustoon tai lataa määrittely suoraan."},
-    "cards":[]
-  },
-  "articles_index": {
-    "eyebrow":{"en":"Articles","tr":"Makaleler","fi":"Artikkelit"},
-    "title":{"en":"Practical notes for building PHP websites with AI.","tr":"AI ile PHP siteleri oluşturmak için pratik notlar.","fi":"Käytännön ohjeita PHP-sivustojen rakentamiseen tekoälyllä."},
-    "text":{"en":"Guides for AI-assisted PHP development, affordable shared hosting and simple FTP deployment.","tr":"AI destekli PHP geliştirme, uygun fiyatlı shared hosting ve basit FTP deployment için rehberler.","fi":"Oppaita tekoälyavusteiseen PHP-kehitykseen, edulliseen jaettuun hostingiin ja helppoon FTP-käyttöönottoon."},
-    "button":{"en":"Read the specification","tr":"Spesifikasyonu oku","fi":"Lue määrittely"},
-    "section_title":{"en":"Start with a practical answer.","tr":"Pratik bir cevapla başla.","fi":"Aloita käytännön vastauksesta."},
-    "section_text":{"en":"Each article answers a real question and connects the answer to the Genes specification and example project.","tr":"Her makale gerçek bir soruyu yanıtlar ve cevabı Genes spesifikasyonuna ve örnek projeye bağlar.","fi":"Jokainen artikkeli vastaa todelliseen kysymykseen ja yhdistää vastauksen Genes-määrittelyyn ja esimerkkiprojektiin."},
-    "cards":[]
-  },
-  "articles": {
-    "ai-php-on-shared-hosting": {
-      "eyebrow":{"en":"Shared hosting","tr":"Shared hosting","fi":"Jaettu hosting"},
-      "title":{"en":"Can AI build a PHP website on a $5 shared hosting plan?","tr":"AI, 5 dolarlık bir shared hosting üzerinde PHP sitesi oluşturabilir mi?","fi":"Voiko tekoäly rakentaa PHP-sivuston 5 dollarin jaetulle hosting-palvelimelle?"},
-      "text":{"en":"Yes. Genes is designed for ordinary PHP hosting. You do not need Node.js, Composer, Docker, a build server or a VPS. Ask an AI to generate the files, upload them with FTP, and run the site with PHP and optionally SQLite.","tr":"Evet. Genes sıradan PHP hostingler için tasarlanmıştır. Node.js, Composer, Docker, build server veya VPS gerekmez. AI'dan dosyaları üretmesini iste, FTP ile yükle ve siteyi PHP, gerekirse SQLite ile çalıştır.","fi":"Kyllä. Genes on suunniteltu tavalliseen PHP-hostingiin. Et tarvitse Node.js:ää, Composeria, Dockeria, build-palvelinta tai VPS:ää. Pyydä tekoälyä luomaan tiedostot, lataa ne FTP:llä ja käytä PHP:tä sekä tarvittaessa SQLitea."},
-      "button":{"en":"Download genes.md","tr":"genes.md indir","fi":"Lataa genes.md"},
-      "section_title":{"en":"What you need","tr":"Neye ihtiyacın var","fi":"Mitä tarvitset"},
-      "section_text":{"en":"A PHP hosting plan, FTP access, an SSL certificate and a database only when the project needs editable or queryable content. For many small websites, this is enough.","tr":"Bir PHP hosting planı, FTP erişimi, SSL sertifikası ve yalnızca proje editable veya queryable içerik gerektiriyorsa bir veritabanı. Birçok küçük site için bu yeterlidir.","fi":"PHP-hosting, FTP-yhteys, SSL-sertifika ja tietokanta vain silloin, kun projekti tarvitsee muokattavaa tai haettavaa sisältöä. Monille pienille sivustoille tämä riittää."},
-      "cards":[]
+    "common": {
+        "nav": {
+            "home": {
+                "en": "Home",
+                "tr": "Ana Sayfa",
+                "fi": "Etusivu"
+            },
+            "docs": {
+                "en": "Docs",
+                "tr": "Doküman",
+                "fi": "Ohjeet"
+            },
+            "examples": {
+                "en": "Examples",
+                "tr": "Örnekler",
+                "fi": "Esimerkit"
+            },
+            "download": {
+                "en": "Download",
+                "tr": "İndir",
+                "fi": "Lataa"
+            },
+            "articles": {
+                "en": "Articles",
+                "tr": "Makaleler",
+                "fi": "Artikkelit"
+            },
+            "github": {
+                "en": "GitHub",
+                "tr": "GitHub",
+                "fi": "GitHub"
+            }
+        },
+        "footer": {
+            "en": "Made for humans and AI.",
+            "tr": "İnsanlar ve yapay zekâ için.",
+            "fi": "Ihmisille ja tekoälylle."
+        },
+        "brand": "genes",
+        "nav_label": {
+            "en": "Main navigation",
+            "tr": "Ana menü",
+            "fi": "Päävalikko"
+        },
+        "language_label": {
+            "en": "Language",
+            "tr": "Dil",
+            "fi": "Kieli"
+        },
+        "read_more": {
+            "en": "Read article",
+            "tr": "Makaleyi oku",
+            "fi": "Lue artikkeli"
+        },
+        "back_to_articles": {
+            "en": "All articles",
+            "tr": "Tüm makaleler",
+            "fi": "Kaikki artikkelit"
+        },
+        "footer_links": [
+            {
+                "label": "Rxions",
+                "url": "https://rxions.com/"
+            },
+            {
+                "label": "LinkedIn",
+                "url": "https://www.linkedin.com/company/rxions-oy/"
+            },
+            {
+                "label": "Devrim Vardar",
+                "url": "https://devrimvardar.com/"
+            },
+            {
+                "label": "X",
+                "url": "https://x.com/DevrimVardar"
+            }
+        ],
+        "consent": {
+            "text": {
+                "en": "We use Google Analytics to understand which pages are useful. It only runs if you allow it.",
+                "tr": "Hangi sayfaların faydalı olduğunu anlamak için Google Analytics kullanıyoruz. Yalnızca izin verirsen çalışır.",
+                "fi": "Käytämme Google Analyticsia ymmärtääksemme, mitkä sivut ovat hyödyllisiä. Se toimii vain, jos sallit sen."
+            },
+            "accept": {
+                "en": "Allow",
+                "tr": "İzin ver",
+                "fi": "Salli"
+            },
+            "decline": {
+                "en": "Decline",
+                "tr": "Reddet",
+                "fi": "Hylkää"
+            }
+        }
     },
-    "how-to-ask-ai-to-build-php": {
-      "eyebrow":{"en":"AI workflow","tr":"AI workflow","fi":"Tekoälytyöskentely"},
-      "title":{"en":"How to ask an AI to build a PHP website","tr":"AI'dan PHP sitesi oluşturmasını nasıl istersin?","fi":"Näin pyydät tekoälyä rakentamaan PHP-sivuston"},
-      "text":{"en":"Place genes.md beside your project and tell the coding LLM to read it before writing code. The specification gives the model a stable architecture instead of leaving every decision open.","tr":"genes.md dosyasını projenin yanına koy ve coding LLM'den kod yazmadan önce onu okumasını iste. Spesifikasyon, her kararı boş bırakmak yerine modele sabit bir mimari verir.","fi":"Sijoita genes.md projektisi viereen ja pyydä koodaavaa kielimallia lukemaan se ennen koodin kirjoittamista. Määrittely antaa mallille vakaan arkkitehtuurin."},
-      "button":{"en":"Read the documentation","tr":"Dokümantasyonu oku","fi":"Lue dokumentaatio"},
-      "section_title":{"en":"A useful first prompt","tr":"İyi bir ilk prompt","fi":"Hyvä ensimmäinen kehote"},
-      "section_text":{"en":"Read genes.md before writing any code. Create a multilingual PHP corporate website with English, Turkish and Finnish, a SQLite-managed news section, FTP-compatible deployment, and no Composer, Node.js, CDN or build step. Follow genes.md exactly.","tr":"Kod yazmadan önce genes.md dosyasını oku. İngilizce, Türkçe ve Fince destekli, SQLite ile yönetilen haber bölümü olan, FTP uyumlu ve Composer, Node.js, CDN veya build step kullanmayan çok dilli bir PHP kurumsal sitesi oluştur. genes.md kurallarına tam uy.","fi":"Lue genes.md ennen koodin kirjoittamista. Luo monikielinen PHP-yrityssivusto englannin, turkin ja suomen kielellä, SQLite-hallittu uutisosio, FTP-yhteensopiva käyttöönotto ilman Composeria, Node.js:ää, CDN:ää tai build-vaihetta. Noudata genes.md:tä tarkasti."},
-      "cards":[]
+    "home": {
+        "eyebrow": {
+            "en": "AI-readable web building",
+            "tr": "Yapay zekâ ile web geliştirme",
+            "fi": "Tekoälylle luotu web-kehitys"
+        },
+        "title": {
+            "en": "Give an AI one file. Get a real website.",
+            "tr": "Yapay zekâya tek dosya ver. Gerçek bir site al.",
+            "fi": "Anna tekoälylle yksi tiedosto. Saat oikean verkkosivuston."
+        },
+        "text": {
+            "en": "Genes is a compact specification that helps an LLM create a consistent, dependency-free PHP website without inventing the architecture every time.",
+            "tr": "Genes, bir LLM'in her seferinde mimariyi yeniden icat etmeden tutarlı ve bağımlılıksız bir PHP sitesi oluşturmasına yardım eden kompakt bir spesifikasyondur.",
+            "fi": "Genes on kompakti määrittely, joka auttaa kielimallia luomaan yhtenäisen ja riippumattoman PHP-sivuston ilman uuden arkkitehtuurin keksimistä joka kerta."
+        },
+        "button": {
+            "en": "Download genes.md",
+            "tr": "genes.md indir",
+            "fi": "Lataa genes.md"
+        },
+        "section_title": {
+            "en": "One clear source of truth.",
+            "tr": "Tek ve net bir kaynak.",
+            "fi": "Yksi selkeä totuuden lähde."
+        },
+        "section_text": {
+            "en": "Layouts, routing, localization, JSON, SQLite, templates, assets and admin rules are defined once. The generated project remains yours.",
+            "tr": "Layout, routing, localization, JSON, SQLite, template, asset ve admin kuralları bir kez tanımlanır. Oluşturulan proje tamamen senin olur.",
+            "fi": "Asettelu, reititys, lokalisointi, JSON, SQLite, mallit, resurssit ja hallintasäännöt määritellään kerran. Luotu projekti pysyy sinun omana."
+        },
+        "cards": [
+            {
+                "title": {
+                    "en": "One specification",
+                    "tr": "Tek spesifikasyon",
+                    "fi": "Yksi määrittely"
+                },
+                "text": {
+                    "en": "Give the same compact rules to every coding LLM.",
+                    "tr": "Aynı kompakt kuralları her coding LLM'e ver.",
+                    "fi": "Anna samat tiiviit säännöt jokaiselle koodaavalle kielimallille."
+                }
+            },
+            {
+                "title": {
+                    "en": "Your project",
+                    "tr": "Senin projen",
+                    "fi": "Oma projektisi"
+                },
+                "text": {
+                    "en": "The AI generates plain PHP, HTML, CSS, JSON and SQLite files.",
+                    "tr": "AI düz PHP, HTML, CSS, JSON ve SQLite dosyaları üretir.",
+                    "fi": "Tekoäly luo tavalliset PHP-, HTML-, CSS-, JSON- ja SQLite-tiedostot."
+                }
+            },
+            {
+                "title": {
+                    "en": "No lock-in",
+                    "tr": "Bağımlılık yok",
+                    "fi": "Ei toimittajalukkoa"
+                },
+                "text": {
+                    "en": "Genes guides creation; it does not own the application.",
+                    "tr": "Genes üretimi yönlendirir; uygulamanın sahibi değildir.",
+                    "fi": "Genes ohjaa luomista, mutta ei omista sovellusta."
+                }
+            }
+        ],
+        "button_url": "https://github.com/devrimvardar/genes"
     },
-    "ftp-deployment-for-ai-php-sites": {
-      "eyebrow":{"en":"Deployment","tr":"Deployment","fi":"Käyttöönotto"},
-      "title":{"en":"Deploy an AI-generated PHP website with FTP","tr":"AI ile oluşturulan PHP sitesini FTP ile yayınla","fi":"Ota tekoälyn luoma PHP-sivusto käyttöön FTP:llä"},
-      "text":{"en":"A generated Genes project is a normal PHP project. Upload the files, point the domain to the public folder, enable the required PHP version, and verify that .htaccess and SQLite permissions work.","tr":"Genes ile üretilen proje normal bir PHP projesidir. Dosyaları yükle, domaini public klasöre yönlendir, gereken PHP sürümünü etkinleştir ve .htaccess ile SQLite izinlerini kontrol et.","fi":"Genes-projekti on tavallinen PHP-projekti. Lataa tiedostot, osoita domain julkiseen kansioon, ota tarvittava PHP-versio käyttöön ja tarkista .htaccess- sekä SQLite-oikeudet."},
-      "button":{"en":"View the example","tr":"Örneği gör","fi":"Katso esimerkki"},
-      "section_title":{"en":"Local and live paths","tr":"Local ve live path'ler","fi":"Paikalliset ja live-polut"},
-      "section_text":{"en":"The same project can run at localhost/genes/ during development and at a domain root in production. Keep paths relative or configure the base path for the deployment environment.","tr":"Aynı proje geliştirme sırasında localhost/genes/ altında, production'da domain root'ta çalışabilir. Path'leri relative tut veya deployment ortamı için base path yapılandır.","fi":"Sama projekti voi toimia kehityksessä osoitteessa localhost/genes/ ja tuotannossa domainin juuressa. Pidä polut suhteellisina tai määritä ympäristön base path."},
-      "cards":[]
+    "docs": {
+        "eyebrow": {
+            "en": "The specification",
+            "tr": "Spesifikasyon",
+            "fi": "Määrittely"
+        },
+        "title": {
+            "en": "A clear contract between you and your coding AI.",
+            "tr": "Seninle coding AI arasında net bir sözleşme.",
+            "fi": "Selkeä sopimus sinun ja koodaavan tekoälyn välillä."
+        },
+        "text": {
+            "en": "Genes defines the project structure before the model writes code: fixed responsive canvases, routing, localization, JSON, SQLite, templates, assets and lightweight administration.",
+            "tr": "Genes model kod yazmadan önce proje yapısını tanımlar: sabit responsive canvaslar, routing, localization, JSON, SQLite, template, asset ve hafif admin.",
+            "fi": "Genes määrittelee projektin rakenteen ennen koodin kirjoittamista: responsiiviset canvas-koot, reititys, lokalisointi, JSON, SQLite, mallit, resurssit ja kevyt hallinta."
+        },
+        "button": {
+            "en": "Read genes.md",
+            "tr": "genes.md oku",
+            "fi": "Lue genes.md"
+        },
+        "section_title": {
+            "en": "Use the same foundation every time.",
+            "tr": "Her seferinde aynı temeli kullan.",
+            "fi": "Käytä samaa perustaa joka kerta."
+        },
+        "section_text": {
+            "en": "Download the specification, place it beside your project, and ask ChatGPT, Claude, Cursor, Copilot or another coding LLM to follow it.",
+            "tr": "Spesifikasyonu indir, projenin yanına koy ve ChatGPT, Claude, Cursor, Copilot veya başka bir coding LLM'den buna uymasını iste.",
+            "fi": "Lataa määrittely, sijoita se projektisi viereen ja pyydä ChatGPT:tä, Claudea, Cursor­­ia, Copilotia tai muuta koodaavaa kielimallia noudattamaan sitä."
+        },
+        "cards": [
+            {
+                "title": {
+                    "en": "Read first",
+                    "tr": "Önce oku",
+                    "fi": "Lue ensin"
+                },
+                "text": {
+                    "en": "The model reads the rules before creating files.",
+                    "tr": "Model dosyaları oluşturmadan önce kuralları okur.",
+                    "fi": "Malli lukee säännöt ennen tiedostojen luomista."
+                }
+            },
+            {
+                "title": {
+                    "en": "Generate plainly",
+                    "tr": "Sade üret",
+                    "fi": "Luo selkeästi"
+                },
+                "text": {
+                    "en": "The result is plain PHP, HTML, CSS and data files.",
+                    "tr": "Sonuç düz PHP, HTML, CSS ve veri dosyalarıdır.",
+                    "fi": "Tuloksena ovat tavalliset PHP-, HTML-, CSS- ja datatiedostot."
+                }
+            },
+            {
+                "title": {
+                    "en": "Keep control",
+                    "tr": "Kontrol sende",
+                    "fi": "Pidä hallinta"
+                },
+                "text": {
+                    "en": "There is no hosted runtime or vendor lock-in.",
+                    "tr": "Hosted runtime veya vendor lock-in yoktur.",
+                    "fi": "Palveluntarjoajan runtimea tai toimittajalukkoa ei ole."
+                }
+            }
+        ],
+        "button_url": "https://github.com/devrimvardar/genes"
+    },
+    "examples": {
+        "eyebrow": {
+            "en": "Practical examples",
+            "tr": "Pratik örnekler",
+            "fi": "Käytännön esimerkit"
+        },
+        "title": {
+            "en": "Generate the kind of PHP site you actually need.",
+            "tr": "Gerçekten ihtiyacın olan PHP sitesini üret.",
+            "fi": "Luo tarvitsemasi PHP-sivusto."
+        },
+        "text": {
+            "en": "Use Genes for a multilingual landing page, a corporate site, a SQLite-managed news section, a blog, an admin dashboard or a custom combination.",
+            "tr": "Genes'i çok dilli landing page, kurumsal site, SQLite ile yönetilen haber bölümü, blog, admin dashboard veya özel kombinasyon için kullan.",
+            "fi": "Käytä Genes-määrittelyä monikieliseen laskeutumissivuun, yrityssivustoon, SQLite-hallittuun uutisosioon, blogiin, hallintapaneeliin tai omaan yhdistelmään."
+        },
+        "button": {
+            "en": "Download the corporate example (.zip)",
+            "tr": "Kurumsal örneği indir (.zip)",
+            "fi": "Lataa yritysesimerkki (.zip)"
+        },
+        "section_title": {
+            "en": "A complete corporate site, ready to upload.",
+            "tr": "Yüklemeye hazır, eksiksiz bir kurumsal site.",
+            "fi": "Valmis yrityssivusto, jonka voi ladata palvelimelle."
+        },
+        "section_text": {
+            "en": "The example was generated from genes.md: three languages, a news section managed in the admin, and a contact form. Unzip it, upload it with FTP, and replace the content with your own.",
+            "tr": "Örnek genes.md ile üretildi: üç dil, admin'den yönetilen haberler ve iletişim formu. Zip'i açın, FTP ile yükleyin ve içeriği kendinizinkiyle değiştirin.",
+            "fi": "Esimerkki on luotu genes.md:n avulla: kolme kieltä, ylläpidossa hallittavat uutiset ja yhteydenottolomake. Pura zip, lataa se FTP:llä ja vaihda sisältö omaksesi."
+        },
+        "cards": [
+            {
+                "title": {
+                    "en": "Three languages",
+                    "tr": "Üç dil",
+                    "fi": "Kolme kieltä"
+                },
+                "text": {
+                    "en": "English, Turkish, and Finnish from one set of templates. Add a language by adding its code.",
+                    "tr": "Tek şablon setinden İngilizce, Türkçe ve Fince. Yeni bir dil için kodunu eklemeniz yeterli.",
+                    "fi": "Englanti, turkki ja suomi samoista sivupohjista. Uusi kieli lisätään kielikoodilla."
+                }
+            },
+            {
+                "title": {
+                    "en": "News with an admin",
+                    "tr": "Admin'li haberler",
+                    "fi": "Uutiset ja ylläpito"
+                },
+                "text": {
+                    "en": "SQLite news with drafts, image upload, users, and roles. Works on $5 shared hosting.",
+                    "tr": "Taslak, görsel yükleme, kullanıcı ve rollerle SQLite haberler. 5 dolarlık hostingde çalışır.",
+                    "fi": "SQLite-uutiset luonnoksineen, kuvineen, käyttäjineen ja rooleineen. Toimii 5 dollarin hostingissa."
+                }
+            },
+            {
+                "title": {
+                    "en": "Safe contact form",
+                    "tr": "Güvenli iletişim formu",
+                    "fi": "Turvallinen lomake"
+                },
+                "text": {
+                    "en": "PHP mail() with CSRF protection, a honeypot, and rate limits. Messages are also stored in the admin.",
+                    "tr": "CSRF koruması, honeypot ve hız sınırlarıyla PHP mail(). Mesajlar admin'de de saklanır.",
+                    "fi": "PHP mail() CSRF-suojauksella, hunajapurkilla ja nopeusrajoituksilla. Viestit tallentuvat myös ylläpitoon."
+                }
+            }
+        ],
+        "button_url": "downloads/genes-corporate-example.zip"
+    },
+    "download": {
+        "eyebrow": {
+            "en": "Open and portable",
+            "tr": "Açık ve taşınabilir",
+            "fi": "Avoin ja siirrettävä"
+        },
+        "title": {
+            "en": "Download genes.md and start with a better brief.",
+            "tr": "genes.md indir ve daha iyi bir brief ile başla.",
+            "fi": "Lataa genes.md ja aloita paremmalla määrittelyllä."
+        },
+        "text": {
+            "en": "Genes is free, dependency-free and designed to be placed directly in the project folder where your coding AI can read it.",
+            "tr": "Genes ücretsizdir, bağımlılık içermez ve coding AI'ın okuyabileceği şekilde doğrudan proje klasörüne konmak için tasarlanmıştır.",
+            "fi": "Genes on ilmainen, riippuvuuksista vapaa ja suunniteltu sijoitettavaksi suoraan projektikansioon, jossa koodaava tekoäly voi lukea sen."
+        },
+        "button": {
+            "en": "Download the specification",
+            "tr": "Spesifikasyonu indir",
+            "fi": "Lataa määrittely"
+        },
+        "section_title": {
+            "en": "Source, example and specification in one place.",
+            "tr": "Kaynak, örnek ve spesifikasyon tek yerde.",
+            "fi": "Lähdekoodi, esimerkki ja määrittely yhdessä paikassa."
+        },
+        "section_text": {
+            "en": "Read the source on GitHub, inspect the example website, or download the raw specification directly.",
+            "tr": "Kaynağı GitHub'da oku, örnek siteyi incele veya ham spesifikasyonu doğrudan indir.",
+            "fi": "Lue lähdekoodi GitHubissa, tutustu esimerkkisivustoon tai lataa määrittely suoraan."
+        },
+        "cards": [],
+        "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md"
+    },
+    "articles": {
+        "eyebrow": {
+            "en": "Articles",
+            "tr": "Makaleler",
+            "fi": "Artikkelit"
+        },
+        "title": {
+            "en": "Practical notes for building PHP websites with AI.",
+            "tr": "AI ile PHP siteleri oluşturmak için pratik notlar.",
+            "fi": "Käytännön ohjeita PHP-sivustojen rakentamiseen tekoälyllä."
+        },
+        "text": {
+            "en": "Guides for AI-assisted PHP development, affordable shared hosting and simple FTP deployment.",
+            "tr": "AI destekli PHP geliştirme, uygun fiyatlı shared hosting ve basit FTP deployment için rehberler.",
+            "fi": "Oppaita tekoälyavusteiseen PHP-kehitykseen, edulliseen jaettuun hostingiin ja helppoon FTP-käyttöönottoon."
+        },
+        "button": {
+            "en": "Read the specification",
+            "tr": "Spesifikasyonu oku",
+            "fi": "Lue määrittely"
+        },
+        "section_title": {
+            "en": "Start with a practical answer.",
+            "tr": "Pratik bir cevapla başla.",
+            "fi": "Aloita käytännön vastauksesta."
+        },
+        "section_text": {
+            "en": "Each article answers a real question and connects the answer to the Genes specification and example project.",
+            "tr": "Her makale gerçek bir soruyu yanıtlar ve cevabı Genes spesifikasyonuna ve örnek projeye bağlar.",
+            "fi": "Jokainen artikkeli vastaa todelliseen kysymykseen ja yhdistää vastauksen Genes-määrittelyyn ja esimerkkiprojektiin."
+        },
+        "cards": [],
+        "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md",
+        "items": {
+            "ai-php-on-shared-hosting": {
+                "eyebrow": {
+                    "en": "Shared hosting",
+                    "tr": "Shared hosting",
+                    "fi": "Jaettu hosting"
+                },
+                "title": {
+                    "en": "Can AI build a PHP website on a $5 shared hosting plan?",
+                    "tr": "AI, 5 dolarlık bir shared hosting üzerinde PHP sitesi oluşturabilir mi?",
+                    "fi": "Voiko tekoäly rakentaa PHP-sivuston 5 dollarin jaetulle hosting-palvelimelle?"
+                },
+                "text": {
+                    "en": "Yes. Genes is designed for ordinary PHP hosting. You do not need Node.js, Composer, Docker, a build server or a VPS. Ask an AI to generate the files, upload them with FTP, and run the site with PHP and optionally SQLite.",
+                    "tr": "Evet. Genes sıradan PHP hostingler için tasarlanmıştır. Node.js, Composer, Docker, build server veya VPS gerekmez. AI'dan dosyaları üretmesini iste, FTP ile yükle ve siteyi PHP, gerekirse SQLite ile çalıştır.",
+                    "fi": "Kyllä. Genes on suunniteltu tavalliseen PHP-hostingiin. Et tarvitse Node.js:ää, Composeria, Dockeria, build-palvelinta tai VPS:ää. Pyydä tekoälyä luomaan tiedostot, lataa ne FTP:llä ja käytä PHP:tä sekä tarvittaessa SQLitea."
+                },
+                "button": {
+                    "en": "Download genes.md",
+                    "tr": "genes.md indir",
+                    "fi": "Lataa genes.md"
+                },
+                "section_title": {
+                    "en": "What you need",
+                    "tr": "Neye ihtiyacın var",
+                    "fi": "Mitä tarvitset"
+                },
+                "section_text": {
+                    "en": "A PHP hosting plan, FTP access, an SSL certificate and a database only when the project needs editable or queryable content. For many small websites, this is enough.",
+                    "tr": "Bir PHP hosting planı, FTP erişimi, SSL sertifikası ve yalnızca proje editable veya queryable içerik gerektiriyorsa bir veritabanı. Birçok küçük site için bu yeterlidir.",
+                    "fi": "PHP-hosting, FTP-yhteys, SSL-sertifika ja tietokanta vain silloin, kun projekti tarvitsee muokattavaa tai haettavaa sisältöä. Monille pienille sivustoille tämä riittää."
+                },
+                "cards": [],
+                "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md"
+            },
+            "how-to-ask-ai-to-build-php": {
+                "eyebrow": {
+                    "en": "AI workflow",
+                    "tr": "AI workflow",
+                    "fi": "Tekoälytyöskentely"
+                },
+                "title": {
+                    "en": "How to ask an AI to build a PHP website",
+                    "tr": "AI'dan PHP sitesi oluşturmasını nasıl istersin?",
+                    "fi": "Näin pyydät tekoälyä rakentamaan PHP-sivuston"
+                },
+                "text": {
+                    "en": "Place genes.md beside your project and tell the coding LLM to read it before writing code. The specification gives the model a stable architecture instead of leaving every decision open.",
+                    "tr": "genes.md dosyasını projenin yanına koy ve coding LLM'den kod yazmadan önce onu okumasını iste. Spesifikasyon, her kararı boş bırakmak yerine modele sabit bir mimari verir.",
+                    "fi": "Sijoita genes.md projektisi viereen ja pyydä koodaavaa kielimallia lukemaan se ennen koodin kirjoittamista. Määrittely antaa mallille vakaan arkkitehtuurin."
+                },
+                "button": {
+                    "en": "Read the documentation",
+                    "tr": "Dokümantasyonu oku",
+                    "fi": "Lue dokumentaatio"
+                },
+                "section_title": {
+                    "en": "A useful first prompt",
+                    "tr": "İyi bir ilk prompt",
+                    "fi": "Hyvä ensimmäinen kehote"
+                },
+                "section_text": {
+                    "en": "Read genes.md before writing any code. Create a multilingual PHP corporate website with English, Turkish and Finnish, a SQLite-managed news section, FTP-compatible deployment, and no Composer, Node.js, CDN or build step. Follow genes.md exactly.",
+                    "tr": "Kod yazmadan önce genes.md dosyasını oku. İngilizce, Türkçe ve Fince destekli, SQLite ile yönetilen haber bölümü olan, FTP uyumlu ve Composer, Node.js, CDN veya build step kullanmayan çok dilli bir PHP kurumsal sitesi oluştur. genes.md kurallarına tam uy.",
+                    "fi": "Lue genes.md ennen koodin kirjoittamista. Luo monikielinen PHP-yrityssivusto englannin, turkin ja suomen kielellä, SQLite-hallittu uutisosio, FTP-yhteensopiva käyttöönotto ilman Composeria, Node.js:ää, CDN:ää tai build-vaihetta. Noudata genes.md:tä tarkasti."
+                },
+                "cards": [],
+                "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md"
+            },
+            "ftp-deployment-for-ai-php-sites": {
+                "eyebrow": {
+                    "en": "Deployment",
+                    "tr": "Deployment",
+                    "fi": "Käyttöönotto"
+                },
+                "title": {
+                    "en": "Deploy an AI-generated PHP website with FTP",
+                    "tr": "AI ile oluşturulan PHP sitesini FTP ile yayınla",
+                    "fi": "Ota tekoälyn luoma PHP-sivusto käyttöön FTP:llä"
+                },
+                "text": {
+                    "en": "A generated Genes project is a normal PHP project. Upload the files, point the domain to the public folder, enable the required PHP version, and verify that .htaccess and SQLite permissions work.",
+                    "tr": "Genes ile üretilen proje normal bir PHP projesidir. Dosyaları yükle, domaini public klasöre yönlendir, gereken PHP sürümünü etkinleştir ve .htaccess ile SQLite izinlerini kontrol et.",
+                    "fi": "Genes-projekti on tavallinen PHP-projekti. Lataa tiedostot, osoita domain julkiseen kansioon, ota tarvittava PHP-versio käyttöön ja tarkista .htaccess- sekä SQLite-oikeudet."
+                },
+                "button": {
+                    "en": "View the example",
+                    "tr": "Örneği gör",
+                    "fi": "Katso esimerkki"
+                },
+                "section_title": {
+                    "en": "Local and live paths",
+                    "tr": "Local ve live path'ler",
+                    "fi": "Paikalliset ja live-polut"
+                },
+                "section_text": {
+                    "en": "The same project can run at localhost/genes/ during development and at a domain root in production. Keep paths relative or configure the base path for the deployment environment.",
+                    "tr": "Aynı proje geliştirme sırasında localhost/genes/ altında, production'da domain root'ta çalışabilir. Path'leri relative tut veya deployment ortamı için base path yapılandır.",
+                    "fi": "Sama projekti voi toimia kehityksessä osoitteessa localhost/genes/ ja tuotannossa domainin juuressa. Pidä polut suhteellisina tai määritä ympäristön base path."
+                },
+                "cards": [],
+                "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md"
+            }
+        }
+    },
+    "404": {
+        "title": {
+            "en": "Page not found",
+            "tr": "Sayfa bulunamadı",
+            "fi": "Sivua ei löytynyt"
+        },
+        "text": {
+            "en": "The page you are looking for does not exist or has moved.",
+            "tr": "Aradığın sayfa yok ya da taşınmış.",
+            "fi": "Etsimääsi sivua ei ole tai se on siirretty."
+        },
+        "button": {
+            "en": "Go to home page",
+            "tr": "Ana sayfaya dön",
+            "fi": "Siirry etusivulle"
+        }
     }
-  }
 }

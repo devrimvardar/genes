@@ -1,0 +1,22 @@
+{
+    "site": {
+        "name": "Arkka",
+        "url": "https://arkka.example",
+        "default_locale": "en",
+        "locales": ["en", "tr", "fi"]
+    },
+    "theme": {
+        "title": "Arkka — Engineering for low-carbon buildings",
+        "description": "Structural and energy engineering for timber buildings and renovations in Finland and Türkiye."
+    },
+    "admin": {
+        "types": {
+            "news": { "fields": ["title", "summary", "text", "image", "published_at"] }
+        },
+        "events": ["contact"]
+    },
+    "contact": {
+        "to": "info@arkka.example",
+        "from": "noreply@arkka.example"
+    }
+}

@@ -1,0 +1,984 @@
+{
+    "common": {
+        "nav": {
+            "home": {
+                "en": "Home",
+                "tr": "Ana sayfa",
+                "fi": "Etusivu"
+            },
+            "about": {
+                "en": "About",
+                "tr": "Hakkımızda",
+                "fi": "Meistä"
+            },
+            "services": {
+                "en": "Services",
+                "tr": "Hizmetler",
+                "fi": "Palvelut"
+            },
+            "news": {
+                "en": "News",
+                "tr": "Haberler",
+                "fi": "Uutiset"
+            },
+            "contact": {
+                "en": "Contact",
+                "tr": "İletişim",
+                "fi": "Yhteystiedot"
+            }
+        },
+        "language": {
+            "en": "Language",
+            "tr": "Dil",
+            "fi": "Kieli"
+        },
+        "cta": {
+            "title": {
+                "en": "Planning a building or a renovation?",
+                "tr": "Bir bina ya da yenileme mi planlıyorsunuz?",
+                "fi": "Suunnitteletko rakennusta tai korjausta?"
+            },
+            "text": {
+                "en": "Tell us about the project. We reply within two working days.",
+                "tr": "Projenizi anlatın. İki iş günü içinde dönüş yapıyoruz.",
+                "fi": "Kerro hankkeesta. Vastaamme kahden arkipäivän kuluessa."
+            },
+            "button": {
+                "en": "Start a conversation",
+                "tr": "Görüşme başlatın",
+                "fi": "Aloita keskustelu"
+            }
+        },
+        "read_more": {
+            "en": "Read more",
+            "tr": "Devamını oku",
+            "fi": "Lue lisää"
+        },
+        "footer": {
+            "about": {
+                "en": "Arkka is an independent engineering studio for timber structures and low-energy renovation.",
+                "tr": "Arkka, ahşap yapılar ve düşük enerjili yenileme için bağımsız bir mühendislik stüdyosudur.",
+                "fi": "Arkka on itsenäinen insinööritoimisto puurakenteille ja energiatehokkaille korjauksille."
+            },
+            "offices": {
+                "en": "Offices",
+                "tr": "Ofisler",
+                "fi": "Toimistot"
+            },
+            "contact": {
+                "en": "Contact",
+                "tr": "İletişim",
+                "fi": "Yhteystiedot"
+            },
+            "rights": {
+                "en": "© 2026 Arkka Oy. A fictional company used as a Genes example.",
+                "tr": "© 2026 Arkka Oy. Genes örneği olarak kullanılan kurgusal bir şirkettir.",
+                "fi": "© 2026 Arkka Oy. Kuvitteellinen yritys Genes-esimerkkinä."
+            }
+        },
+        "email": "info@arkka.example",
+        "phone": "+358 40 000 0000",
+        "offices": [
+            {
+                "city": "Helsinki",
+                "address": "Lönnrotinkatu 00, 00120 Helsinki"
+            },
+            {
+                "city": "İstanbul",
+                "address": "Moda Cd. 00, 34710 Kadıköy"
+            }
+        ],
+        "months": {
+            "en": [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December"
+            ],
+            "tr": [
+                "Ocak",
+                "Şubat",
+                "Mart",
+                "Nisan",
+                "Mayıs",
+                "Haziran",
+                "Temmuz",
+                "Ağustos",
+                "Eylül",
+                "Ekim",
+                "Kasım",
+                "Aralık"
+            ],
+            "fi": [
+                "tammikuuta",
+                "helmikuuta",
+                "maaliskuuta",
+                "huhtikuuta",
+                "toukokuuta",
+                "kesäkuuta",
+                "heinäkuuta",
+                "elokuuta",
+                "syyskuuta",
+                "lokakuuta",
+                "marraskuuta",
+                "joulukuuta"
+            ]
+        },
+        "date_format": {
+            "en": "{month} {d}, {Y}",
+            "tr": "{d} {month} {Y}",
+            "fi": "{d}. {month} {Y}"
+        }
+    },
+    "home": {
+        "title": {
+            "en": "Engineering for low-carbon buildings",
+            "tr": "Düşük karbonlu binalar için mühendislik",
+            "fi": "Insinöörityötä vähähiilisiin rakennuksiin"
+        },
+        "description": {
+            "en": "Arkka designs timber structures and energy renovations that cut emissions without cutting corners. Studios in Helsinki and Istanbul.",
+            "tr": "Arkka, kaliteden ödün vermeden emisyonu azaltan ahşap yapılar ve enerji yenilemeleri tasarlar. Helsinki ve İstanbul'da stüdyolar.",
+            "fi": "Arkka suunnittelee puurakenteita ja energiakorjauksia, jotka vähentävät päästöjä laadusta tinkimättä. Toimistot Helsingissä ja Istanbulissa."
+        },
+        "hero": {
+            "eyebrow": {
+                "en": "Structural & energy engineering",
+                "tr": "Yapı ve enerji mühendisliği",
+                "fi": "Rakenne- ja energiasuunnittelu"
+            },
+            "title": {
+                "en": "Buildings that last longer and use less.",
+                "tr": "Daha uzun ömürlü, daha az tüketen binalar.",
+                "fi": "Rakennuksia, jotka kestävät pidempään ja kuluttavat vähemmän."
+            },
+            "text": {
+                "en": "We design timber structures and energy renovations for housing, schools, and offices — from the first sketch to the last site visit.",
+                "tr": "Konut, okul ve ofisler için ahşap yapılar ve enerji yenilemeleri tasarlıyoruz; ilk eskizden son şantiye ziyaretine kadar.",
+                "fi": "Suunnittelemme puurakenteita ja energiakorjauksia asuntoihin, kouluihin ja toimistoihin — ensimmäisestä luonnoksesta viimeiseen työmaakäyntiin."
+            },
+            "primary": {
+                "en": "Discuss your project",
+                "tr": "Projenizi konuşalım",
+                "fi": "Keskustele hankkeesta"
+            },
+            "secondary": {
+                "en": "See our services",
+                "tr": "Hizmetlerimiz",
+                "fi": "Katso palvelut"
+            }
+        },
+        "stats": [
+            {
+                "value": "140+",
+                "label": {
+                    "en": "projects delivered",
+                    "tr": "tamamlanan proje",
+                    "fi": "toteutettua hanketta"
+                }
+            },
+            {
+                "value": "38%",
+                "label": {
+                    "en": "average energy saving in renovations",
+                    "tr": "yenilemelerde ortalama enerji tasarrufu",
+                    "fi": "keskimääräinen energiansäästö korjauksissa"
+                }
+            },
+            {
+                "value": "2",
+                "label": {
+                    "en": "studios: Helsinki and Istanbul",
+                    "tr": "stüdyo: Helsinki ve İstanbul",
+                    "fi": "toimistoa: Helsinki ja Istanbul"
+                }
+            }
+        ],
+        "approach": {
+            "title": {
+                "en": "How we work",
+                "tr": "Nasıl çalışıyoruz",
+                "fi": "Miten työskentelemme"
+            },
+            "text": {
+                "en": "Small teams, one engineer responsible from start to finish, and decisions based on measured data.",
+                "tr": "Küçük ekipler, baştan sona sorumlu tek bir mühendis ve ölçülmüş verilere dayalı kararlar.",
+                "fi": "Pienet tiimit, yksi vastuuinsinööri alusta loppuun ja päätökset mitatun tiedon pohjalta."
+            },
+            "cards": [
+                {
+                    "title": {
+                        "en": "Measure first",
+                        "tr": "Önce ölç",
+                        "fi": "Ensin mittaus"
+                    },
+                    "text": {
+                        "en": "Every renovation starts with on-site measurements of energy use, moisture, and structure.",
+                        "tr": "Her yenileme, enerji kullanımı, nem ve yapının yerinde ölçülmesiyle başlar.",
+                        "fi": "Jokainen korjaus alkaa energiankulutuksen, kosteuden ja rakenteen mittauksilla paikan päällä."
+                    }
+                },
+                {
+                    "title": {
+                        "en": "Design with timber",
+                        "tr": "Ahşapla tasarla",
+                        "fi": "Suunnittele puulla"
+                    },
+                    "text": {
+                        "en": "Cross-laminated timber and glulam replace concrete and steel wherever it makes sense.",
+                        "tr": "Çapraz lamine ahşap ve tutkallı lamine ahşap, mantıklı olan her yerde beton ve çeliğin yerini alır.",
+                        "fi": "CLT ja liimapuu korvaavat betonin ja teräksen kaikkialla, missä se on järkevää."
+                    }
+                },
+                {
+                    "title": {
+                        "en": "Follow it through",
+                        "tr": "Sonuna kadar takip et",
+                        "fi": "Viedään loppuun"
+                    },
+                    "text": {
+                        "en": "We stay on the project during construction and check the results a year after handover.",
+                        "tr": "İnşaat boyunca projede kalır, teslimden bir yıl sonra sonuçları kontrol ederiz.",
+                        "fi": "Olemme mukana rakentamisen ajan ja tarkistamme tulokset vuosi luovutuksen jälkeen."
+                    }
+                }
+            ]
+        },
+        "latest": {
+            "collection": "news",
+            "limit": 3,
+            "title": {
+                "en": "Latest news",
+                "tr": "Son haberler",
+                "fi": "Uusimmat uutiset"
+            },
+            "more": {
+                "en": "All news",
+                "tr": "Tüm haberler",
+                "fi": "Kaikki uutiset"
+            }
+        }
+    },
+    "about": {
+        "title": {
+            "en": "About Arkka",
+            "tr": "Arkka hakkında",
+            "fi": "Tietoa Arkasta"
+        },
+        "description": {
+            "en": "Arkka is an engineering studio founded in 2014 in Helsinki, with a second studio in Istanbul since 2021.",
+            "tr": "Arkka, 2014'te Helsinki'de kurulan ve 2021'den beri İstanbul'da ikinci stüdyosu bulunan bir mühendislik stüdyosudur.",
+            "fi": "Arkka on vuonna 2014 Helsingissä perustettu insinööritoimisto, jolla on vuodesta 2021 ollut toinen toimisto Istanbulissa."
+        },
+        "intro": {
+            "en": "Arkka was founded in Helsinki in 2014 by two structural engineers who wanted to build more with wood and waste less energy.\n\nToday we are a team of eighteen engineers and designers in Helsinki and Istanbul. We work for housing companies, municipalities, schools, and private clients.",
+            "tr": "Arkka, 2014 yılında Helsinki'de, ahşapla daha çok inşa etmek ve daha az enerji harcamak isteyen iki yapı mühendisi tarafından kuruldu.\n\nBugün Helsinki ve İstanbul'da on sekiz mühendis ve tasarımcıdan oluşan bir ekibiz. Konut şirketleri, belediyeler, okullar ve özel müşteriler için çalışıyoruz.",
+            "fi": "Arkan perustivat Helsingissä vuonna 2014 kaksi rakennesuunnittelijaa, jotka halusivat rakentaa enemmän puusta ja tuhlata vähemmän energiaa.\n\nTänään olemme kahdeksantoista insinöörin ja suunnittelijan tiimi Helsingissä ja Istanbulissa. Työskentelemme asunto-osakeyhtiöille, kunnille, kouluille ja yksityisille asiakkaille."
+        },
+        "values": {
+            "title": {
+                "en": "What we stand for",
+                "tr": "Neyi savunuyoruz",
+                "fi": "Mitä arvostamme"
+            },
+            "cards": [
+                {
+                    "title": {
+                        "en": "Honest numbers",
+                        "tr": "Dürüst rakamlar",
+                        "fi": "Rehelliset luvut"
+                    },
+                    "text": {
+                        "en": "We publish the measured results of our projects, not only the design targets.",
+                        "tr": "Yalnızca tasarım hedeflerini değil, projelerimizin ölçülmüş sonuçlarını da yayımlıyoruz.",
+                        "fi": "Julkaisemme hankkeidemme mitatut tulokset, emme vain suunnittelutavoitteita."
+                    }
+                },
+                {
+                    "title": {
+                        "en": "Simple details",
+                        "tr": "Basit detaylar",
+                        "fi": "Yksinkertaiset detaljit"
+                    },
+                    "text": {
+                        "en": "A detail that is easy to build is a detail that gets built correctly.",
+                        "tr": "Kolay uygulanan bir detay, doğru uygulanan bir detaydır.",
+                        "fi": "Helposti rakennettava detalji on oikein rakennettu detalji."
+                    }
+                },
+                {
+                    "title": {
+                        "en": "Long life",
+                        "tr": "Uzun ömür",
+                        "fi": "Pitkä käyttöikä"
+                    },
+                    "text": {
+                        "en": "We design for a hundred years of use and for repair, not replacement.",
+                        "tr": "Yüz yıllık kullanım ve değiştirme değil onarım için tasarlıyoruz.",
+                        "fi": "Suunnittelemme sadan vuoden käyttöön ja korjattavuuteen, ei uusimiseen."
+                    }
+                }
+            ]
+        },
+        "team": {
+            "title": {
+                "en": "Leadership",
+                "tr": "Yönetim",
+                "fi": "Johto"
+            },
+            "people": [
+                {
+                    "name": "Aino Lehtinen",
+                    "role": {
+                        "en": "Founder, structural engineering",
+                        "tr": "Kurucu, yapı mühendisliği",
+                        "fi": "Perustaja, rakennesuunnittelu"
+                    }
+                },
+                {
+                    "name": "Mert Aydın",
+                    "role": {
+                        "en": "Head of Istanbul studio",
+                        "tr": "İstanbul stüdyosu yöneticisi",
+                        "fi": "Istanbulin toimiston johtaja"
+                    }
+                },
+                {
+                    "name": "Joonas Virtanen",
+                    "role": {
+                        "en": "Energy and building physics",
+                        "tr": "Enerji ve yapı fiziği",
+                        "fi": "Energia ja rakennusfysiikka"
+                    }
+                }
+            ]
+        }
+    },
+    "services": {
+        "title": {
+            "en": "Services",
+            "tr": "Hizmetler",
+            "fi": "Palvelut"
+        },
+        "description": {
+            "en": "Structural design for timber buildings, energy renovation, condition surveys, and site supervision from Arkka.",
+            "tr": "Arkka'dan ahşap binalar için yapı tasarımı, enerji yenileme, durum tespiti ve şantiye denetimi.",
+            "fi": "Arkan palvelut: puurakennusten rakennesuunnittelu, energiakorjaukset, kuntotutkimukset ja työmaavalvonta."
+        },
+        "intro": {
+            "en": "Four services, one responsible engineer per project.",
+            "tr": "Dört hizmet, her proje için tek bir sorumlu mühendis.",
+            "fi": "Neljä palvelua, yksi vastuuinsinööri hanketta kohden."
+        },
+        "back": {
+            "en": "All services",
+            "tr": "Tüm hizmetler",
+            "fi": "Kaikki palvelut"
+        },
+        "items": {
+            "timber-structures": {
+                "title": {
+                    "en": "Timber structures",
+                    "tr": "Ahşap yapılar",
+                    "fi": "Puurakenteet"
+                },
+                "summary": {
+                    "en": "Structural design for CLT and glulam buildings up to eight storeys.",
+                    "tr": "Sekiz kata kadar CLT ve tutkallı lamine ahşap binalar için yapı tasarımı.",
+                    "fi": "Rakennesuunnittelu enintään kahdeksankerroksisiin CLT- ja liimapuurakennuksiin."
+                },
+                "description": {
+                    "en": "Structural engineering for cross-laminated timber and glulam buildings: frames, connections, fire and acoustic design.",
+                    "tr": "Çapraz lamine ve tutkallı lamine ahşap binalar için yapı mühendisliği: taşıyıcı sistem, bağlantılar, yangın ve akustik tasarım.",
+                    "fi": "Rakennesuunnittelu CLT- ja liimapuurakennuksiin: runko, liitokset, palo- ja äänitekninen suunnittelu."
+                },
+                "text": {
+                    "en": "We design the load-bearing frame, the connections, and the fire and acoustic details of multi-storey timber buildings.\n\nOur drawings are made for the factory and the site: each element is numbered, each connection is drawn once and repeated.",
+                    "tr": "Çok katlı ahşap binaların taşıyıcı sistemini, bağlantılarını, yangın ve akustik detaylarını tasarlıyoruz.\n\nÇizimlerimiz fabrika ve şantiye için hazırlanır: her eleman numaralandırılır, her bağlantı bir kez çizilir ve tekrarlanır.",
+                    "fi": "Suunnittelemme monikerroksisten puurakennusten kantavan rungon, liitokset sekä palo- ja äänitekniset detaljit.\n\nPiirustuksemme tehdään tehtaalle ja työmaalle: jokainen elementti numeroidaan ja jokainen liitos piirretään kerran ja toistetaan."
+                }
+            },
+            "energy-renovation": {
+                "title": {
+                    "en": "Energy renovation",
+                    "tr": "Enerji yenileme",
+                    "fi": "Energiakorjaukset"
+                },
+                "summary": {
+                    "en": "Measured, step-by-step plans that cut heating energy by a third or more.",
+                    "tr": "Isıtma enerjisini üçte bir veya daha fazla azaltan, ölçüme dayalı adım adım planlar.",
+                    "fi": "Mitattuihin tietoihin perustuvat vaiheittaiset suunnitelmat, jotka vähentävät lämmitysenergiaa kolmanneksen tai enemmän."
+                },
+                "description": {
+                    "en": "Energy renovation planning for apartment buildings and schools, based on measured data and a step-by-step investment plan.",
+                    "tr": "Ölçülmüş verilere ve adım adım yatırım planına dayalı, apartman ve okullar için enerji yenileme planlaması.",
+                    "fi": "Energiakorjausten suunnittelu kerrostaloihin ja kouluihin mitatun tiedon ja vaiheittaisen investointisuunnitelman pohjalta."
+                },
+                "text": {
+                    "en": "We measure how the building really uses energy before we propose anything.\n\nThe result is a plan in clear steps — insulation, windows, ventilation heat recovery, heat pumps — with cost and saving for each step.",
+                    "tr": "Bir öneri yapmadan önce binanın enerjiyi gerçekte nasıl kullandığını ölçüyoruz.\n\nSonuç, net adımlardan oluşan bir plandır: yalıtım, pencereler, ısı geri kazanımlı havalandırma, ısı pompaları; her adım için maliyet ve tasarruf.",
+                    "fi": "Mittaamme, miten rakennus todella käyttää energiaa, ennen kuin ehdotamme mitään.\n\nTuloksena on selkeä vaiheittainen suunnitelma — eristys, ikkunat, ilmanvaihdon lämmöntalteenotto, lämpöpumput — ja jokaiselle vaiheelle kustannus ja säästö."
+                }
+            },
+            "condition-surveys": {
+                "title": {
+                    "en": "Condition surveys",
+                    "tr": "Durum tespiti",
+                    "fi": "Kuntotutkimukset"
+                },
+                "summary": {
+                    "en": "Moisture, structure, and indoor air surveys with a clear priority list.",
+                    "tr": "Net bir öncelik listesiyle nem, yapı ve iç hava incelemeleri.",
+                    "fi": "Kosteus-, rakenne- ja sisäilmatutkimukset selkeällä kiireellisyysjärjestyksellä."
+                },
+                "description": {
+                    "en": "Condition surveys of structures, moisture, and indoor air for housing companies and public buildings.",
+                    "tr": "Konut şirketleri ve kamu binaları için yapı, nem ve iç hava durum tespiti.",
+                    "fi": "Rakenteiden, kosteuden ja sisäilman kuntotutkimukset asunto-osakeyhtiöille ja julkisiin rakennuksiin."
+                },
+                "text": {
+                    "en": "We open structures where needed, take samples, and log moisture over time.\n\nYou receive a short report that ranks every finding by urgency, so the board can decide what to fix first.",
+                    "tr": "Gerektiğinde yapıları açar, numune alır ve nemi zaman içinde kaydederiz.\n\nYönetimin önce neyin onarılacağına karar verebilmesi için her bulguyu aciliyete göre sıralayan kısa bir rapor alırsınız.",
+                    "fi": "Avaamme rakenteita tarvittaessa, otamme näytteitä ja seuraamme kosteutta ajan mittaan.\n\nSaat lyhyen raportin, jossa jokainen havainto on kiireellisyysjärjestyksessä, jotta hallitus voi päättää, mitä korjataan ensin."
+                }
+            },
+            "site-supervision": {
+                "title": {
+                    "en": "Site supervision",
+                    "tr": "Şantiye denetimi",
+                    "fi": "Työmaavalvonta"
+                },
+                "summary": {
+                    "en": "Regular site visits and checks of critical details during construction.",
+                    "tr": "İnşaat sırasında düzenli şantiye ziyaretleri ve kritik detayların kontrolü.",
+                    "fi": "Säännölliset työmaakäynnit ja kriittisten detaljien tarkastukset rakentamisen aikana."
+                },
+                "description": {
+                    "en": "Structural and energy supervision on site: inspections of connections, air tightness, and moisture protection.",
+                    "tr": "Şantiyede yapı ve enerji denetimi: bağlantıların, hava sızdırmazlığının ve nem korumasının kontrolü.",
+                    "fi": "Rakenne- ja energiavalvonta työmaalla: liitosten, ilmatiiviyden ja kosteussuojauksen tarkastukset."
+                },
+                "text": {
+                    "en": "The engineer who designed the building visits the site at agreed stages.\n\nWe check connections, air tightness, and moisture protection before they are covered, and record everything with photos.",
+                    "tr": "Binayı tasarlayan mühendis, kararlaştırılan aşamalarda şantiyeyi ziyaret eder.\n\nBağlantıları, hava sızdırmazlığını ve nem korumasını kapatılmadan önce kontrol eder, her şeyi fotoğraflarla kayıt altına alırız.",
+                    "fi": "Rakennuksen suunnitellut insinööri käy työmaalla sovituissa vaiheissa.\n\nTarkastamme liitokset, ilmatiiviyden ja kosteussuojauksen ennen kuin ne peitetään, ja dokumentoimme kaiken valokuvin."
+                }
+            }
+        }
+    },
+    "news": {
+        "collection": "news",
+        "per_page": 10,
+        "title": {
+            "en": "News",
+            "tr": "Haberler",
+            "fi": "Uutiset"
+        },
+        "description": {
+            "en": "Project news, research results, and announcements from Arkka's studios in Helsinki and Istanbul.",
+            "tr": "Arkka'nın Helsinki ve İstanbul stüdyolarından proje haberleri, araştırma sonuçları ve duyurular.",
+            "fi": "Hankeuutisia, tutkimustuloksia ja tiedotteita Arkan Helsingin ja Istanbulin toimistoista."
+        },
+        "intro": {
+            "en": "Projects, results, and announcements.",
+            "tr": "Projeler, sonuçlar ve duyurular.",
+            "fi": "Hankkeita, tuloksia ja tiedotteita."
+        },
+        "back": {
+            "en": "All news",
+            "tr": "Tüm haberler",
+            "fi": "Kaikki uutiset"
+        },
+        "empty": {
+            "en": "No news yet.",
+            "tr": "Henüz haber yok.",
+            "fi": "Ei vielä uutisia."
+        },
+        "pages": {
+            "en": "Pages",
+            "tr": "Sayfalar",
+            "fi": "Sivut"
+        }
+    },
+    "contact": {
+        "title": {
+            "en": "Contact us",
+            "tr": "Bize ulaşın",
+            "fi": "Ota yhteyttä"
+        },
+        "description": {
+            "en": "Contact Arkka about a new building, an energy renovation, or a condition survey. We reply within two working days.",
+            "tr": "Yeni bir bina, enerji yenileme ya da durum tespiti için Arkka ile iletişime geçin. İki iş günü içinde dönüş yapıyoruz.",
+            "fi": "Ota yhteyttä Arkkaan uudisrakennuksesta, energiakorjauksesta tai kuntotutkimuksesta. Vastaamme kahden arkipäivän kuluessa."
+        },
+        "intro": {
+            "en": "Tell us what you are planning. A short description is enough to start.",
+            "tr": "Ne planladığınızı anlatın. Başlamak için kısa bir açıklama yeterli.",
+            "fi": "Kerro, mitä suunnittelet. Lyhyt kuvaus riittää alkuun."
+        },
+        "details": {
+            "en": "Email and phone",
+            "tr": "E-posta ve telefon",
+            "fi": "Sähköposti ja puhelin"
+        },
+        "form": {
+            "name": {
+                "en": "Your name",
+                "tr": "Adınız",
+                "fi": "Nimesi"
+            },
+            "email": {
+                "en": "Email",
+                "tr": "E-posta",
+                "fi": "Sähköposti"
+            },
+            "message": {
+                "en": "Message",
+                "tr": "Mesaj",
+                "fi": "Viesti"
+            },
+            "submit": {
+                "en": "Send message",
+                "tr": "Mesajı gönder",
+                "fi": "Lähetä viesti"
+            },
+            "messages": {
+                "sent": {
+                    "en": "Thank you. Your message was received and we will reply soon.",
+                    "tr": "Teşekkürler. Mesajınız alındı, en kısa sürede dönüş yapacağız.",
+                    "fi": "Kiitos. Viestisi on vastaanotettu, ja vastaamme pian."
+                },
+                "invalid": {
+                    "en": "Please check the highlighted fields.",
+                    "tr": "Lütfen işaretli alanları kontrol edin.",
+                    "fi": "Tarkista merkityt kentät."
+                },
+                "limited": {
+                    "en": "Too many messages. Please try again later or email us directly.",
+                    "tr": "Çok fazla mesaj gönderildi. Lütfen daha sonra tekrar deneyin ya da doğrudan e-posta gönderin.",
+                    "fi": "Liian monta viestiä. Yritä myöhemmin uudelleen tai lähetä sähköpostia suoraan."
+                }
+            },
+            "errors": {
+                "name": {
+                    "en": "Enter your name (up to 100 characters).",
+                    "tr": "Adınızı girin (en fazla 100 karakter).",
+                    "fi": "Kirjoita nimesi (enintään 100 merkkiä)."
+                },
+                "email": {
+                    "en": "Enter a valid email address.",
+                    "tr": "Geçerli bir e-posta adresi girin.",
+                    "fi": "Anna kelvollinen sähköpostiosoite."
+                },
+                "message": {
+                    "en": "Write between 10 and 5000 characters.",
+                    "tr": "10 ile 5000 karakter arasında yazın.",
+                    "fi": "Kirjoita 10–5000 merkkiä."
+                }
+            }
+        }
+    },
+    "404": {
+        "title": {
+            "en": "Page not found",
+            "tr": "Sayfa bulunamadı",
+            "fi": "Sivua ei löytynyt"
+        },
+        "text": {
+            "en": "The page you are looking for does not exist or has moved.",
+            "tr": "Aradığınız sayfa yok ya da taşınmış.",
+            "fi": "Etsimääsi sivua ei ole tai se on siirretty."
+        },
+        "button": {
+            "en": "Go to the home page",
+            "tr": "Ana sayfaya dön",
+            "fi": "Siirry etusivulle"
+        }
+    },
+    "admin": {
+        "title": {
+            "en": "Admin",
+            "tr": "Yönetim",
+            "fi": "Ylläpito"
+        },
+        "items": {
+            "en": "Content",
+            "tr": "İçerik",
+            "fi": "Sisältö"
+        },
+        "events": {
+            "en": "Messages",
+            "tr": "Mesajlar",
+            "fi": "Viestit"
+        },
+        "persons": {
+            "en": "Users",
+            "tr": "Kullanıcılar",
+            "fi": "Käyttäjät"
+        },
+        "types": {
+            "news": {
+                "en": "News",
+                "tr": "Haberler",
+                "fi": "Uutiset"
+            },
+            "contact": {
+                "en": "Contact messages",
+                "tr": "İletişim mesajları",
+                "fi": "Yhteydenotot"
+            }
+        },
+        "logout": {
+            "en": "Log out",
+            "tr": "Çıkış yap",
+            "fi": "Kirjaudu ulos"
+        },
+        "view_site": {
+            "en": "View site",
+            "tr": "Siteyi görüntüle",
+            "fi": "Näytä sivusto"
+        },
+        "new": {
+            "en": "New",
+            "tr": "Yeni",
+            "fi": "Uusi"
+        },
+        "save": {
+            "en": "Save",
+            "tr": "Kaydet",
+            "fi": "Tallenna"
+        },
+        "delete": {
+            "en": "Delete",
+            "tr": "Sil",
+            "fi": "Poista"
+        },
+        "confirm_delete": {
+            "en": "Delete permanently",
+            "tr": "Kalıcı olarak sil",
+            "fi": "Poista pysyvästi"
+        },
+        "delete_question": {
+            "en": "Delete this record? This cannot be undone.",
+            "tr": "Bu kayıt silinsin mi? Bu işlem geri alınamaz.",
+            "fi": "Poistetaanko tämä tietue? Toimintoa ei voi perua."
+        },
+        "cancel": {
+            "en": "Cancel",
+            "tr": "Vazgeç",
+            "fi": "Peruuta"
+        },
+        "back": {
+            "en": "Back to list",
+            "tr": "Listeye dön",
+            "fi": "Takaisin listaan"
+        },
+        "search": {
+            "en": "Search",
+            "tr": "Ara",
+            "fi": "Hae"
+        },
+        "all": {
+            "en": "All",
+            "tr": "Tümü",
+            "fi": "Kaikki"
+        },
+        "empty": {
+            "en": "Nothing here yet.",
+            "tr": "Henüz bir şey yok.",
+            "fi": "Ei vielä mitään."
+        },
+        "select": {
+            "en": "Select a record from the list, or create a new one.",
+            "tr": "Listeden bir kayıt seçin ya da yeni bir kayıt oluşturun.",
+            "fi": "Valitse tietue listasta tai luo uusi."
+        },
+        "previous": {
+            "en": "Previous",
+            "tr": "Önceki",
+            "fi": "Edellinen"
+        },
+        "next": {
+            "en": "Next",
+            "tr": "Sonraki",
+            "fi": "Seuraava"
+        },
+        "status": {
+            "label": {
+                "en": "Status",
+                "tr": "Durum",
+                "fi": "Tila"
+            },
+            "draft": {
+                "en": "Draft",
+                "tr": "Taslak",
+                "fi": "Luonnos"
+            },
+            "published": {
+                "en": "Published",
+                "tr": "Yayında",
+                "fi": "Julkaistu"
+            },
+            "new": {
+                "en": "New",
+                "tr": "Yeni",
+                "fi": "Uusi"
+            },
+            "read": {
+                "en": "Read",
+                "tr": "Okundu",
+                "fi": "Luettu"
+            }
+        },
+        "fields": {
+            "title": {
+                "en": "Title",
+                "tr": "Başlık",
+                "fi": "Otsikko"
+            },
+            "summary": {
+                "en": "Summary",
+                "tr": "Özet",
+                "fi": "Tiivistelmä"
+            },
+            "text": {
+                "en": "Text",
+                "tr": "Metin",
+                "fi": "Teksti"
+            },
+            "slug": {
+                "en": "URL slug",
+                "tr": "URL kısa adı",
+                "fi": "URL-tunniste"
+            },
+            "slug_help": {
+                "en": "Leave empty to create it from the title.",
+                "tr": "Başlıktan oluşturmak için boş bırakın.",
+                "fi": "Jätä tyhjäksi, niin se luodaan otsikosta."
+            },
+            "image": {
+                "en": "Image",
+                "tr": "Görsel",
+                "fi": "Kuva"
+            },
+            "image_help": {
+                "en": "JPEG, PNG, WebP or GIF, up to 1 MB and 1920 × 1920 px.",
+                "tr": "JPEG, PNG, WebP veya GIF; en fazla 1 MB ve 1920 × 1920 px.",
+                "fi": "JPEG, PNG, WebP tai GIF, enintään 1 Mt ja 1920 × 1920 px."
+            },
+            "remove_image": {
+                "en": "Remove image",
+                "tr": "Görseli kaldır",
+                "fi": "Poista kuva"
+            },
+            "published_at": {
+                "en": "Publish date",
+                "tr": "Yayın tarihi",
+                "fi": "Julkaisupäivä"
+            },
+            "name": {
+                "en": "Name",
+                "tr": "Ad",
+                "fi": "Nimi"
+            },
+            "email": {
+                "en": "Email",
+                "tr": "E-posta",
+                "fi": "Sähköposti"
+            },
+            "password": {
+                "en": "Password",
+                "tr": "Parola",
+                "fi": "Salasana"
+            },
+            "password_help": {
+                "en": "At least 12 characters.",
+                "tr": "En az 12 karakter.",
+                "fi": "Vähintään 12 merkkiä."
+            },
+            "role": {
+                "en": "Role",
+                "tr": "Rol",
+                "fi": "Rooli"
+            },
+            "message": {
+                "en": "Message",
+                "tr": "Mesaj",
+                "fi": "Viesti"
+            },
+            "date": {
+                "en": "Date",
+                "tr": "Tarih",
+                "fi": "Päivämäärä"
+            },
+            "token": {
+                "en": "Setup token",
+                "tr": "Kurulum anahtarı",
+                "fi": "Asennustunniste"
+            },
+            "locale": {
+                "en": "Language",
+                "tr": "Dil",
+                "fi": "Kieli"
+            }
+        },
+        "roles": {
+            "admin": {
+                "en": "Admin",
+                "tr": "Yönetici",
+                "fi": "Ylläpitäjä"
+            },
+            "editor": {
+                "en": "Editor",
+                "tr": "Editör",
+                "fi": "Toimittaja"
+            }
+        },
+        "login": {
+            "title": {
+                "en": "Log in",
+                "tr": "Giriş yap",
+                "fi": "Kirjaudu"
+            },
+            "submit": {
+                "en": "Log in",
+                "tr": "Giriş yap",
+                "fi": "Kirjaudu"
+            },
+            "failed": {
+                "en": "Wrong email or password, or too many attempts. Wait 15 minutes after five failed attempts.",
+                "tr": "E-posta veya parola hatalı ya da çok fazla deneme yapıldı. Beş başarısız denemeden sonra 15 dakika bekleyin.",
+                "fi": "Väärä sähköposti tai salasana, tai liian monta yritystä. Odota 15 minuuttia viiden epäonnistuneen yrityksen jälkeen."
+            }
+        },
+        "setup": {
+            "title": {
+                "en": "Create the first admin",
+                "tr": "İlk yöneticiyi oluşturun",
+                "fi": "Luo ensimmäinen ylläpitäjä"
+            },
+            "text": {
+                "en": "Open the file data/setup-token.txt on the server (for example with FTP) and paste its content below.",
+                "tr": "Sunucudaki data/setup-token.txt dosyasını açın (örneğin FTP ile) ve içeriğini aşağıya yapıştırın.",
+                "fi": "Avaa palvelimella tiedosto data/setup-token.txt (esimerkiksi FTP:llä) ja liitä sen sisältö alle."
+            },
+            "submit": {
+                "en": "Create admin",
+                "tr": "Yönetici oluştur",
+                "fi": "Luo ylläpitäjä"
+            }
+        },
+        "persons_create": {
+            "en": "Add a user",
+            "tr": "Kullanıcı ekle",
+            "fi": "Lisää käyttäjä"
+        },
+        "disable": {
+            "en": "Disable",
+            "tr": "Devre dışı bırak",
+            "fi": "Poista käytöstä"
+        },
+        "enable": {
+            "en": "Enable",
+            "tr": "Etkinleştir",
+            "fi": "Ota käyttöön"
+        },
+        "active": {
+            "en": "Active",
+            "tr": "Aktif",
+            "fi": "Aktiivinen"
+        },
+        "disabled": {
+            "en": "Disabled",
+            "tr": "Devre dışı",
+            "fi": "Ei käytössä"
+        },
+        "flash": {
+            "saved": {
+                "en": "Saved.",
+                "tr": "Kaydedildi.",
+                "fi": "Tallennettu."
+            },
+            "deleted": {
+                "en": "Deleted.",
+                "tr": "Silindi.",
+                "fi": "Poistettu."
+            },
+            "created": {
+                "en": "User created.",
+                "tr": "Kullanıcı oluşturuldu.",
+                "fi": "Käyttäjä luotu."
+            },
+            "updated": {
+                "en": "User updated.",
+                "tr": "Kullanıcı güncellendi.",
+                "fi": "Käyttäjä päivitetty."
+            }
+        },
+        "errors": {
+            "title": {
+                "en": "Enter a title in the default language (up to 200 characters).",
+                "tr": "Varsayılan dilde bir başlık girin (en fazla 200 karakter).",
+                "fi": "Kirjoita otsikko oletuskielellä (enintään 200 merkkiä)."
+            },
+            "summary": {
+                "en": "The summary can have up to 500 characters.",
+                "tr": "Özet en fazla 500 karakter olabilir.",
+                "fi": "Tiivistelmässä voi olla enintään 500 merkkiä."
+            },
+            "text": {
+                "en": "The text can have up to 50 000 characters.",
+                "tr": "Metin en fazla 50 000 karakter olabilir.",
+                "fi": "Tekstissä voi olla enintään 50 000 merkkiä."
+            },
+            "slug": {
+                "en": "Use only lowercase letters, numbers, and hyphens. The slug must be unique.",
+                "tr": "Yalnızca küçük harf, rakam ve tire kullanın. Kısa ad benzersiz olmalı.",
+                "fi": "Käytä vain pieniä kirjaimia, numeroita ja yhdysmerkkejä. Tunnisteen on oltava yksilöllinen."
+            },
+            "image": {
+                "en": "The image must be JPEG, PNG, WebP or GIF, up to 1 MB and 1920 × 1920 px.",
+                "tr": "Görsel JPEG, PNG, WebP veya GIF olmalı; en fazla 1 MB ve 1920 × 1920 px.",
+                "fi": "Kuvan on oltava JPEG, PNG, WebP tai GIF, enintään 1 Mt ja 1920 × 1920 px."
+            },
+            "published_at": {
+                "en": "Enter a valid date.",
+                "tr": "Geçerli bir tarih girin.",
+                "fi": "Anna kelvollinen päivämäärä."
+            },
+            "name": {
+                "en": "Enter a name.",
+                "tr": "Bir ad girin.",
+                "fi": "Kirjoita nimi."
+            },
+            "email": {
+                "en": "Enter a valid email address that is not used yet.",
+                "tr": "Henüz kullanılmayan geçerli bir e-posta adresi girin.",
+                "fi": "Anna kelvollinen sähköpostiosoite, jota ei ole vielä käytetty."
+            },
+            "password": {
+                "en": "The password needs at least 12 characters.",
+                "tr": "Parola en az 12 karakter olmalı.",
+                "fi": "Salasanassa on oltava vähintään 12 merkkiä."
+            },
+            "token": {
+                "en": "The setup token is not correct.",
+                "tr": "Kurulum anahtarı doğru değil.",
+                "fi": "Asennustunniste ei ole oikein."
+            },
+            "forbidden": {
+                "en": "You can only edit your own records.",
+                "tr": "Yalnızca kendi kayıtlarınızı düzenleyebilirsiniz.",
+                "fi": "Voit muokata vain omia tietueitasi."
+            }
+        }
+    }
+}
