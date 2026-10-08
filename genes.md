@@ -125,6 +125,10 @@ site uses only `home`.
 ```apache
 Options -Indexes
 DirectoryIndex index.php
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+    AddCharset UTF-8 .css .js .json .txt .xml .md .svg
+</IfModule>
 RewriteEngine On
 
 # One canonical host: https without www. Remove this block if site.url uses www.
@@ -558,7 +562,9 @@ and its translations to the content. Follow these rules so that Turkish, Finnish
 German, and other languages work without special cases:
 
 - Save every file as UTF-8 without BOM. `<meta charset="utf-8">` is the first
-  element in `<head>`. The runtime sends `Content-Type: text/html; charset=utf-8`.
+  element in `<head>`. The runtime sends `Content-Type: text/html; charset=utf-8`,
+  and `.htaccess` declares UTF-8 for static files such as `.css`, `.js`, and
+  `llms.txt`. Without it, browsers and crawlers read `ü` as `Ã¼`.
 - For user text, use `mb_strlen`, `mb_substr`, `mb_strtolower`, and `mb_strtoupper`.
   Never use `strlen`, `substr`, `strtolower`, or `ucfirst` on user text; they count
   bytes and break characters such as `İ`, `ş`, `ä`.
