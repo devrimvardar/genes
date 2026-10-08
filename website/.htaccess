@@ -2,6 +2,10 @@ Options -Indexes
 DirectoryIndex index.php
 RewriteEngine On
 
+# One canonical host: https without www. Remove this block if site.url uses www.
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
 # Force HTTPS in production. Local hosts are skipped.
 RewriteCond %{HTTPS} off
 RewriteCond %{HTTP:X-Forwarded-Proto} !https

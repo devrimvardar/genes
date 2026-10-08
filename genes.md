@@ -127,6 +127,10 @@ Options -Indexes
 DirectoryIndex index.php
 RewriteEngine On
 
+# One canonical host: https without www. Remove this block if site.url uses www.
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
 # Force HTTPS in production. Local hosts are skipped.
 RewriteCond %{HTTPS} off
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
@@ -165,8 +169,10 @@ RewriteRule ^ %{ENV:BASE}/index.php [L]
 </IfModule>
 ```
 
-The `BASE` rule makes the same file work at the domain root, in a subdirectory, and
-behind an Apache `Alias` (Laragon, XAMPP, MAMP). Do not add `RewriteBase`. Do not
+Every visitor ends on one address: `http://www.example.com/x`, `https://www.example.com/x`,
+and `http://example.com/x` all redirect once (301) to `https://example.com/x`, which
+must match `site.url`. The `BASE` rule makes the same file work at the domain root,
+in a subdirectory, and behind an Apache `Alias` (Laragon, XAMPP, MAMP). Do not add `RewriteBase`. Do not
 edit this file per environment.
 
 Every folder that receives uploads gets its own `.htaccess` — COPY EXACTLY:
