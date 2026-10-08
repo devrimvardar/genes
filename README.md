@@ -29,6 +29,21 @@ Examples: https://genes.one/en/examples/
 
 Download: https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md
 
+## Example
+
+[`examples/corporate`](examples/corporate) is a complete multilingual corporate site
+generated from `genes.md`: three languages, an admin-managed news section (SQLite),
+and a contact form. Download it as a zip from
+[genes.one/en/examples](https://genes.one/en/examples).
+
+The files marked COPY EXACTLY in `genes.md` are extracted into the example by
+`tools/extract.py`, so the example always matches the specification. Rebuild the
+example and the zip with:
+
+```text
+python tools/build.py
+```
+
 ## Links
 
 - [Genes website](https://genes.one/)
@@ -41,7 +56,15 @@ Download: https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md
 
 ## Website deployment
 
-The example site is in `website/`. Upload the contents of that folder to the
-web root with FTP, or serve it from a subdirectory such as `/genes/`. The site
-detects its base path automatically and keeps localized routes working in both
-locations.
+The genes.one website in `website/` is generated from `genes.md` and doubles as a
+reference implementation. Upload the contents of that folder to the web root with
+FTP, or serve it from a subdirectory such as `/genes/`. The `.htaccess` computes the
+base path from the request, so the same files work at the domain root, in a
+subdirectory, and behind a local Apache alias without any configuration change.
+
+Run it locally without Apache:
+
+```text
+cd website
+php -S localhost:8000 index.php
+```

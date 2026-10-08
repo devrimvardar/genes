@@ -1,0 +1,156 @@
+/* BASE CSS */
+* { box-sizing: border-box; padding: 0; margin: 0; line-height: 1em }
+html { -webkit-text-size-adjust: 100% }
+html, body { overflow-x: clip }
+@media (max-width: 639px) { html { font-size: 3.125vw } }
+@media (min-width: 640px) and (max-width: 1279px) { html { font-size: 1.5625vw } }
+@media (min-width: 1280px) { html { font-size: .78125vw } }
+img, svg, video, canvas { display: block; max-width: 100% }
+button, input, textarea, select { font: inherit; border: 0 }
+ul, ol { list-style: none }
+table { border-collapse: collapse }
+* { scrollbar-width: thin; scrollbar-color: #999 transparent }
+*::-webkit-scrollbar { width: .6rem; height: .6rem }
+*::-webkit-scrollbar-track { background: transparent }
+*::-webkit-scrollbar-thumb { background: #999; border-radius: 1rem }
+*::-webkit-scrollbar-thumb:hover { background: #777 }
+
+/* Landing preset */
+.g-landing { width: 128rem; min-height: 100vh; padding: 0 6.4rem }
+@media (min-width: 640px) and (max-width: 1279px) {
+    .g-landing { width: 64rem; padding: 0 3.2rem }
+}
+@media (max-width: 639px) {
+    .g-landing { width: 32rem; padding: 0 1.6rem }
+}
+
+/* Design tokens */
+:root {
+    --bg: #101413;
+    --surface: #18211e;
+    --line: #2f3c37;
+    --text: #f5f3eb;
+    --muted: #aab6af;
+    --accent: #d4ef72;
+    --on-accent: #101413;
+    --radius: 0;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 1.6rem }
+p, li { line-height: 1.5 }
+h1, h2, h3 { line-height: 1.1; font-weight: 750; letter-spacing: -.02em }
+a { color: inherit; text-decoration: none }
+a:focus-visible, button:focus-visible { outline: .2rem solid var(--accent); outline-offset: .4rem }
+
+/* Header */
+.header { display: flex; align-items: center; gap: 4.8rem; padding: 3.2rem 0; border-bottom: 1px solid var(--line) }
+.brand { font-size: 2.4rem; font-weight: 800; letter-spacing: -.04em }
+.nav { display: flex; flex-wrap: wrap; gap: 3.2rem; margin-right: auto }
+.nav a, .languages a { color: var(--muted); font-size: 1.4rem; line-height: 1.5 }
+.nav a:hover, .languages a:hover, .nav a[aria-current], .languages a[aria-current] { color: var(--text) }
+.nav a[aria-current="page"] { box-shadow: 0 .2rem 0 var(--accent) }
+.languages { display: flex; gap: 1.6rem }
+
+/* Hero */
+.hero { padding: 9.6rem 0; max-width: 88rem }
+.eyebrow { display: block; color: var(--accent); font-size: 1.3rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 2.4rem }
+.hero h1 { font-size: 7.2rem; margin-bottom: 3.2rem }
+.lead { color: var(--muted); font-size: 2rem; max-width: 64rem }
+
+/* Buttons */
+.button { display: inline-flex; align-items: center; min-height: 4.4rem; padding: 0 2.4rem; margin-top: 4.8rem; background: var(--accent); color: var(--on-accent); font-size: 1.5rem; font-weight: 700; border-radius: var(--radius); cursor: pointer }
+.button:hover { background: var(--text) }
+.button-ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1px var(--line) }
+.button-ghost:hover { background: var(--surface) }
+
+/* Sections */
+.section { display: grid; grid-template-columns: 32rem 76.8rem; gap: 6.4rem; padding: 9.6rem 0; border-top: 1px solid var(--line) }
+.section h2 { font-size: 3.2rem }
+.section-body > p { color: var(--muted); font-size: 1.8rem; max-width: 64rem }
+.cards { display: grid; grid-template-columns: 24rem 24rem 24rem; gap: 2.4rem; margin-top: 4.8rem }
+.card { padding: 3.2rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius) }
+.card h3 { font-size: 2rem; margin-bottom: 1.6rem }
+.card p { color: var(--muted); font-size: 1.5rem }
+
+/* Articles */
+.article-list { display: grid; gap: 1.6rem; margin-top: 4.8rem }
+.article-link { display: block; padding: 3.2rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius) }
+.article-link:hover { border-color: var(--accent) }
+.article-link .eyebrow { margin-bottom: 1.6rem }
+.article-title { display: block; font-size: 2.4rem; font-weight: 700; line-height: 1.2 }
+.article-more { display: block; margin-top: 2.4rem; color: var(--accent); font-size: 1.4rem }
+.article { max-width: 76.8rem; padding: 6.4rem 0 9.6rem }
+.back { display: inline-block; color: var(--muted); font-size: 1.4rem; margin-bottom: 6.4rem }
+.back:hover { color: var(--text) }
+.article h1 { font-size: 4.8rem; margin-bottom: 3.2rem }
+.article h2 { font-size: 3.2rem; margin: 6.4rem 0 2.4rem }
+.article h3 { font-size: 2rem; margin: 4.8rem 0 1.6rem }
+.article > p { font-size: 1.8rem; color: var(--muted) }
+.article > .lead { font-size: 2rem }
+
+/* Footer */
+.footer { display: flex; justify-content: space-between; gap: 3.2rem; padding: 4.8rem 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 1.3rem }
+.footer-links { display: flex; gap: 2.4rem }
+.footer-links a:hover { color: var(--text) }
+
+/* Consent */
+.consent { position: fixed; left: 2.4rem; bottom: 2.4rem; width: 48rem; padding: 2.4rem; background: var(--surface); border: 1px solid var(--line); font-size: 1.4rem; z-index: 10 }
+.consent[hidden] { display: none }
+.consent-actions { display: flex; gap: 1.2rem }
+.consent .button { margin-top: 2.4rem }
+
+/* Tablet */
+@media (min-width: 640px) and (max-width: 1279px) {
+    body { font-size: 1.4rem }
+    .header { flex-wrap: wrap; gap: 2.4rem 3.2rem; padding: 2.4rem 0 }
+    .nav { gap: 2.4rem }
+    .hero { padding: 6.4rem 0 }
+    .hero h1 { font-size: 5.6rem }
+    .lead { font-size: 1.8rem }
+    .section { grid-template-columns: 57.6rem; gap: 3.2rem; padding: 6.4rem 0 }
+    .section h2 { font-size: 2.8rem }
+    .section-body > p { font-size: 1.6rem }
+    .cards { grid-template-columns: 57.6rem; gap: 1.6rem }
+    .card { padding: 2.4rem }
+    .card h3 { font-size: 1.8rem }
+    .article { padding: 4.8rem 0 6.4rem }
+    .article h1 { font-size: 4rem }
+    .article h2 { font-size: 2.8rem }
+    .article h3 { font-size: 1.8rem }
+    .article > p { font-size: 1.6rem }
+}
+
+/* Mobile */
+@media (max-width: 639px) {
+    body { font-size: 1.4rem }
+    .header { flex-wrap: wrap; gap: 1.6rem; padding: 2.4rem 0 1.6rem }
+    .brand { margin-right: auto }
+    .nav { order: 3; width: 28.8rem; gap: .8rem 1.6rem }
+    .nav a, .languages a { font-size: 1.3rem }
+    .languages { gap: 1.2rem }
+    .hero { padding: 4.8rem 0 }
+    .eyebrow { font-size: 1.2rem; margin-bottom: 1.6rem }
+    .hero h1 { font-size: 3.6rem; margin-bottom: 2.4rem }
+    .lead { font-size: 1.6rem }
+    .button { min-height: 3.6rem; padding: 0 1.6rem; margin-top: 3.2rem; font-size: 1.4rem }
+    .section { grid-template-columns: 28.8rem; gap: 2.4rem; padding: 4.8rem 0 }
+    .section h2 { font-size: 2.2rem }
+    .section-body > p { font-size: 1.4rem }
+    .cards { grid-template-columns: 28.8rem; gap: 1.6rem; margin-top: 3.2rem }
+    .card { padding: 1.6rem }
+    .card h3 { font-size: 1.7rem; margin-bottom: 1.2rem }
+    .card p { font-size: 1.4rem }
+    .article-list { margin-top: 3.2rem }
+    .article-link { padding: 1.6rem }
+    .article-title { font-size: 1.8rem }
+    .article { padding: 3.2rem 0 4.8rem }
+    .back { margin-bottom: 3.2rem }
+    .article h1 { font-size: 2.8rem; margin-bottom: 2.4rem }
+    .article h2 { font-size: 2.2rem; margin: 4.8rem 0 1.6rem }
+    .article h3 { font-size: 1.7rem; margin: 3.2rem 0 1.2rem }
+    .article > p, .article > .lead { font-size: 1.4rem }
+    .footer { flex-direction: column; gap: 1.6rem; padding: 3.2rem 0; font-size: 1.2rem }
+    .footer-links { flex-wrap: wrap; gap: 1.6rem }
+    .consent { left: 1.6rem; bottom: 1.6rem; width: 28.8rem; padding: 1.6rem; font-size: 1.3rem }
+}

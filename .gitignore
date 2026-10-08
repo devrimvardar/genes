@@ -1,3 +1,4 @@
 .vscode/
 Thumbs.db
 *.log
+data/error.log

@@ -1,0 +1,12 @@
+# Arkka
+
+> Arkka is an engineering studio for timber structures and low-energy renovation, with offices in Helsinki and Istanbul.
+
+Arkka designs the structure and energy systems of timber buildings, plans energy renovations for apartment buildings and schools, carries out condition surveys, and supervises construction sites. The team of eighteen engineers works for housing companies, municipalities, schools, and private clients in Finland and Türkiye. Arkka is a fictional company used as an example for the Genes specification.
+
+## Pages
+
+- [About](https://arkka.example/en/about): history, values, and leadership
+- [Services](https://arkka.example/en/services): timber structures, energy renovation, condition surveys, site supervision
+- [News](https://arkka.example/en/news): project results and announcements
+- [Contact](https://arkka.example/en/contact): email, phone, offices, and contact form
