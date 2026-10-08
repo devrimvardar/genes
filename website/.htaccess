@@ -1,5 +1,9 @@
 Options -Indexes
 DirectoryIndex index.php
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+    AddCharset UTF-8 .css .js .json .txt .xml .md .svg
+</IfModule>
 RewriteEngine On
 
 # One canonical host: https without www. Remove this block if site.url uses www.
