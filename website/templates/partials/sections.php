@@ -3,6 +3,9 @@
     <h1><?= e($content['title']) ?></h1>
     <p class="lead"><?= e($content['text']) ?></p>
     <a class="button" href="<?= e(preg_match('#^https?://#', $content['button_url']) ? $content['button_url'] : url($content['button_url'])) ?>"><?= e($content['button']) ?></a>
+<?php if (!empty($content['secondary_url'])): ?>
+    <a class="button button-ghost" href="<?= e(url($content['secondary_url'])) ?>"><?= e($content['secondary']) ?></a>
+<?php endif; ?>
 </section>
 <section class="section">
     <h2><?= e($content['section_title']) ?></h2>
@@ -20,3 +23,13 @@
 <?php endif; ?>
     </div>
 </section>
+<?php if (!empty($content['gallery'])): ?>
+<section class="section">
+    <h2><?= e($content['gallery_title']) ?></h2>
+    <div class="gallery">
+<?php foreach ($content['gallery'] as $image): ?>
+        <img src="<?= e(url($image['src'])) ?>" alt="<?= e($image['alt']) ?>" width="<?= (int) $image['width'] ?>" height="<?= (int) $image['height'] ?>" loading="lazy">
+<?php endforeach; ?>
+    </div>
+</section>
+<?php endif; ?>

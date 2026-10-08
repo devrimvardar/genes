@@ -33,3 +33,49 @@ with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as archive:
     archive.writestr(spec, (root / 'genes.md').read_bytes())
 
 print('built', target.relative_to(root), target.stat().st_size, 'bytes')
+
+# Live demo on genes.one: same example, but not indexed, without admin or form posts.
+import json
+import shutil
+
+demo = root / 'website' / 'examples' / 'corporate'
+demo_url = 'https://genes.one/examples/corporate'
+if demo.exists():
+    shutil.rmtree(demo)
+for path in sorted(p for p in example.rglob('*') if p.is_file()):
+    relative = path.relative_to(example).as_posix()
+    if relative in excluded or relative == 'README.md' or (relative.startswith('assets/items/') and relative != 'assets/items/.htaccess'):
+        continue
+    (demo / relative).parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(path, demo / relative)
+
+config = json.loads((demo / 'data/config.json').read_text(encoding='utf-8'))
+config['site']['url'] = demo_url
+(demo / 'data/config.json').write_text(json.dumps(config, ensure_ascii=False, indent=4) + '\n', encoding='utf-8', newline='\n')
+
+content = json.loads((demo / 'data/content.json').read_text(encoding='utf-8'))
+content['contact']['intro'] = {
+    'en': 'This is a live demo of the Genes corporate example. The form is shown but cannot be sent here.',
+    'tr': 'Bu, Genes kurumsal örneğinin canlı demosudur. Form gösterilir ama burada gönderilemez.',
+    'fi': 'Tämä on Genes-yritysesimerkin live-demo. Lomake näytetään, mutta sitä ei voi lähettää täällä.',
+}
+(demo / 'data/content.json').write_text(json.dumps(content, ensure_ascii=False, indent=4) + '\n', encoding='utf-8', newline='\n')
+
+htaccess = (demo / '.htaccess').read_text(encoding='utf-8')
+htaccess = htaccess.replace('RewriteEngine On\n', """RewriteEngine On
+
+# Live demo on genes.one: not indexed, no admin, no form submissions.
+<IfModule mod_headers.c>
+    Header always set X-Robots-Tag "noindex"
+</IfModule>
+RewriteRule ^admin(/|$) - [F,L]
+RewriteCond %{REQUEST_METHOD} POST
+RewriteRule ^ - [F,L]
+""", 1)
+(demo / '.htaccess').write_text(htaccess, encoding='utf-8', newline='\n')
+
+for name in ('robots.txt', 'llms.txt'):
+    text = (demo / name).read_text(encoding='utf-8').replace('https://arkka.example', demo_url)
+    (demo / name).write_text(text, encoding='utf-8', newline='\n')
+
+print('built demo', demo.relative_to(root))

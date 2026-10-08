@@ -127,6 +127,10 @@ Options -Indexes
 DirectoryIndex index.php
 RewriteEngine On
 
+# One canonical host: https without www. Remove this block if site.url uses www.
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
 # Force HTTPS in production. Local hosts are skipped.
 RewriteCond %{HTTPS} off
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
@@ -165,8 +169,10 @@ RewriteRule ^ %{ENV:BASE}/index.php [L]
 </IfModule>
 ```
 
-The `BASE` rule makes the same file work at the domain root, in a subdirectory, and
-behind an Apache `Alias` (Laragon, XAMPP, MAMP). Do not add `RewriteBase`. Do not
+Every visitor ends on one address: `http://www.example.com/x`, `https://www.example.com/x`,
+and `http://example.com/x` all redirect once (301) to `https://example.com/x`, which
+must match `site.url`. The `BASE` rule makes the same file work at the domain root,
+in a subdirectory, and behind an Apache `Alias` (Laragon, XAMPP, MAMP). Do not add `RewriteBase`. Do not
 edit this file per environment.
 
 Every folder that receives uploads gets its own `.htaccess` — COPY EXACTLY:
@@ -379,18 +385,27 @@ function render_sitemap(array $config, array $content): void {
     echo '</urlset>' . "\n";
 }
 
-function send_headers(): void {
+function send_headers(array $config): void {
+    $policy = [
+        'default-src' => ["'self'"], 'img-src' => ["'self'", 'data:'], 'form-action' => ["'self'"],
+        'base-uri' => ["'self'"], 'frame-ancestors' => ["'self'"],
+    ];
+    foreach ($config['csp'] ?? [] as $directive => $sources) {
+        $policy[$directive] = array_merge($policy[$directive] ?? ["'self'"], $sources);
+    }
+    $csp = [];
+    foreach ($policy as $directive => $sources) $csp[] = $directive . ' ' . implode(' ', array_unique($sources));
     header('Content-Type: text/html; charset=utf-8');
     header('X-Content-Type-Options: nosniff');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('X-Frame-Options: SAMEORIGIN');
-    header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; form-action 'self'; base-uri 'self'; frame-ancestors 'self'");
+    header('Content-Security-Policy: ' . implode('; ', $csp));
 }
 
 $config = json_decode(file_get_contents(ROOT . '/data/config.json'), true, 512, JSON_THROW_ON_ERROR);
 $content = json_decode(file_get_contents(ROOT . '/data/content.json'), true, 512, JSON_THROW_ON_ERROR);
 
-send_headers();
+send_headers($config);
 $route = route($_SERVER['REQUEST_URI'] ?? '/', $config['site']['locales'], $config['site']['default_locale']);
 
 // Modules add their requires and routes here.
@@ -443,6 +458,17 @@ descriptions come from `content.json` in the visitor's language.
 - `site.url` is the production URL without a trailing slash. Canonical links,
   sitemap, and Open Graph always use it, so a local copy still points to production.
 - `config.json` holds settings only: URLs, locales, email addresses, feature flags.
+- Optional `csp` adds sources to the Content-Security-Policy, only for hosts the
+  site really uses. Never add `'unsafe-inline'` or `'unsafe-eval'`:
+
+```json
+{
+    "csp": {
+        "script-src": ["https://www.googletagmanager.com"],
+        "connect-src": ["https://*.google-analytics.com"]
+    }
+}
+```
 - Never put page text, translations, passwords, API keys, or other secrets in
   `config.json`.
 
@@ -878,7 +904,10 @@ One paragraph that explains what the organization does, for whom, and where.
 
 - Keep pages fast on shared hosting: no unused CSS or JavaScript, compressed images,
   no third-party scripts unless the user asks for them.
-- Analytics is optional. In the EU, load analytics only after the visitor consents.
+- Analytics is optional. Put the measurement ID in `site.analytics` so templates can
+  read it as `$site['analytics']`, add the analytics hosts to `csp`, and load the
+  analytics script from a file in `assets/js/`. In the EU, load analytics only after
+  the visitor consents; show the consent text from `common`.
 
 ## 11. Security
 
