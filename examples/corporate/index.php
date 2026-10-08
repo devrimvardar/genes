@@ -190,18 +190,27 @@ function render_sitemap(array $config, array $content): void {
     echo '</urlset>' . "\n";
 }
 
-function send_headers(): void {
+function send_headers(array $config): void {
+    $policy = [
+        'default-src' => ["'self'"], 'img-src' => ["'self'", 'data:'], 'form-action' => ["'self'"],
+        'base-uri' => ["'self'"], 'frame-ancestors' => ["'self'"],
+    ];
+    foreach ($config['csp'] ?? [] as $directive => $sources) {
+        $policy[$directive] = array_merge($policy[$directive] ?? ["'self'"], $sources);
+    }
+    $csp = [];
+    foreach ($policy as $directive => $sources) $csp[] = $directive . ' ' . implode(' ', array_unique($sources));
     header('Content-Type: text/html; charset=utf-8');
     header('X-Content-Type-Options: nosniff');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('X-Frame-Options: SAMEORIGIN');
-    header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; form-action 'self'; base-uri 'self'; frame-ancestors 'self'");
+    header('Content-Security-Policy: ' . implode('; ', $csp));
 }
 
 $config = json_decode(file_get_contents(ROOT . '/data/config.json'), true, 512, JSON_THROW_ON_ERROR);
 $content = json_decode(file_get_contents(ROOT . '/data/content.json'), true, 512, JSON_THROW_ON_ERROR);
 
-send_headers();
+send_headers($config);
 $route = route($_SERVER['REQUEST_URI'] ?? '/', $config['site']['locales'], $config['site']['default_locale']);
 
 // Modules add their requires and routes here.

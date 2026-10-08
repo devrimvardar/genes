@@ -25,28 +25,12 @@
                 "en": "Articles",
                 "tr": "Makaleler",
                 "fi": "Artikkelit"
-            },
-            "github": {
-                "en": "GitHub",
-                "tr": "GitHub",
-                "fi": "GitHub"
             }
         },
         "footer": {
             "en": "Made for humans and AI.",
             "tr": "İnsanlar ve yapay zekâ için.",
             "fi": "Ihmisille ja tekoälylle."
-        },
-        "brand": "genes",
-        "nav_label": {
-            "en": "Main navigation",
-            "tr": "Ana menü",
-            "fi": "Päävalikko"
-        },
-        "language_label": {
-            "en": "Language",
-            "tr": "Dil",
-            "fi": "Kieli"
         },
         "read_more": {
             "en": "Read article",
@@ -92,6 +76,12 @@
                 "tr": "Reddet",
                 "fi": "Hylkää"
             }
+        },
+        "github": "GitHub",
+        "language": {
+            "en": "Language",
+            "tr": "Dil",
+            "fi": "Kieli"
         }
     },
     "home": {
@@ -311,7 +301,34 @@
             "tr": "Canlı demoyu gör",
             "fi": "Katso live-demo"
         },
-        "secondary_url": "examples/corporate/en/"
+        "secondary_url": "examples/corporate/en/",
+        "gallery": [
+            {
+                "src": "assets/media/example-admin-news.webp",
+                "width": 1794,
+                "height": 902,
+                "alt": {
+                    "en": "Admin of the corporate example: news list and editor with fields per language",
+                    "tr": "Kurumsal örneğin admin paneli: haber listesi ve dillere göre alanları olan editör",
+                    "fi": "Yritysesimerkin ylläpito: uutislista ja editori kielikohtaisine kenttineen"
+                }
+            },
+            {
+                "src": "assets/media/example-admin-users.webp",
+                "width": 1794,
+                "height": 902,
+                "alt": {
+                    "en": "Admin of the corporate example: user management",
+                    "tr": "Kurumsal örneğin admin paneli: kullanıcı yönetimi",
+                    "fi": "Yritysesimerkin ylläpito: käyttäjien hallinta"
+                }
+            }
+        ],
+        "gallery_title": {
+            "en": "The admin",
+            "tr": "Admin paneli",
+            "fi": "Ylläpito"
+        }
     },
     "download": {
         "eyebrow": {

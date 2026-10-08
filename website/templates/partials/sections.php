@@ -23,3 +23,13 @@
 <?php endif; ?>
     </div>
 </section>
+<?php if (!empty($content['gallery'])): ?>
+<section class="section">
+    <h2><?= e($content['gallery_title']) ?></h2>
+    <div class="gallery">
+<?php foreach ($content['gallery'] as $image): ?>
+        <img src="<?= e(url($image['src'])) ?>" alt="<?= e($image['alt']) ?>" width="<?= (int) $image['width'] ?>" height="<?= (int) $image['height'] ?>" loading="lazy">
+<?php endforeach; ?>
+    </div>
+</section>
+<?php endif; ?>

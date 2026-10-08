@@ -379,18 +379,27 @@ function render_sitemap(array $config, array $content): void {
     echo '</urlset>' . "\n";
 }
 
-function send_headers(): void {
+function send_headers(array $config): void {
+    $policy = [
+        'default-src' => ["'self'"], 'img-src' => ["'self'", 'data:'], 'form-action' => ["'self'"],
+        'base-uri' => ["'self'"], 'frame-ancestors' => ["'self'"],
+    ];
+    foreach ($config['csp'] ?? [] as $directive => $sources) {
+        $policy[$directive] = array_merge($policy[$directive] ?? ["'self'"], $sources);
+    }
+    $csp = [];
+    foreach ($policy as $directive => $sources) $csp[] = $directive . ' ' . implode(' ', array_unique($sources));
     header('Content-Type: text/html; charset=utf-8');
     header('X-Content-Type-Options: nosniff');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('X-Frame-Options: SAMEORIGIN');
-    header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; form-action 'self'; base-uri 'self'; frame-ancestors 'self'");
+    header('Content-Security-Policy: ' . implode('; ', $csp));
 }
 
 $config = json_decode(file_get_contents(ROOT . '/data/config.json'), true, 512, JSON_THROW_ON_ERROR);
 $content = json_decode(file_get_contents(ROOT . '/data/content.json'), true, 512, JSON_THROW_ON_ERROR);
 
-send_headers();
+send_headers($config);
 $route = route($_SERVER['REQUEST_URI'] ?? '/', $config['site']['locales'], $config['site']['default_locale']);
 
 // Modules add their requires and routes here.
@@ -443,6 +452,17 @@ descriptions come from `content.json` in the visitor's language.
 - `site.url` is the production URL without a trailing slash. Canonical links,
   sitemap, and Open Graph always use it, so a local copy still points to production.
 - `config.json` holds settings only: URLs, locales, email addresses, feature flags.
+- Optional `csp` adds sources to the Content-Security-Policy, only for hosts the
+  site really uses. Never add `'unsafe-inline'` or `'unsafe-eval'`:
+
+```json
+{
+    "csp": {
+        "script-src": ["https://www.googletagmanager.com"],
+        "connect-src": ["https://*.google-analytics.com"]
+    }
+}
+```
 - Never put page text, translations, passwords, API keys, or other secrets in
   `config.json`.
 
@@ -878,7 +898,10 @@ One paragraph that explains what the organization does, for whom, and where.
 
 - Keep pages fast on shared hosting: no unused CSS or JavaScript, compressed images,
   no third-party scripts unless the user asks for them.
-- Analytics is optional. In the EU, load analytics only after the visitor consents.
+- Analytics is optional. Put the measurement ID in `site.analytics` so templates can
+  read it as `$site['analytics']`, add the analytics hosts to `csp`, and load the
+  analytics script from a file in `assets/js/`. In the EU, load analytics only after
+  the visitor consents; show the consent text from `common`.
 
 ## 11. Security
 

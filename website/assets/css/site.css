@@ -155,3 +155,9 @@ a:focus-visible, button:focus-visible { outline: .2rem solid var(--accent); outl
     .consent { left: 1.6rem; bottom: 1.6rem; width: 28.8rem; padding: 1.6rem; font-size: 1.3rem }
 }
 .hero .button + .button { margin-left: 1.2rem }
+
+/* Gallery */
+.gallery { display: grid; grid-template-columns: 76.8rem; gap: 2.4rem }
+.gallery img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius) }
+@media (max-width: 1279px) { .gallery { grid-template-columns: 57.6rem; gap: 1.6rem } }
+@media (max-width: 639px) { .gallery { grid-template-columns: 28.8rem } }
