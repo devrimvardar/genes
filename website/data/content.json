@@ -305,7 +305,13 @@
                 }
             }
         ],
-        "button_url": "downloads/genes-corporate-example.zip"
+        "button_url": "downloads/genes-corporate-example.zip",
+        "secondary": {
+            "en": "View the live demo",
+            "tr": "Canlı demoyu gör",
+            "fi": "Katso live-demo"
+        },
+        "secondary_url": "examples/corporate/en/"
     },
     "download": {
         "eyebrow": {
