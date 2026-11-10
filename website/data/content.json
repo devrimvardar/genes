@@ -153,7 +153,12 @@
                 }
             }
         ],
-        "button_url": "https://github.com/devrimvardar/genes"
+        "button_url": "https://github.com/devrimvardar/genes",
+        "meta_title": {
+            "en": "Give an AI one file. Get a real website.",
+            "tr": "Yapay zekâya tek dosya ver. Gerçek bir site al.",
+            "fi": "Yksi tiedosto tekoälylle, oikea verkkosivusto"
+        }
     },
     "docs": {
         "eyebrow": {
@@ -430,7 +435,13 @@
                     "fi": "PHP-hosting, FTP-yhteys, SSL-sertifika ja tietokanta vain silloin, kun projekti tarvitsee muokattavaa tai haettavaa sisältöä. Monille pienille sivustoille tämä riittää."
                 },
                 "cards": [],
-                "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md"
+                "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md",
+                "meta_title": {
+                    "en": "Can AI build a PHP site on $5 hosting?",
+                    "tr": "AI 5 dolarlık hostingde PHP sitesi kurabilir mi?",
+                    "fi": "Tekoäly ja PHP-sivusto 5 dollarin hostingissa"
+                },
+                "published_at": "2026-09-29T21:58:50Z"
             },
             "how-to-ask-ai-to-build-php": {
                 "eyebrow": {
@@ -464,7 +475,8 @@
                     "fi": "Lue genes.md ennen koodin kirjoittamista. Luo monikielinen PHP-yrityssivusto englannin, turkin ja suomen kielellä, SQLite-hallittu uutisosio, FTP-yhteensopiva käyttöönotto ilman Composeria, Node.js:ää, CDN:ää tai build-vaihetta. Noudata genes.md:tä tarkasti."
                 },
                 "cards": [],
-                "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md"
+                "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md",
+                "published_at": "2026-09-29T21:58:50Z"
             },
             "ftp-deployment-for-ai-php-sites": {
                 "eyebrow": {
@@ -498,8 +510,14 @@
                     "fi": "Sama projekti voi toimia kehityksessä osoitteessa localhost/genes/ ja tuotannossa domainin juuressa. Pidä polut suhteellisina tai määritä ympäristön base path."
                 },
                 "cards": [],
-                "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md"
+                "button_url": "https://raw.githubusercontent.com/devrimvardar/genes/main/genes.md",
+                "published_at": "2026-09-29T21:58:50Z"
             }
+        },
+        "meta_title": {
+            "en": "Practical notes for building PHP websites with AI.",
+            "tr": "AI ile PHP siteleri oluşturmak için pratik notlar.",
+            "fi": "PHP-sivustot tekoälyllä: käytännön ohjeet"
         }
     },
     "404": {

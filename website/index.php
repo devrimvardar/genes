@@ -134,32 +134,44 @@ function make_meta(array $view): array {
     $is404 = $view['page'] === '404';
     $title = (string) ($content['title'] ?? $view['theme']['title']);
     $description = (string) ($content['description'] ?? $content['summary'] ?? $content['text'] ?? $view['theme']['description']);
-    $description = mb_substr(trim((string) preg_replace('/\s+/u', ' ', $description)), 0, 160);
+    $description = trim((string) preg_replace('/\s+/u', ' ', $description));
+    if (mb_strlen($description) > 160) {
+        $cut = mb_substr($description, 0, 157);
+        $description = rtrim(mb_substr($cut, 0, (int) mb_strrpos($cut, ' ')), ' ,.;:') . '…';
+    }
 
     $alternates = [];
     foreach ($view['locales'] as $locale) {
         $alternates[$locale] = abs_url($site['url'], page_path($locale, $view['page'], $view['slug']));
     }
     $canonical = $is404 ? null : $alternates[$view['locale']];
+    $image = !empty($content['image']) ? $content['image'] : ($site['image'] ?? '');
+    $image = $image !== '' ? abs_url($site['url'], $image) : null;
+    $organization = ['@type' => 'Organization', 'name' => $site['name'], 'url' => abs_url($site['url']),
+        'logo' => abs_url($site['url'], 'assets/icons/apple-touch-icon.png'), 'sameAs' => $site['same_as'] ?? null];
 
     if ($view['page'] === 'home') {
-        $schema = ['@type' => 'Organization', 'name' => $site['name'], 'url' => abs_url($site['url']), 'description' => $description];
+        $schema = $organization + ['description' => $description];
     } elseif ($view['slug'] !== null) {
         $schema = ['@type' => 'Article', 'headline' => $title, 'description' => $description, 'url' => $canonical,
-            'inLanguage' => $view['locale'], 'datePublished' => $content['published_at'] ?? null,
-            'publisher' => ['@type' => 'Organization', 'name' => $site['name']]];
+            'image' => $image, 'inLanguage' => $view['locale'], 'author' => array_filter($organization),
+            'datePublished' => $content['published_at'] ?? null,
+            'dateModified' => $content['updated_at'] ?? $content['published_at'] ?? null,
+            'publisher' => array_filter($organization)];
     } else {
         $schema = ['@type' => 'WebPage', 'name' => $title, 'description' => $description, 'url' => $canonical, 'inLanguage' => $view['locale']];
     }
 
+    $metaTitle = (string) ($content['meta_title'] ?? $title);
     return [
-        'title' => $view['page'] === 'home' ? $site['name'] . ' — ' . $title : $title . ' | ' . $site['name'],
+        'title' => $view['page'] === 'home' ? $site['name'] . ' — ' . $metaTitle : $metaTitle . ' | ' . $site['name'],
+        'share_title' => $title,
         'description' => $description,
         'canonical' => $canonical,
         'alternates' => $is404 ? [] : $alternates,
         'x_default' => $alternates[$site['default_locale']],
         'robots' => $is404 ? 'noindex' : null,
-        'image' => !empty($content['image']) ? abs_url($site['url'], $content['image']) : null,
+        'image' => $image,
         'schema' => $is404 ? null : ['@context' => 'https://schema.org'] + array_filter($schema),
     ];
 }

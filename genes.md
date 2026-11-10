@@ -81,6 +81,7 @@ Core project:
 ```text
 index.php                 entry point and runtime (section 4)
 .htaccess                 routing and protection (section 3)
+favicon.ico               32×32 icon (section 10)
 robots.txt
 llms.txt
 data/
@@ -95,8 +96,8 @@ templates/
 assets/
     css/site.css          all CSS (section 9)
     js/                   optional
-    media/                images
-    icons/
+    media/                images, including share.png (section 10)
+    icons/                favicon.svg, apple-touch-icon.png (section 10)
     fonts/
 ```
 
@@ -166,6 +167,8 @@ RewriteRule ^ %{ENV:BASE}/index.php [L]
     ExpiresByType image/webp "access plus 1 month"
     ExpiresByType image/gif "access plus 1 month"
     ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 month"
+    ExpiresByType image/vnd.microsoft.icon "access plus 1 month"
 </IfModule>
 
 <IfModule mod_deflate.c>
@@ -334,32 +337,44 @@ function make_meta(array $view): array {
     $is404 = $view['page'] === '404';
     $title = (string) ($content['title'] ?? $view['theme']['title']);
     $description = (string) ($content['description'] ?? $content['summary'] ?? $content['text'] ?? $view['theme']['description']);
-    $description = mb_substr(trim((string) preg_replace('/\s+/u', ' ', $description)), 0, 160);
+    $description = trim((string) preg_replace('/\s+/u', ' ', $description));
+    if (mb_strlen($description) > 160) {
+        $cut = mb_substr($description, 0, 157);
+        $description = rtrim(mb_substr($cut, 0, (int) mb_strrpos($cut, ' ')), ' ,.;:') . '…';
+    }
 
     $alternates = [];
     foreach ($view['locales'] as $locale) {
         $alternates[$locale] = abs_url($site['url'], page_path($locale, $view['page'], $view['slug']));
     }
     $canonical = $is404 ? null : $alternates[$view['locale']];
+    $image = !empty($content['image']) ? $content['image'] : ($site['image'] ?? '');
+    $image = $image !== '' ? abs_url($site['url'], $image) : null;
+    $organization = ['@type' => 'Organization', 'name' => $site['name'], 'url' => abs_url($site['url']),
+        'logo' => abs_url($site['url'], 'assets/icons/apple-touch-icon.png'), 'sameAs' => $site['same_as'] ?? null];
 
     if ($view['page'] === 'home') {
-        $schema = ['@type' => 'Organization', 'name' => $site['name'], 'url' => abs_url($site['url']), 'description' => $description];
+        $schema = $organization + ['description' => $description];
     } elseif ($view['slug'] !== null) {
         $schema = ['@type' => 'Article', 'headline' => $title, 'description' => $description, 'url' => $canonical,
-            'inLanguage' => $view['locale'], 'datePublished' => $content['published_at'] ?? null,
-            'publisher' => ['@type' => 'Organization', 'name' => $site['name']]];
+            'image' => $image, 'inLanguage' => $view['locale'], 'author' => array_filter($organization),
+            'datePublished' => $content['published_at'] ?? null,
+            'dateModified' => $content['updated_at'] ?? $content['published_at'] ?? null,
+            'publisher' => array_filter($organization)];
     } else {
         $schema = ['@type' => 'WebPage', 'name' => $title, 'description' => $description, 'url' => $canonical, 'inLanguage' => $view['locale']];
     }
 
+    $metaTitle = (string) ($content['meta_title'] ?? $title);
     return [
-        'title' => $view['page'] === 'home' ? $site['name'] . ' — ' . $title : $title . ' | ' . $site['name'],
+        'title' => $view['page'] === 'home' ? $site['name'] . ' — ' . $metaTitle : $metaTitle . ' | ' . $site['name'],
+        'share_title' => $title,
         'description' => $description,
         'canonical' => $canonical,
         'alternates' => $is404 ? [] : $alternates,
         'x_default' => $alternates[$site['default_locale']],
         'robots' => $is404 ? 'noindex' : null,
-        'image' => !empty($content['image']) ? abs_url($site['url'], $content['image']) : null,
+        'image' => $image,
         'schema' => $is404 ? null : ['@context' => 'https://schema.org'] + array_filter($schema),
     ];
 }
@@ -447,7 +462,10 @@ php -S localhost:8000 index.php
         "name": "Site name",
         "url": "https://example.com",
         "default_locale": "en",
-        "locales": ["en", "tr"]
+        "locales": ["en", "tr"],
+        "image": "assets/media/share.png",
+        "theme_color": "#ffffff",
+        "same_as": ["https://www.linkedin.com/company/example", "https://github.com/example"]
     },
     "theme": {
         "title": "Site name — short promise",
@@ -459,6 +477,9 @@ php -S localhost:8000 index.php
 `theme.title` and `theme.description` are fallbacks only. Page titles and
 descriptions come from `content.json` in the visitor's language.
 
+- `site.image` is the default share image (section 10). `site.theme_color` is the
+  browser toolbar color, usually `--bg`. `site.same_as` lists the organization's
+  official profiles; omit it if there are none.
 - `site.url` is the production URL without a trailing slash. Canonical links,
   sitemap, and Open Graph always use it, so a local copy still points to production.
 - `config.json` holds settings only: URLs, locales, email addresses, feature flags.
@@ -526,7 +547,9 @@ Rules:
   name or an email address.
 - Pages may nest sections as deep as needed. Pages do not need the same structure.
 - `common.nav` lists the menu in order. Its keys are page keys.
-- Every page has `title` and `description` in every locale.
+- Every page has `title` and `description` in every locale. If the title is longer
+  than 55 characters, add a shorter `meta_title` for the browser tab and search
+  results; `title` stays the visible heading.
 - A missing translation falls back to the default locale, then to an empty string.
 - Templates are shared by all languages. Never copy a template per language.
 - Text is plain text. HTML inside content is not allowed unless the user asks for it.
@@ -620,6 +643,12 @@ the project needs:
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($meta['title']) ?></title>
     <meta name="description" content="<?= e($meta['description']) ?>">
+    <link rel="icon" href="<?= e(url('favicon.ico')) ?>" sizes="32x32">
+    <link rel="icon" href="<?= e(url('assets/icons/favicon.svg')) ?>" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="<?= e(url('assets/icons/apple-touch-icon.png')) ?>">
+<?php if (!empty($site['theme_color'])): ?>
+    <meta name="theme-color" content="<?= e($site['theme_color']) ?>">
+<?php endif; ?>
 <?php if ($meta['robots']): ?>
     <meta name="robots" content="<?= e($meta['robots']) ?>">
 <?php endif; ?>
@@ -631,11 +660,12 @@ the project needs:
     <link rel="alternate" hreflang="x-default" href="<?= e($meta['x_default']) ?>">
     <meta property="og:type" content="<?= $slug !== null ? 'article' : 'website' ?>">
     <meta property="og:site_name" content="<?= e($site['name']) ?>">
-    <meta property="og:title" content="<?= e($content['title'] ?? $theme['title']) ?>">
+    <meta property="og:title" content="<?= e($meta['share_title']) ?>">
     <meta property="og:description" content="<?= e($meta['description']) ?>">
     <meta property="og:url" content="<?= e($meta['canonical']) ?>">
 <?php if ($meta['image']): ?>
     <meta property="og:image" content="<?= e($meta['image']) ?>">
+    <meta property="og:image:alt" content="<?= e($meta['share_title']) ?>">
 <?php endif; ?>
     <meta name="twitter:card" content="<?= $meta['image'] ? 'summary_large_image' : 'summary' ?>">
 <?php endif; ?>
@@ -861,7 +891,26 @@ grid gap              2.4      1.6     1.6
 ## 10. Search and AI discoverability
 
 The runtime and `layout.php` already output title, description, canonical,
-`hreflang`, Open Graph, JSON-LD, and `noindex` for 404. You must also:
+`hreflang`, Open Graph, Twitter card, icons, JSON-LD, and `noindex` for 404.
+
+**Icons and share image.** Every project ships these four files. Without them,
+links shared on WhatsApp, LinkedIn, X, Slack, or Facebook show no picture, and
+browser tabs show a blank icon:
+
+```text
+favicon.ico                        32×32, in the project root
+assets/icons/favicon.svg           square logo mark, simple enough to read at 16×16
+assets/icons/apple-touch-icon.png  180×180 PNG, no transparency
+assets/media/share.png             1200×630 PNG or JPEG, at most 300 KB
+```
+
+- The share image shows the site name and its main promise in large text (at least
+  48px high), with a 64px safe margin on every side. Use the site's colors.
+- A page or record with its own `image` uses that image instead of `site.image`.
+- Make the images with PHP GD or any image tool; never hotlink images from other
+  sites.
+
+You must also:
 
 - Give every page and record its own `title` and `description` (120–160 characters)
   in every locale.
@@ -870,6 +919,9 @@ The runtime and `layout.php` already output title, description, canonical,
 - Make every page readable without JavaScript.
 - Use descriptive link text, never "click here". Put facts in text, not only in
   images.
+- Articles, news, and other dated records have `published_at` (and `updated_at` when
+  changed) as `YYYY-MM-DDTHH:MM:SSZ`, also in `content.json`, so search engines and
+  AI assistants can tell how current they are.
 - Write `robots.txt` — SHAPE:
 
 ```text
@@ -978,6 +1030,8 @@ Before you finish, check every item:
 - [ ] Spacing uses only the spacing steps; contrast passes.
 - [ ] No placeholder colors, lorem ipsum, or empty sections remain.
 - [ ] One `h1` per page; every page has its own title and description.
+- [ ] `favicon.ico`, `favicon.svg`, `apple-touch-icon.png`, and `share.png` exist,
+      and a shared link shows the image (check with a link preview tool).
 - [ ] Every output uses `e()` or `paragraphs()`.
 - [ ] The site works at `http://localhost/project/` and at a domain root without
       changing any file.
