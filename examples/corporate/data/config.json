@@ -3,7 +3,13 @@
         "name": "Arkka",
         "url": "https://arkka.example",
         "default_locale": "en",
-        "locales": ["en", "tr", "fi"]
+        "locales": [
+            "en",
+            "tr",
+            "fi"
+        ],
+        "image": "assets/media/share.png",
+        "theme_color": "#fbfaf7"
     },
     "theme": {
         "title": "Arkka — Engineering for low-carbon buildings",
@@ -11,9 +17,19 @@
     },
     "admin": {
         "types": {
-            "news": { "fields": ["title", "summary", "text", "image", "published_at"] }
+            "news": {
+                "fields": [
+                    "title",
+                    "summary",
+                    "text",
+                    "image",
+                    "published_at"
+                ]
+            }
         },
-        "events": ["contact"]
+        "events": [
+            "contact"
+        ]
     },
     "contact": {
         "to": "info@arkka.example",

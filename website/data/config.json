@@ -8,7 +8,12 @@
             "tr",
             "fi"
         ],
-        "analytics": "G-TYGWB7TRQV"
+        "analytics": "G-TYGWB7TRQV",
+        "image": "assets/media/share.png",
+        "theme_color": "#101413",
+        "same_as": [
+            "https://github.com/devrimvardar/genes"
+        ]
     },
     "theme": {
         "title": "Genes — AI-readable website specification",

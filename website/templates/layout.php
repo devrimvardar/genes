@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($meta['title']) ?></title>
     <meta name="description" content="<?= e($meta['description']) ?>">
+    <link rel="icon" href="<?= e(url('favicon.ico')) ?>" sizes="32x32">
+    <link rel="icon" href="<?= e(url('assets/icons/favicon.svg')) ?>" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="<?= e(url('assets/icons/apple-touch-icon.png')) ?>">
+<?php if (!empty($site['theme_color'])): ?>
+    <meta name="theme-color" content="<?= e($site['theme_color']) ?>">
+<?php endif; ?>
 <?php if ($meta['robots']): ?>
     <meta name="robots" content="<?= e($meta['robots']) ?>">
 <?php endif; ?>
@@ -16,11 +22,12 @@
     <link rel="alternate" hreflang="x-default" href="<?= e($meta['x_default']) ?>">
     <meta property="og:type" content="<?= $slug !== null ? 'article' : 'website' ?>">
     <meta property="og:site_name" content="<?= e($site['name']) ?>">
-    <meta property="og:title" content="<?= e($content['title'] ?? $theme['title']) ?>">
+    <meta property="og:title" content="<?= e($meta['share_title']) ?>">
     <meta property="og:description" content="<?= e($meta['description']) ?>">
     <meta property="og:url" content="<?= e($meta['canonical']) ?>">
 <?php if ($meta['image']): ?>
     <meta property="og:image" content="<?= e($meta['image']) ?>">
+    <meta property="og:image:alt" content="<?= e($meta['share_title']) ?>">
 <?php endif; ?>
     <meta name="twitter:card" content="<?= $meta['image'] ? 'summary_large_image' : 'summary' ?>">
 <?php endif; ?>

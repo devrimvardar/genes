@@ -40,8 +40,7 @@ import shutil
 
 demo = root / 'website' / 'examples' / 'corporate'
 demo_url = 'https://genes.one/examples/corporate'
-if demo.exists():
-    shutil.rmtree(demo)
+# Overwrite in place: synced folders (OneDrive) can refuse to delete directories.
 for path in sorted(p for p in example.rglob('*') if p.is_file()):
     relative = path.relative_to(example).as_posix()
     if relative in excluded or relative == 'README.md' or (relative.startswith('assets/items/') and relative != 'assets/items/.htaccess'):
