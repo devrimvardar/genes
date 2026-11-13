@@ -36,7 +36,7 @@
     <script type="application/ld+json"><?= json_encode($meta['schema'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) ?></script>
 <?php endif; ?>
 <?php if (!empty($site['analytics'])): ?>
-    <script src="<?= e(url('assets/js/consent.js')) ?>?v=<?= filemtime(ROOT . '/assets/js/consent.js') ?>" data-ga4="<?= e($site['analytics']) ?>" defer></script>
+    <script src="<?= e(url('assets/js/consent.js')) ?>?v=<?= filemtime(ROOT . '/assets/js/consent.js') ?>" data-ga4="<?= e($site['analytics']) ?>" data-ga4-hosts="genes.one,www.genes.one" defer></script>
 <?php endif; ?>
 </head>
 <body>

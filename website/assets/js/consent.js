@@ -1,6 +1,17 @@
 (function () {
     var id = document.currentScript.getAttribute('data-ga4');
+    // Optional: data-ga4-hosts="example.com,www.example.com" limits measurement to those hosts.
+    // Without it, local and private addresses (localhost, 127.0.0.1, 192.168.x.x, *.local, *.test) are never measured.
+    var hosts = (document.currentScript.getAttribute('data-ga4-hosts') || '').split(',')
+        .map(function (h) { return h.trim().toLowerCase(); }).filter(Boolean);
     var key = 'genes-consent';
+
+    function hostAllowed() {
+        var host = location.hostname.toLowerCase();
+        if (hosts.length) return hosts.indexOf(host) !== -1;
+        return !(host === 'localhost' || /\.(localhost|local|test)$/.test(host) ||
+            /^(127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host) || host === '[::1]');
+    }
 
     // Time zones where analytics needs consent first: EU/EEA, UK, Switzerland, and
     // Türkiye (KVKK). Every Europe/* zone counts; these are the others.
@@ -27,6 +38,7 @@
     }
 
     function loadAnalytics() {
+        if (!hostAllowed()) return;
         window.dataLayer = window.dataLayer || [];
         window.gtag = function () { window.dataLayer.push(arguments); };
         window.gtag('js', new Date());
