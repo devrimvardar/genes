@@ -60,12 +60,14 @@
     <main>
 <?php require ROOT . '/templates/' . $template . '.php'; ?>
     </main>
+    <?php include __DIR__ . '/network-block.html'; ?>
     <footer class="footer">
         <p><?= e($common['footer']) ?></p>
         <ul class="footer-links">
 <?php foreach ($common['footer_links'] as $link): ?>
             <li><a href="<?= e($link['url']) ?>"><?= e($link['label']) ?></a></li>
 <?php endforeach; ?>
+            <li><?php include __DIR__ . '/network-links.html'; ?></li>
         </ul>
     </footer>
 </div>
